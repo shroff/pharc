@@ -1,0 +1,248 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="92b7e3e1-aa95-43e5-8018-86ad238a0c20"
+  name="Filesystem" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <importedPackagesInternal>
+    <packageImport
+      Id="4efcf240-4c2e-40e7-af8f-bb9d9fb9b230"
+      visibility="Public">
+      <packageMoniker
+        Id="74161838-a158-4a13-93b3-379ae9a51840"
+        LastKnownName="Logic"
+        LastKnownLocation="Package_0247.uml" />
+    </packageImport>
+  </importedPackagesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <Interface
+        Id="d3c77e3d-5888-446f-88bf-068fa3052d36"
+        name="File Accessor"
+        isAbstract="false"
+        isLeaf="false">
+        <ownedOperations>
+          <operation
+            Id="402d7063-73b7-4e23-a0d8-582fb3fdc694"
+            name="populatemanager"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="3f75e160-cc8a-4f38-8e57-8a437417a0c0"
+            name="populatepatient"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="fda0897b-5ac7-49aa-8070-dcf0fd9074ff"
+            name="populatephotoset"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="ae833169-8878-4763-b3b1-60eeee895e9a"
+            name="populatephoto"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="27b16307-62fb-4d94-8d96-7c196dd223f9"
+            name="populatephysicians"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperations>
+      </Interface>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="cb24b7a2-ccfb-492d-96b3-a4e46fe4e3c1"
+        name="Naive Accessor"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <interfaceRealization
+            Id="3cb8817d-7b7d-4246-8e65-63d3c83782b4">
+            <interfaceMoniker
+              Id="d3c77e3d-5888-446f-88bf-068fa3052d36"
+              LastKnownName="File Accessor"
+              LastKnownLocation="Package_0333.uml" />
+          </interfaceRealization>
+        </suppliersInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="c0c95cf8-51cb-42ec-9a88-55f27ff73ffe"
+            name="populatemanager"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="b8df4a45-dcb4-44ee-956f-5dc806334084"
+            name="populatepatient"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="fa4478ec-705c-4e74-a28b-42a1909a5b91"
+            name="populatephotoset"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="f0fbba07-9e29-44d4-854e-e8ae8e97cea4"
+            name="populatephoto"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="3619f3a8-1de9-4a73-b7aa-dec5c4fa3c24"
+            name="populatephysicians"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="17f44f93-2176-4fcd-abe5-6120ac55c6d7"
+        name="Lazy Accessor"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <interfaceRealization
+            Id="1e053799-3115-4c5c-afc9-04bc989f4827">
+            <interfaceMoniker
+              Id="d3c77e3d-5888-446f-88bf-068fa3052d36"
+              LastKnownName="File Accessor"
+              LastKnownLocation="Package_0333.uml" />
+          </interfaceRealization>
+        </suppliersInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="9ffb3f7b-a97b-4ab5-a896-9a60c0443110"
+            name="populatemanager"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="7c95d07b-8819-4861-9ba5-f00becec39b2"
+            name="populatepatient"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="4da7ef65-fd9d-4bc4-b1c7-44f730dfa65c"
+            name="populatephotoset"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="5455522a-71e3-42e1-9093-b656af00e775"
+            name="populatephoto"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="e37b7476-d8f3-4a6f-911f-e38bd3cf6950"
+            name="populatephysicians"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="cbbd5e86-6f8b-407b-8ce7-05e6989ceb0b"
+        name="Database-Cached Accessor"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <interfaceRealization
+            Id="3ba3a268-0419-4634-8147-c0c7e262142e">
+            <interfaceMoniker
+              Id="d3c77e3d-5888-446f-88bf-068fa3052d36"
+              LastKnownName="File Accessor"
+              LastKnownLocation="Package_0333.uml" />
+          </interfaceRealization>
+        </suppliersInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="294a72b9-7a74-425e-b55d-49856fcdba4e"
+            name="populatemanager"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="e105847a-9b68-4a91-80be-47f8c1dfba86"
+            name="populatepatient"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="a725ed70-293f-44ca-b07d-92a14ac318c3"
+            name="populatephotoset"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="569cea5e-d08e-45b0-823f-aae4d1c0eb5f"
+            name="populatephoto"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="0cfbff3c-144f-4900-9256-075aa99c43ca"
+            name="populatephysicians"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>
