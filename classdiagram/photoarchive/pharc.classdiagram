@@ -445,6 +445,24 @@
                         </type_NamedElement>
                       </parameter>
                     </operationHasOwnedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="d320da34-ddc0-4b26-b176-ee92535b12b6" direction="Return">
+                        <lowerValueInternal>
+                          <literalString Id="0d287863-bd2f-48b0-81c6-0490ec4bf7bd" name="Lower" value="*">
+                            <elementDefinition Id="80848511-0296-4616-99aa-40231b37fd57" />
+                          </literalString>
+                        </lowerValueInternal>
+                        <upperValueInternal>
+                          <literalString Id="94b90f96-af1e-46c3-a986-11df09eb5239" name="Upper" value="*">
+                            <elementDefinition Id="10ce7597-8716-4fb7-a2df-7c9a3bdbad69" />
+                          </literalString>
+                        </upperValueInternal>
+                        <elementDefinition Id="1ce872fe-2783-4666-bdc2-7c39b4ce9a72" />
+                        <type_NamedElement>
+                          <referencedTypeMoniker Id="15e1f2e3-66a4-45ad-a022-392469fdd35e" LastKnownName="Patient" />
+                        </type_NamedElement>
+                      </parameter>
+                    </operationHasOwnedParameters>
                   </ownedParameters>
                 </operation>
               </ownedOperationsInternal>
@@ -532,18 +550,55 @@
               <ownedOperations>
                 <operation Id="176e268b-4bbe-4a69-b936-311fc4fe3dcd" name="populatemanager" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
                   <elementDefinition Id="402d7063-73b7-4e23-a0d8-582fb3fdc694" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="fdb87183-c95f-4d9c-a2c2-a7a44b2127fa" name="item" direction="In">
+                        <elementDefinition Id="00de0587-33a1-42ba-abf9-e8b8aa9d6f01" />
+                        <type_NamedElement>
+                          <referencedTypeMoniker Id="07aae7f4-e2ed-4625-a477-22a08a80cbd6" LastKnownName="Data Manager" />
+                        </type_NamedElement>
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
                 </operation>
                 <operation Id="5471f5dc-87fc-4537-b6f7-07ca4319abb4" name="populatepatient" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
                   <elementDefinition Id="3f75e160-cc8a-4f38-8e57-8a437417a0c0" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="da709791-b9b9-4957-8d16-7d57d5555bda" name="item" direction="In">
+                        <elementDefinition Id="d1f82337-f400-4160-9e4b-ef435cc4fe8d" />
+                        <type_NamedElement>
+                          <referencedTypeMoniker Id="15e1f2e3-66a4-45ad-a022-392469fdd35e" LastKnownName="Patient" />
+                        </type_NamedElement>
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
                 </operation>
                 <operation Id="5b435447-1044-42cc-9094-8d7e17919a83" name="populatephotoset" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
                   <elementDefinition Id="fda0897b-5ac7-49aa-8070-dcf0fd9074ff" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="1b9506ce-2eec-473c-8f01-e2fb65fd1634" name="item" direction="In">
+                        <elementDefinition Id="5daba08b-212b-4750-af0c-87c1ad8763d4" />
+                        <type_NamedElement>
+                          <referencedTypeMoniker Id="ed7b87e0-be8d-440a-80e9-273b2a6b3a28" LastKnownName="Photoset" />
+                        </type_NamedElement>
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
                 </operation>
                 <operation Id="6c7ec14f-8539-4a5c-a6f2-89022f817f58" name="populatephoto" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
                   <elementDefinition Id="ae833169-8878-4763-b3b1-60eeee895e9a" />
-                </operation>
-                <operation Id="671c5ed4-09ac-4534-8ba4-493ae76a1758" name="populatephysicians" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
-                  <elementDefinition Id="27b16307-62fb-4d94-8d96-7c196dd223f9" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="d50986bb-ccba-4cd6-a9f7-7e2db5f96186" name="item" direction="In">
+                        <elementDefinition Id="242aa9b3-d4d8-452f-875f-3889ef7f653d" />
+                        <type_NamedElement>
+                          <referencedTypeMoniker Id="bf70d1c8-9ef3-4f7a-bf99-a51f25246b8d" LastKnownName="Photo" />
+                        </type_NamedElement>
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
                 </operation>
               </ownedOperations>
             </Interface>
@@ -560,18 +615,55 @@
               <ownedOperationsInternal>
                 <operation Id="f47fcbba-6364-40bf-bcf0-8897aa9864ad" name="populatemanager" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
                   <elementDefinition Id="c0c95cf8-51cb-42ec-9a88-55f27ff73ffe" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="9ef84775-9898-4872-87f6-1ebc11554acd" name="item" direction="In">
+                        <elementDefinition Id="c80173e5-877a-4588-bea7-f45b35dfa903" />
+                        <type_NamedElement>
+                          <referencedTypeMoniker Id="07aae7f4-e2ed-4625-a477-22a08a80cbd6" LastKnownName="Data Manager" />
+                        </type_NamedElement>
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
                 </operation>
                 <operation Id="36213334-7b14-4c65-ac0f-ce5190bdf05b" name="populatepatient" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
                   <elementDefinition Id="b8df4a45-dcb4-44ee-956f-5dc806334084" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="6dffed34-9934-4053-a005-ab6ab3de8736" name="item" direction="In">
+                        <elementDefinition Id="d21c7d65-8dcd-4f97-af03-c13d4c741ac3" />
+                        <type_NamedElement>
+                          <referencedTypeMoniker Id="15e1f2e3-66a4-45ad-a022-392469fdd35e" LastKnownName="Patient" />
+                        </type_NamedElement>
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
                 </operation>
                 <operation Id="4d0923ff-c4f2-4b57-bd62-e60ce0c70f93" name="populatephotoset" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
                   <elementDefinition Id="fa4478ec-705c-4e74-a28b-42a1909a5b91" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="a3227775-640b-47d1-bf48-cb907c11d1a2" name="item" direction="In">
+                        <elementDefinition Id="44ac24ff-8331-405a-87ab-cf224bcef8dc" />
+                        <type_NamedElement>
+                          <referencedTypeMoniker Id="ed7b87e0-be8d-440a-80e9-273b2a6b3a28" LastKnownName="Photoset" />
+                        </type_NamedElement>
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
                 </operation>
                 <operation Id="4f416137-1df5-4635-a0cf-f4dc75637273" name="populatephoto" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
                   <elementDefinition Id="f0fbba07-9e29-44d4-854e-e8ae8e97cea4" />
-                </operation>
-                <operation Id="30f2e8b0-7bae-4a22-88d0-a23dcb8ae6da" name="populatephysicians" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-                  <elementDefinition Id="3619f3a8-1de9-4a73-b7aa-dec5c4fa3c24" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="d06c6e37-29b5-4657-b169-80c54d093301" name="item" direction="In">
+                        <elementDefinition Id="a25f1a98-610c-400f-bc70-55607a10eefb" />
+                        <type_NamedElement>
+                          <referencedTypeMoniker Id="bf70d1c8-9ef3-4f7a-bf99-a51f25246b8d" LastKnownName="Photo" />
+                        </type_NamedElement>
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
                 </operation>
               </ownedOperationsInternal>
             </class>
@@ -588,24 +680,61 @@
               <ownedOperationsInternal>
                 <operation Id="adad3c6b-dfa6-4cbd-b97a-44f6e0e45cef" name="populatemanager" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
                   <elementDefinition Id="9ffb3f7b-a97b-4ab5-a896-9a60c0443110" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="96ca2215-2e0e-4b36-b8d5-9ebb72ea63fa" name="item" direction="In">
+                        <elementDefinition Id="91f4c14a-e259-49d5-94d8-1162649b4f69" />
+                        <type_NamedElement>
+                          <referencedTypeMoniker Id="07aae7f4-e2ed-4625-a477-22a08a80cbd6" LastKnownName="Data Manager" />
+                        </type_NamedElement>
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
                 </operation>
                 <operation Id="6adc4a83-45b9-4139-b5fe-1da207934e99" name="populatepatient" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
                   <elementDefinition Id="7c95d07b-8819-4861-9ba5-f00becec39b2" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="a93e947d-75c2-4ca1-bec0-c4739a3eda3b" name="item" direction="In">
+                        <elementDefinition Id="cf9b33a1-9ac2-47fc-8376-5504a68906e0" />
+                        <type_NamedElement>
+                          <referencedTypeMoniker Id="15e1f2e3-66a4-45ad-a022-392469fdd35e" LastKnownName="Patient" />
+                        </type_NamedElement>
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
                 </operation>
                 <operation Id="8bf13592-b3af-4b00-86c1-0fd85a9c43e8" name="populatephotoset" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
                   <elementDefinition Id="4da7ef65-fd9d-4bc4-b1c7-44f730dfa65c" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="7ead46a9-6ef5-413f-a459-503bf2603fdd" name="item" direction="In">
+                        <elementDefinition Id="6d8e2b14-cc8b-49bf-9a3d-aaabb92ce1e7" />
+                        <type_NamedElement>
+                          <referencedTypeMoniker Id="ed7b87e0-be8d-440a-80e9-273b2a6b3a28" LastKnownName="Photoset" />
+                        </type_NamedElement>
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
                 </operation>
                 <operation Id="9af38214-a30d-4a5e-8533-abed95337968" name="populatephoto" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
                   <elementDefinition Id="5455522a-71e3-42e1-9093-b656af00e775" />
-                </operation>
-                <operation Id="20bcf2ca-b2b9-40dd-a254-dc62ce0c4ef8" name="populatephysicians" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-                  <elementDefinition Id="e37b7476-d8f3-4a6f-911f-e38bd3cf6950" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="0ce1f1e7-6563-4a80-b1e5-3f2c145cfbe7" name="item" direction="In">
+                        <elementDefinition Id="fd920c44-5eba-482a-b9b0-861eeeb1aad4" />
+                        <type_NamedElement>
+                          <referencedTypeMoniker Id="bf70d1c8-9ef3-4f7a-bf99-a51f25246b8d" LastKnownName="Photo" />
+                        </type_NamedElement>
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
                 </operation>
               </ownedOperationsInternal>
             </class>
           </packageHasNamedElement>
           <packageHasNamedElement>
-            <class Id="30e88965-6ee0-4feb-aff4-b8bfe53f1e97" name="Database-Cached Accessor" isAbstract="false" isLeaf="false" isActiveClass="false">
+            <class Id="30e88965-6ee0-4feb-aff4-b8bfe53f1e97" name="Caching Lazy Accessor" isAbstract="false" isLeaf="false" isActiveClass="false">
               <elementDefinition Id="cbbd5e86-6f8b-407b-8ce7-05e6989ceb0b" />
               <suppliersInternal>
                 <interfaceRealization Id="ce619758-68c8-4d0c-81a1-ca0f31238ee6">
@@ -616,18 +745,55 @@
               <ownedOperationsInternal>
                 <operation Id="3e489dcb-b8e8-4ebc-a215-2cdf848292f6" name="populatemanager" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
                   <elementDefinition Id="294a72b9-7a74-425e-b55d-49856fcdba4e" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="0a4c85e6-1073-484f-b506-adebb3ba0c2d" name="item" direction="In">
+                        <elementDefinition Id="b2ec4e6b-fbcc-4584-80e0-9462847d9f66" />
+                        <type_NamedElement>
+                          <referencedTypeMoniker Id="07aae7f4-e2ed-4625-a477-22a08a80cbd6" LastKnownName="Data Manager" />
+                        </type_NamedElement>
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
                 </operation>
                 <operation Id="25b4ef1c-cc23-4329-b451-6bbb56cbde3e" name="populatepatient" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
                   <elementDefinition Id="e105847a-9b68-4a91-80be-47f8c1dfba86" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="274c0d1c-5ff6-4269-9e57-f1c84d909736" name="item" direction="In">
+                        <elementDefinition Id="3c8d2427-154b-46e8-86dd-9347981fab47" />
+                        <type_NamedElement>
+                          <referencedTypeMoniker Id="15e1f2e3-66a4-45ad-a022-392469fdd35e" LastKnownName="Patient" />
+                        </type_NamedElement>
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
                 </operation>
                 <operation Id="7badbcfa-29ad-4da3-b9e0-ff0cf14b8df5" name="populatephotoset" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
                   <elementDefinition Id="a725ed70-293f-44ca-b07d-92a14ac318c3" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="2aff1623-9351-47e9-a2b2-9c35cd636cd7" name="item" direction="In">
+                        <elementDefinition Id="1c8c10d7-7e2e-4fa9-9acc-81b8b1c6d070" />
+                        <type_NamedElement>
+                          <referencedTypeMoniker Id="ed7b87e0-be8d-440a-80e9-273b2a6b3a28" LastKnownName="Photoset" />
+                        </type_NamedElement>
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
                 </operation>
                 <operation Id="cbba769e-102d-4a5b-b747-38059e1c098e" name="populatephoto" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
                   <elementDefinition Id="569cea5e-d08e-45b0-823f-aae4d1c0eb5f" />
-                </operation>
-                <operation Id="35f0ab2e-3b12-446b-8774-3a64b1fafb9a" name="populatephysicians" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-                  <elementDefinition Id="0cfbff3c-144f-4900-9256-075aa99c43ca" />
+                  <ownedParameters>
+                    <operationHasOwnedParameters>
+                      <parameter Id="440d4748-9c23-4fcc-a03a-f7d5fe1238c6" name="item" direction="In">
+                        <elementDefinition Id="1c81cc42-e542-4e23-bb5c-a8d61ac596e0" />
+                        <type_NamedElement>
+                          <referencedTypeMoniker Id="bf70d1c8-9ef3-4f7a-bf99-a51f25246b8d" LastKnownName="Photo" />
+                        </type_NamedElement>
+                      </parameter>
+                    </operationHasOwnedParameters>
+                  </ownedParameters>
                 </operation>
               </ownedOperationsInternal>
             </class>
@@ -707,6 +873,26 @@
     <packageHasNamedElement>
       <referencedType Id="952c664e-c09b-4037-969c-1ee5d1ffdf20" name="Integer" isAbstract="false" isLeaf="false" cachedFullName="Integer">
         <elementDefinition Id="220a3521-e091-4221-bae9-3ef9018e845c" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="15e1f2e3-66a4-45ad-a022-392469fdd35e" name="Patient" isAbstract="false" isLeaf="false" cachedFullName="photoarchive::Logic::Patient">
+        <elementDefinition Id="6a6ded6e-ad4e-4070-a99e-3a73f02f327f" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="07aae7f4-e2ed-4625-a477-22a08a80cbd6" name="Data Manager" isAbstract="false" isLeaf="false" cachedFullName="photoarchive::Logic::Data Manager">
+        <elementDefinition Id="bc03258e-fe90-477b-9a28-72c9b17830eb" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="bf70d1c8-9ef3-4f7a-bf99-a51f25246b8d" name="Photo" isAbstract="false" isLeaf="false" cachedFullName="photoarchive::Logic::Photo">
+        <elementDefinition Id="8c3abd76-a5ac-4ef7-8eb0-62428a56f2fd" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="ed7b87e0-be8d-440a-80e9-273b2a6b3a28" name="Photoset" isAbstract="false" isLeaf="false" cachedFullName="photoarchive::Logic::Photoset">
+        <elementDefinition Id="fb129a79-0ffd-4320-9345-4bafa48cf802" />
       </referencedType>
     </packageHasNamedElement>
   </packagedElements>

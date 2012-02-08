@@ -854,6 +854,30 @@
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="1ce872fe-2783-4666-bdc2-7c39b4ce9a72"
+                  direction="Return">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="80848511-0296-4616-99aa-40231b37fd57"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="10ce7597-8716-4fb7-a2df-7c9a3bdbad69"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="6a6ded6e-ad4e-4070-a99e-3a73f02f327f"
+                      LastKnownName="Patient"
+                      LastKnownLocation="Package_0247.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
         </ownedOperationsInternal>
