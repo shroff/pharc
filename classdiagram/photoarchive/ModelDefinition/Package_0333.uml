@@ -468,5 +468,121 @@
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="678915ea-75d2-42ab-8b37-495a51065c65"
+        name="Data Manager Loader"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <targetEnds>
+          <association
+            Id="604dc35a-e82d-4351-9757-c8b404b632ad"
+            isDerived="false"
+            sourceEndRoleName="Data Manager Data"
+            targetEndRoleName="Data Manager"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="bc03258e-fe90-477b-9a28-72c9b17830eb"
+              LastKnownName="Data Manager"
+              LastKnownLocation="Package_0247.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="35a29eee-aa3b-44de-99ac-d2dec28e5802"
+                  name="Data Manager Data"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="beeb3e5c-8d32-4b6e-8c84-7dcafffb2e53"
+                  name="Data Manager"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="35a314dd-d3af-4980-9bcb-2f78a48de217"
+        name="Patient Loader"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <targetEnds>
+          <association
+            Id="48a57c2c-c13d-4644-a609-f829d435be62"
+            isDerived="false"
+            sourceEndRoleName="Patient Data"
+            targetEndRoleName="Patient"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="6a6ded6e-ad4e-4070-a99e-3a73f02f327f"
+              LastKnownName="Patient"
+              LastKnownLocation="Package_0247.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="8ad11a4b-366e-42de-afbc-74660e4cef51"
+                  name="Patient Data"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="5d8be7ad-9337-4aed-9512-2edd3fa6f73b"
+                  name="Patient"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="2dda3434-c5ad-4e9c-97bd-b6cd7e7a7158"
+        name="Photoset Loader"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="d8aabd5e-186a-43a5-a5b4-2b24a7a91d83"
+        name="Photo Loader"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
   </packagedElements>
 </package>

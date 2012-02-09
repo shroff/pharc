@@ -17,7 +17,7 @@
     <packageHasNamedElement>
       <class
         Id="be02815e-eeb4-4965-bef0-e6f62ace3fc0"
-        name="Main"
+        name="Main Window"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
@@ -58,6 +58,201 @@
                   isDerivedUnion="false"
                   aggregation="None"
                   isComposite="true" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="9be9bdba-5cb5-4e41-a5af-92c580eea81b"
+            isDerived="false"
+            sourceEndRoleName="Main Window"
+            targetEndRoleName="Main View"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="4f59685b-8a17-48c5-935f-fe72cdeb6684"
+              LastKnownName="Main View"
+              LastKnownLocation="Package_0337.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="f8663357-0fe9-468f-abb8-5625a801dbdd"
+                  name="Main Window"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="7cf561d4-dbfc-49e6-82cc-0611d12181ad"
+                  name="Main View"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="c2c4a91d-752d-472a-8130-16d1d304311b"
+            isDerived="false"
+            sourceEndRoleName="Main Window"
+            targetEndRoleName="Patient Display View"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="2b4a31fc-0b72-4d3d-ae59-d640b93aa457"
+              LastKnownName="Patient Display View"
+              LastKnownLocation="Package_0337.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="aec2ff8b-caa7-4556-adba-a1be29493692"
+                  name="Main Window"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="298cbb4d-c936-4a64-bff9-685ee4b60b7d"
+                  name="Patient Display View"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="cbd24541-f52a-4681-92a5-b6a8cdea4f18"
+            isDerived="false"
+            sourceEndRoleName="Main Window"
+            targetEndRoleName="Advanced Search View"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="6317ff2c-36f9-43ae-8e52-4615cb59bfcd"
+              LastKnownName="Advanced Search View"
+              LastKnownLocation="Package_0337.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="0f5fb9a8-ae95-434b-8520-87d830177b0d"
+                  name="Main Window"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="03c57369-c136-4f16-b308-0bc79898ea42"
+                  name="Advanced Search View"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="d66c2241-fc9c-4708-9a02-16c1eea55d14"
+            isDerived="false"
+            sourceEndRoleName="Main Window"
+            targetEndRoleName="Import Photos Window"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="a30cafa0-8d25-4968-933b-750ae0d51a98"
+              LastKnownName="Import Photos Window"
+              LastKnownLocation="Package_0337.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="32bd6383-b85f-46ce-bf85-6f52a5001285"
+                  name="Main Window"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="68c2b35d-8fa7-419c-9ace-ef4740cf835e"
+                  name="Import Photos Window"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="68923e89-6a21-48f1-a389-a1fe78cf7c7a"
+            isDerived="false"
+            sourceEndRoleName="Main Window"
+            targetEndRoleName="Photo Edit Window"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="4428eaa4-5f21-4418-8893-807aa86cc002"
+              LastKnownName="Photo Edit Window"
+              LastKnownLocation="Package_0337.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="a670d4e9-fa4a-4732-8c45-54bf1066bcd3"
+                  name="Main Window"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="8f5196eb-7e33-42e9-9eee-f2ea7cb54e2d"
+                  name="Photo Edit Window"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
               </associationHasOwnedEnds>
             </relationshipOwnedElementsInternal>
           </association>
@@ -113,6 +308,46 @@
           </operation>
         </ownedOperationsInternal>
       </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="4f59685b-8a17-48c5-935f-fe72cdeb6684"
+        name="Main View"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="2b4a31fc-0b72-4d3d-ae59-d640b93aa457"
+        name="Patient Display View"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="a30cafa0-8d25-4968-933b-750ae0d51a98"
+        name="Import Photos Window"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="6317ff2c-36f9-43ae-8e52-4615cb59bfcd"
+        name="Advanced Search View"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="4428eaa4-5f21-4418-8893-807aa86cc002"
+        name="Photo Edit Window"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
     </packageHasNamedElement>
   </packagedElements>
 </package>

@@ -3,12 +3,6 @@
   dslVersion="1.0.0.0"
   Id="74161838-a158-4a13-93b3-379ae9a51840"
   name="Logic" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
-  <ownedCommentsInternal>
-    <comment
-      Id="6a72318e-8feb-4370-8706-97d70b6baa30">
-      <body>This is a tentative diagram showing the internal layout of the data storage black box.</body>
-    </comment>
-  </ownedCommentsInternal>
   <importedPackagesInternal>
     <packageImport
       Id="37ec5524-5a8f-43f2-9c41-e8c066c6b523"
@@ -362,6 +356,45 @@
               </associationHasOwnedEnds>
             </relationshipOwnedElementsInternal>
           </association>
+          <association
+            Id="13c5a8f8-d574-4ecd-93db-be36998aaab7"
+            isDerived="false"
+            sourceEndRoleName="Photoset"
+            targetEndRoleName="Photoset Loader"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="2dda3434-c5ad-4e9c-97bd-b6cd7e7a7158"
+              LastKnownName="Photoset Loader"
+              LastKnownLocation="Package_0333.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="144eb910-be72-4976-9448-2f88c1a5e9e8"
+                  name="Photoset"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="e8787f0a-8b13-4a58-97c1-d1d21a41e06c"
+                  name="Photoset Loader"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
         </targetEnds>
         <ownedAttributesInternal>
           <property
@@ -393,6 +426,47 @@
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
+        <targetEnds>
+          <association
+            Id="f4d2dc05-7a8a-44a7-8045-2c1b5ca6e254"
+            isDerived="false"
+            sourceEndRoleName="Photo"
+            targetEndRoleName="Photo Loader"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="d8aabd5e-186a-43a5-a5b4-2b24a7a91d83"
+              LastKnownName="Photo Loader"
+              LastKnownLocation="Package_0333.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="67154b69-b78e-4773-8bd0-12193f0862ab"
+                  name="Photo"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="92fcb1c2-f768-45ab-9888-ee3a7f0e5ebc"
+                  name="Photo Loader"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
         <ownedAttributesInternal>
           <property
             Id="11921feb-6dfe-4684-98f2-6e50dc711767"
