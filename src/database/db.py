@@ -71,7 +71,8 @@ class DB:
 					treatment_txt_hash text,
 					id int primary key not null,
 					path text unique not null,
-					patient int references patients(id) on delete cascade on update cascade
+					patient int references patients(id) on delete cascade on update cascade,
+					notes text
 					);
 
 				create table photos(
