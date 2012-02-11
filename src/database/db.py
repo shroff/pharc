@@ -17,7 +17,9 @@
 
 import sqlite3
 
-class DB:
+from dataloaderinterface import DataLoaderInterface
+
+class DB (DataLoaderInterface):
 	"""A sqlite3 wrapper"""
 
 	def __init__(self):
@@ -98,6 +100,7 @@ class DB:
 				create table thumbnails(
 					id unique not null,
 					path unique not null
+					);
 				""")
 
 			self.connection.commit()

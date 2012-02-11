@@ -26,4 +26,4 @@ class DataLoaderInterface:
 
 	def __init__(self): abstract()
 
-	def exit(): abstract()
+	def exit(self): abstract()

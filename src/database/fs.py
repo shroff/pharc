@@ -15,8 +15,13 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-class FS:
+from dataloaderinterface import DataLoaderInterface
+
+class FS(DataLoaderInterface):
 	"""A filesystem manager"""
 
 	def __init__(self):
+		return
+
+	def exit(self):
 		return
