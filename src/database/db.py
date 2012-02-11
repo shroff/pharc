@@ -86,10 +86,6 @@ class DB:
 			# Indicate there are things to load from the DB
 			self.newDB = False
 	
-	def getThumbnails(self, patientID):
-		if self.newDB:
-			return None
-
 	def exit(self):
 		# Close the DB cursor
 		self.cursor.close()
