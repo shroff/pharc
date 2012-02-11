@@ -27,53 +27,57 @@ class DB:
 			self.new_DB = True
 			self.cursor.executescript("""
 				create table patients(
-					name,
+					name not null,
 					id int primary key not null
 					);
 
 				create table doctors(
-					name,
+					name not null,
 					id int primary key not null
 					);
 				
 				create table diagnoses(
-					name,
+					name not null,
 					id int primary key not null
 					);
 
 				create table treatments(
-					name,
+					name not null,
 					id int primary key not null
 					);
 
 				create table photosets(
-					date,
+					date not null,
 					direcotry_hash,
 					diagnosis_txt_hash,
 					physicians_txt_hash,
 					treatment_txt_hash,
 					id int primary key not null,
-					path
+					path not null
 					);
 
 				create table photos(
 					id int primary key not null,
-					path,
-					hash
+					path not null,
+					hash not null
 					);
 
 				create table configuration(
-					root_dor,
-					new_image_dir,
-					last_user,
-					current_user,
-					db_version
+					root_dor not null,
+					new_image_dir not null,
+					last_user not null,
+					current_user not null,
+					db_version not null
 					);
 
 				create table users(
-					name,
-					id
+					name not null,
+					id not null
 					);
+
+				create table thumbnails(
+					id not null,
+					path not null
 				""")
 
 			self.connection.commit()
