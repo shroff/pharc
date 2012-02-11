@@ -14,3 +14,16 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+# norvig.com/python-iaq.html
+def abstract():
+	import inspect
+	caller = inspect.getouterframes(inspect.currentframe())[1][3]
+	raise NotImplementedError(caller + ' must be implemented in subclass')
+
+class DataLoaderInterface:
+	"""The interface for data loader classes."""
+
+	def __init__(self): abstract()
+
+	def exit(): abstract()
