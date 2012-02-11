@@ -28,7 +28,7 @@ class DB:
 			self.cursor.executescript("""
 				create table patients(
 					name text primary key asc not null,
-					id int not null
+					id int unique not null
 					);
 
 				create table doctors(
@@ -53,31 +53,31 @@ class DB:
 					physicians_txt_hash text,
 					treatment_txt_hash text,
 					id int primary key not null,
-					path text not null
+					path text unique not null
 					);
 
 				create table photos(
 					id int primary key not null,
-					path text not null,
-					hash text not null
+					path text unique not null,
+					hash text unique not null
 					);
 
 				create table configuration(
-					root_dor text not null,
+					root_dir text not null,
 					new_image_dir text not null,
-					last_user text not null,
+					last_user text,
 					current_user text not null,
 					db_version text not null
 					);
 
 				create table users(
 					name text primary key not null,
-					id not null
+					id unique not null
 					);
 
 				create table thumbnails(
-					id not null,
-					path not null
+					id unique not null,
+					path unique not null
 				""")
 
 			self.connection.commit()
