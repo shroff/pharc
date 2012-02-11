@@ -53,13 +53,15 @@ class DB:
 					physicians_txt_hash text,
 					treatment_txt_hash text,
 					id int primary key not null,
-					path text unique not null
+					path text unique not null,
+					patient int references patients(id) on delete cascade on update cascade
 					);
 
 				create table photos(
 					id int primary key not null,
 					path text unique not null,
-					hash text unique not null
+					hash text unique not null,
+					photoset int references photosets(id) on delete cascade on update cascade
 					);
 
 				create table configuration(
