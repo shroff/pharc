@@ -13,7 +13,7 @@ class DB:
 			exists = False;
 
 		# If the DB file already exists, we need to close f
-		if(exists == True):
+		if exists:
 			f.close()
 
 		# Open database or create it if it didn't exist
@@ -22,28 +22,28 @@ class DB:
 		self.cursor = self.connection.cursor()
 
 		# Create tables if the DB didn't exist
-		if(exists == False):
+		if not exists:
 			# Indicate there is nothing to load from the DB
 			self.new_DB = True
 			self.cursor.executescript("""
 				create table patients(
 					name,
-					id
+					id int primary key not null
 					);
 
 				create table doctors(
 					name,
-					id
+					id int primary key not null
 					);
 				
 				create table diagnoses(
 					name,
-					id
+					id int primary key not null
 					);
 
 				create table treatments(
 					name,
-					id
+					id int primary key not null
 					);
 
 				create table photosets(
@@ -52,12 +52,12 @@ class DB:
 					diagnosis_txt_hash,
 					physicians_txt_hash,
 					treatment_txt_hash,
-					id,
+					id int primary key not null,
 					path
 					);
 
 				create table photos(
-					id,
+					id int primary key not null,
 					path,
 					hash
 					);
@@ -76,14 +76,14 @@ class DB:
 					);
 				""")
 
-
+			self.connection.commit()
 
 		else:
 			# Indicate there are things to load from the DB
 			self.newDB = False
 	
 	def getThumbnails(self, patientID):
-		if(self.newDB):
+		if self.newDB:
 			return None
 
 	def exit(self):
