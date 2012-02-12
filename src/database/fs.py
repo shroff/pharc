@@ -1,5 +1,5 @@
 # PHARC: a photo archiving application for physicians
-# Copyright (C) 2012  Saul Reynolds-Haertle
+# Copyright (C) 2012  Saul Reynolds-Haertle, James Cline
 # 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -20,7 +20,12 @@ from dataloaderinterface import DataLoaderInterface
 class FS(DataLoaderInterface):
 	"""A filesystem manager"""
 
-	def __init__(self):
+	def __init__(self, root):
+		# Where the FS storage is located
+		self.root = root;
+
+		exists = os.path.exists(root)
+
 		return
 
 	def exit(self):
