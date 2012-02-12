@@ -14,3 +14,15 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+
+class Physician(object):
+    
+    name_first = None # first name, string
+    name_last = None # last name, string
+    patients = None # list of patients that this physician interacts with
+
+    loader = None # PhysicianLoader for this Physician
+    
+    def __init__(self):
+        pass
