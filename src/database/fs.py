@@ -26,9 +26,15 @@ class FS(DataLoaderInterface):
 
 		exists = os.path.isdir(root)
 
+		if not exists:
+			self.new_FS = True
 
+			os.mkdir(root)
 
 		return
 
 	def exit(self):
 		return
+
+	def isNew(self):
+		return self.new_FS

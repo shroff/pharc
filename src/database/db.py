@@ -113,3 +113,5 @@ class DB (DataLoaderInterface):
 		# Close the DB cursor
 		self.cursor.close()
 
+	def isNew(self):
+		return self.new_DB
