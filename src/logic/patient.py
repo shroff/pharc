@@ -14,3 +14,21 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+
+class Patient(object):
+    
+    name_first = None # first name, string
+    name_last = None # last name, string
+    physicians = None # list of physicians that this patient interacts with
+    photosets = None # list of photosets of this patient
+    diagnoses = None # list of diagnosis tags attached to this patient
+    storage_diagnosis = None # diagnosis used for persistent storage location
+    treatments = None # list of treatment tags attached to this patient
+    notes = None # notes about this patient, string
+    uid = None # this patient's unique identification number, integer
+    
+    loader = None # PatientLoader for this patient
+    
+    def __init__(self):
+        pass
