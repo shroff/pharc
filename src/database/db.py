@@ -22,6 +22,7 @@ from dataloaderinterface import DataLoaderInterface
 class DB (DataLoaderInterface):
 	"""A sqlite3 wrapper"""
 
+	# Initialize and do appropriate operations on startup
 	def __init__(self):
 
 		# Check if the DB exists before we open it
@@ -109,9 +110,11 @@ class DB (DataLoaderInterface):
 			# Indicate there are things to load from the DB
 			self.newDB = False
 	
+	# Cleanup/validation before program termination
 	def exit(self):
 		# Close the DB cursor
 		self.cursor.close()
 
+	# Returns if the data storage existed prior to class init
 	def isNew(self):
 		return self.new_DB

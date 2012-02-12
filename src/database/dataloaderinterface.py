@@ -24,8 +24,11 @@ def abstract():
 class DataLoaderInterface:
 	"""The interface for data loader classes."""
 
+	# Initialize and do appropriate operations on startup
 	def __init__(self): abstract()
 
+	# Cleanup/validation before program termination
 	def exit(self): abstract()
 
+	# Returns if the data storage existed prior to class init
 	def isNew(self): abstract()

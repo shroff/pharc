@@ -20,6 +20,7 @@ from dataloaderinterface import DataLoaderInterface
 class FS(DataLoaderInterface):
 	"""A filesystem manager"""
 
+	# Initialize and do appropriate operations on startup
 	def __init__(self, root):
 		# Where the FS storage is located
 		self.root = root;
@@ -33,8 +34,10 @@ class FS(DataLoaderInterface):
 
 		return
 
+	# Cleanup/validation before program termination
 	def exit(self):
 		return
 
+	# Returns if the data storage existed prior to class init
 	def isNew(self):
 		return self.new_FS
