@@ -15,7 +15,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-class DataManager(Object):
+class DataManager(object):
     """The DataManager is the root object in the logic package.
 
     The DataManager manages all of the data. It contains lists of
@@ -29,6 +29,9 @@ class DataManager(Object):
         loader: a link to the filesystem interface
     """
 
+    patients = None # list of all patients in the system
+    physicians = None # list of all the physicians in the system
+    loader = None # DataManagerLoader for this DataManager
     
     def __init__(self, filesystem_location):
         """Opens a datamanagerloader and begins populating the system.
@@ -46,7 +49,6 @@ class DataManager(Object):
         Raises:
             IOError: Could not initialize the DataManagerLoader
         """
-        
         pass
 
 
