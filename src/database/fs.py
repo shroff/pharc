@@ -30,7 +30,11 @@ class FS(DataLoaderInterface):
 		if not exists:
 			self.new_FS = True
 
+			# create the root directory
 			os.mkdir(root)
+			# there is nothing more to do until the user adds data
+		else:
+			self.new_FS = False
 
 		return
 
