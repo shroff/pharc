@@ -24,7 +24,9 @@ class FS(DataLoaderInterface):
 		# Where the FS storage is located
 		self.root = root;
 
-		exists = os.path.exists(root)
+		exists = os.path.isdir(root)
+
+
 
 		return
 
