@@ -17,12 +17,27 @@
 
 # norvig.com/python-iaq.html
 def abstract():
+	""" This is a trick to enable abstract methods.
+
+	Any method definition defined as:
+	  def method(self): abstract()
+	that is not then defined in a class that inherits from this, when that method
+	is called by something else, this will cause a runtime error.
+
+	The exception returned also shows information about where the unimplemented
+	method is.
+	"""
 	import inspect
 	caller = inspect.getouterframes(inspect.currentframe())[1][3]
 	raise NotImplementedError(caller + ' must be implemented in subclass')
 
 class DataLoaderInterface:
-	"""The interface for data loader classes."""
+	"""The interface for data loader classes.
+	   
+		 Both DB and FS will inherit from this class.
+		 It defines the methods that those classes must have for other classes to
+		 use.
+	"""
 
 	# Initialize and do appropriate operations on startup
 	def __init__(self): abstract()
