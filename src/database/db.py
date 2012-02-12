@@ -68,7 +68,7 @@ class DB (DataLoaderInterface):
 
 				create table photosets(
 					date int not null,
-					direcotry_hash text,
+					directory_hash text,
 					diagnosis_txt_hash text,
 					physicians_txt_hash text,
 					treatment_txt_hash text,
