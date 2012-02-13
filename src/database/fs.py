@@ -41,3 +41,27 @@ class FS(DataLoaderInterface):
 	# Returns if the data storage existed prior to class init
 	def isNew(self):
 		return self.new_FS
+
+	# Returns a list of all the patients
+	def loadAllPatients(self):
+		if isNew():
+			return None
+		patients = []
+
+		items = os.listdir(self.root)
+		# TODO: Probably not right
+		for i in items:
+			if os.path.isdir(i):
+				p = Patient()
+				name = i.split('#')[0]
+				name = name.split()
+				p.name_first = name[1]
+				p.name_last = name[0]
+				p.uid = i.split('#')[1]
+				patients.append(p)
+
+	
+
+		return patients
+
+
