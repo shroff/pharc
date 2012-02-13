@@ -29,8 +29,9 @@ def testFS():
 
 	patients = f.loadAllPatients()
 	for i in patients:
-		print i.name_first + " " + i.name_last + "\n"
+		print i.name_first + " " + i.name_last
 
+	f.exit()
 	return
 
 def main():
