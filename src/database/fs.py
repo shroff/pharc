@@ -16,6 +16,11 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 from dataloaderinterface import DataLoaderInterface
+import os, sys
+
+sys.path.append('../logic')
+#from ..logic import patient
+from patient import Patient
 
 class FS(DataLoaderInterface):
 	"""A filesystem manager"""
@@ -28,9 +33,12 @@ class FS(DataLoaderInterface):
 		exists = os.path.isdir(root)
 
 		if not exists:
+			print "FS: root directory does not exist, creating " + self.root
 			self.new_FS = True
 
 			os.mkdir(root)
+		else:
+			self.new_FS = False
 
 		return
 
@@ -44,14 +52,14 @@ class FS(DataLoaderInterface):
 
 	# Returns a list of all the patients
 	def loadAllPatients(self):
-		if isNew():
+		if self.isNew():
 			return None
 		patients = []
 
 		items = os.listdir(self.root)
 		# TODO: Probably not right
 		for i in items:
-			if os.path.isdir(i):
+			if os.path.isdir(self.root + "/" + i):
 				p = Patient()
 				name = i.split('#')[0]
 				name = name.split()
