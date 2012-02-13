@@ -52,8 +52,10 @@ class FS(DataLoaderInterface):
 
 	# Returns a list of all the patients
 	def loadAllPatients(self):
+		# There is nothing to load
 		if self.isNew():
 			return None
+
 		patients = []
 
 		items = os.listdir(self.root)
@@ -61,14 +63,14 @@ class FS(DataLoaderInterface):
 		for i in items:
 			if os.path.isdir(self.root + "/" + i):
 				p = Patient()
+				# Parse filename
 				name = i.split('#')[0]
 				name = name.split()
 				p.name_first = name[1]
 				p.name_last = name[0]
 				p.uid = i.split('#')[1]
+				# Add new patient to the list
 				patients.append(p)
-
-	
 
 		return patients
 
