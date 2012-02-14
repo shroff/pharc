@@ -67,7 +67,7 @@ class FS(DataLoaderInterface):
 				name = i.split('#')[0]
 				name = name.split()
 				p.name_first = name[1]
-				p.name_last = name[0]
+				p.name_last = name[0][:-1]
 				p.uid = i.split('#')[1]
 				# Add new patient to the list
 				patients.append(p)
