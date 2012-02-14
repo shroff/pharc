@@ -33,7 +33,8 @@ class DataManager(object):
     physicians = None # list of all the physicians in the system
     loader = None # DataManagerLoader for this DataManager
     
-    def __init__(self, filesystem_location):
+    @classmethod
+    def __init__(filesystem_location):
         """Opens a datamanagerloader and begins populating the system.
         
         Initializes a DataManagerLoader and loads some initial data
@@ -51,5 +52,5 @@ class DataManager(object):
         """
         pass
 
-
-    
+    @staticmethod
+    def 

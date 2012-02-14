@@ -16,7 +16,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 class Photoset(object):
-    
+
     date = None
     patient = None # Patient that this photoset belongs to
     physicians = None # list of Physicians that care about this photoset
@@ -28,5 +28,6 @@ class Photoset(object):
 
     loader = None # PhotosetLoader for this photoset
     
-    def __init__(self):
+    @classmethod
+    def __init__():
         pass

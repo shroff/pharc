@@ -29,6 +29,9 @@ class Patient(object):
     uid = None # this patient's unique identification number, integer
     
     loader = None # PatientLoader for this patient
-    
-    def __init__(self):
+
+    @classmethod
+    def __init__():
         pass
+
+
