@@ -22,9 +22,7 @@ class Patient(object):
     name_last = None # last name, string
     physicians = None # list of physicians that this patient interacts with
     photosets = None # list of photosets of this patient
-    diagnoses = None # list of diagnosis tags attached to this patient
     storage_diagnosis = None # diagnosis used for persistent storage location
-    treatments = None # list of treatment tags attached to this patient
     notes = None # notes about this patient, string
     uid = None # this patient's unique identification number, integer
     
