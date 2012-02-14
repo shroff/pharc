@@ -18,6 +18,7 @@
 
 class Physician(object):
     
+    datamanager = None
     name_first = None # first name, string
     name_last = None # last name, string
     patients = None # list of patients that this physician interacts with
