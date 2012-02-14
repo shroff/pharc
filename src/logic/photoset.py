@@ -17,6 +17,7 @@
 
 class Photoset(object):
 
+    datamanager = None
     date = None
     patient = None # Patient that this photoset belongs to
     physicians = None # list of Physicians that care about this photoset
@@ -28,6 +29,37 @@ class Photoset(object):
 
     loader = None # PhotosetLoader for this photoset
     
-    @classmethod
-    def __init__():
+    def __init__(self):
         pass
+
+
+    def add_treatment_by_string(self, treatment):
+        """Adds a treatment to this photoset and updates indexes.
+
+        Adds the given treatment to this photoset's list of
+        treatments. Also adds this photoset to the treatment's list of
+        photosets with this diagnosis to make lookups faster.
+
+        Args:
+            treatment: tag that will be used to look up the
+                appropriate tag and add it to the photoset or, if no
+                matching tag exists, to create a new tag and add this
+                photoset to it.
+
+        Returns:
+            True if a new treatment tag was created, False otherwise
+
+        Raises:
+        """
+
+        if not isinstance(treatment, Tag):
+            raise TypeError("Adding a tag requires a Tag")
+
+        if treatment in self.datamanager.treatments:
+            self.datamanager.treatments[treatment].add(self)
+            return True
+        else:
+            self.datamanager.treatments = {treatment : set([self])}
+            return False
+
+                

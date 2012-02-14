@@ -27,11 +27,15 @@ class DataManager(object):
         patients: a list of all of the patients in the system
         physicians: a list of all of the physicians in the system
         loader: a link to the filesystem interface
+        treatments: a dictionary mapping treatment names to a set of photosets
+        diagnoses: a dictionary mapping diagnosis names to a set of photosets
     """
 
     patients = None # list of all patients in the system
     physicians = None # list of all the physicians in the system
     loader = None # DataManagerLoader for this DataManager
+    treatments = None # dict: tag -> set of photosets
+    diagnoses = None # dict: tag -> set of photosets
     
     @classmethod
     def __init__(filesystem_location):
@@ -52,5 +56,4 @@ class DataManager(object):
         """
         pass
 
-    @staticmethod
-    def 
+
