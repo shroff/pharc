@@ -46,7 +46,7 @@ class DataLoaderInterface:
 	def exit(self): abstract()
 
 	# Returns if the data storage existed prior to class init
-	def isNew(self): abstract()
+	def is_new(self): abstract()
 
 	# Returns a list of all the patients
-	def loadAllPatients(self): abstract()
+	def load_all_patients(self): abstract()

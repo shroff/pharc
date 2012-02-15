@@ -47,11 +47,11 @@ class FS(DataLoaderInterface):
 		return
 
 	# Returns if the data storage existed prior to class init
-	def isNew(self):
+	def is_new(self):
 		return self.new_FS
 
 	# Returns a list of all the patients
-	def loadAllPatients(self):
+	def load_all_patients(self):
 		# There is nothing to load
 		if self.isNew():
 			return None
