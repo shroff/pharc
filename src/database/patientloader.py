@@ -18,20 +18,21 @@
 import db
 import fs
 
+import sys
 sys.path.append('../logic')
 from patient import Patient
 
 class PatientLoader:
 
-	def __init__(self, db, fs):
+	def __init__(self, dbm, fsm):
 		# there may be a better way of handling this, but it should do
-		self.db = db
-		self.fs = fs
+		self.dbm = dbm
+		self.fsm = fsm
 
 	def load_notes(self, patient):
 		#TODO try database before filesystem
 
-		notes = fs.load_patient_notes(patient)
+		notes = self.fsm.load_patient_notes(patient)
 		if notes is None:
 			# TODO Error code
 			return
