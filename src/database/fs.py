@@ -53,7 +53,7 @@ class FS(DataLoaderInterface):
 	# Returns a list of all the patients
 	def load_all_patients(self):
 		# There is nothing to load
-		if self.isNew():
+		if self.is_new():
 			return None
 
 		patients = []
@@ -74,4 +74,24 @@ class FS(DataLoaderInterface):
 
 		return patients
 
+	def load_patient_notes(self, patient):
+		if self.is_new():
+			# TODO: error codes
+			return None
+
+		directory = self.root + "/" + patient.name_last + ", " + patient.name_first + "#" + patient.uid
+		if os.path.isdir(directory):
+			try:
+				f = open(directory + "/notes.txt")
+				notes = f.read()
+				f.close()
+			except IOError as (errno, strerror):
+				print "IOError [{0}]: {1}".format(errno, sterror)
+				# TODO: error codes
+				return None
+				
+			return notes
+		else:
+			# TODO: error codes
+			return None
 
