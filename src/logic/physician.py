@@ -18,11 +18,13 @@
 
 class Physician(object):
     
+    datamanager = None
     name_first = None # first name, string
     name_last = None # last name, string
     patients = None # list of patients that this physician interacts with
 
     loader = None # PhysicianLoader for this Physician
     
-    def __init__(self):
+    @classmethod
+    def __init__():
         pass

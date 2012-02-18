@@ -17,5 +17,6 @@
 
 class Photo(object):
     
-    def __init__(self):
+    @classmethod
+    def __init__():
         pass

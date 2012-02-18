@@ -14,3 +14,31 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+import db
+import fs
+
+import sys
+sys.path.append('../logic')
+from patient import Patient
+
+class PatientLoader:
+
+	def __init__(self, dbm, fsm):
+		# there may be a better way of handling this, but it should do
+		self.dbm = dbm
+		self.fsm = fsm
+
+	def load_notes(self, patient):
+		#TODO try database before filesystem
+
+		notes = self.fsm.load_patient_notes(patient)
+		if notes is None:
+			# TODO Error code
+			return
+		else:
+			patient.notes = notes
+			# TODO Success code
+			return
+
+

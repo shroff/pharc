@@ -1,3 +1,4 @@
+#!/usr/bin/env python2
 # PHARC: a photo archiving application for physicians
 # Copyright (C) 2012  Saul Reynolds-Haertle, James Cline
 # 
@@ -16,11 +17,30 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 import db
+import fs
+import patientloader
+
+def testDB():
+	d = db.DB()
+	d.exit()
+	return
+
+def testFS():
+	f = fs.FS("Database")
+	pl = patientloader.PatientLoader(None, f)
+
+	patients = f.load_all_patients()
+	for i in patients:
+		pl.load_notes(i)
+		print i.name_first + " " + i.name_last + ": " + i.uid
+		print "\t" + i.notes
+
+	f.exit()
+	return
 
 def main():
-	d = db.DB()
-
-	d.exit()
+	testDB()
+	testFS()
 	return
 
 if __name__ == " __main__":
