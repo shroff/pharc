@@ -34,7 +34,7 @@ def generateDatabase(numPatients, databaseDir):
         physicians = []
         # Generate a list of physicians using randomly generated names, and assign them UIDs (starting at 65536)
         for x in range(0, numDocs):
-                physicians.append("%s %s#%05d" %(firstNames[random.randint(0, len(firstNames)-1)],lastNames[random.randint(0, len(lastNames)-1)], docUID+x))
+                physicians.append("%s, %s#%05d" %(firstNames[random.randint(0, len(firstNames)-1)],lastNames[random.randint(0, len(lastNames)-1)], docUID+x))
         # Generate patient folders and all associated files, as well as a random number of photosets
         for x in range(1, numPatients+1):
                 patientDir = createPatient(databaseDir, x)
@@ -44,6 +44,8 @@ def generateDatabase(numPatients, databaseDir):
                 tempPhys = createPhysicians(patientDir, physicians[random.randint(0, len(physicians)-1)])
                 for x in range(0, random.randint(1, numPhotosets)):
                         createPhotoset(patientDir, random.randint(minPhotos, maxPhotos), tempDiag, tempTreat, tempNote, tempPhys)
+                        os.chdir("..")
+                os.chdir("..")
 
 """
 Generate the Patient's Folder at the given database directory, with the given UID.
@@ -54,7 +56,7 @@ def createPatient(databaseDir, UID):
         print '#%05d' %UID
         myFirstName = '%s' %firstNames[random.randint(0, len(firstNames)-1)]
         myLastName = '%s' %lastNames[random.randint(0, len(lastNames)-1)]
-        dirname = '%s/Database/%s%s#%04d/' %(databaseDir, myFirstName, myLastName, UID)
+        dirname = '%s, %s#%05d' %(myLastName, myFirstName, UID)
         try:
                 os.makedirs(dirname)
         except OSError:
@@ -62,7 +64,7 @@ def createPatient(databaseDir, UID):
         os.chdir(dirname)
         filename = "name.txt"
         File = open(filename,"w")
-        File.writelines("%s, %s:%05d" %(myFirstName, myLastName, UID))
+        File.writelines("%s, %s#%05d" %(myFirstName, myLastName, UID))
         return dirname
 
 """
@@ -70,7 +72,6 @@ Generates a diagnoses.txt file in the patient's directory, selecting a random di
 from the list of diagnoses
 """
 def createDiagnosis(dirname):
-        os.chdir(dirname)
         filename = "diagnoses.txt"
         File = open(filename,"w")
         thisDiag = diags[random.randint(0, len(diags)-1)]
@@ -81,7 +82,6 @@ def createDiagnosis(dirname):
 Generates a treatment.txt file in the patient's directory, selecting the same treatment as the diagnosis this patient has
 """
 def createTreatment(dirname, thisTreatment):
-        os.chdir(dirname)
         filename = "treatments.txt"
         File = open(filename,"w")
         File.writelines(thisTreatment)
@@ -91,7 +91,6 @@ def createTreatment(dirname, thisTreatment):
 Generates a notes.txt file in the patient's directory, writing string into the file
 """
 def createNotes(dirname):
-        os.chdir(dirname)
         filename = "notes.txt"
         File = open(filename,"w")
         randomNotes = "This is some random gibberish for notes.  Muahahaha."
@@ -103,7 +102,6 @@ Generates a physicians.txt file in the patient's directory
 Writes the doctors' name in that file
 """
 def createPhysicians(dirname, docName):
-        os.chdir(dirname)
         filename = "physicians.txt"
         File = open(filename,"w")
         File.writelines(docName)
@@ -117,7 +115,6 @@ Generates the given number of .jpg pictures in the photoset folder
 All .jpg files are empty (and thus cannot be displayed), but do exist
 """
 def createPhotoset(dirname, numPics, myDiagnosis, myTreatment, myNotes, myDoc):
-        os.chdir(dirname)
         # dd-mm-yyyy : day and month generated randomly (1-29 and 1-12 respectively).  Year is 2012 always
         photosetDir = "%02d-%02d-2012" %(random.randint(1, 29), random.randint(1, 12))
         try:
@@ -141,3 +138,6 @@ def createPhotoset(dirname, numPics, myDiagnosis, myTreatment, myNotes, myDoc):
                 imgFile = "DSC%05d.jpg" %x
                 File = open(imgFile, "w")
                 
+
+if __name__ == '__main__':
+	generateDatabase(25, "Database")
