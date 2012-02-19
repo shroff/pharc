@@ -38,18 +38,16 @@ class Patient(object):
         uid: This patient's unique identification number. integer
     """
 
-    datamanager = None
-    name_first = None
-    name_last = None
-    physicians = []
-    photosets = []
-    storage_diagnosis = None
-    notes = None
-    uid = None
-    
     loader = None
 
     def __init__(self):
-        pass
+        self.datamanager = None
+        self.name_first = None
+        self.name_last = None
+        self.physicians = []
+        self.photosets = []
+        self.storage_diagnosis = None
+        self.notes = None
+        self.uid = None
 
 

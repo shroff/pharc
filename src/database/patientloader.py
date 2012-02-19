@@ -54,5 +54,5 @@ class PatientLoader:
     patient.physicians = self.load_field(patient, self.fsm.load_patient_physicians, None)
   
   def load_photosets(self, patient):
-    patient.photosets = self.fsm.load_patient_photoset_list(patient)
+    self.fsm.load_patient_photoset_list(patient)
 
