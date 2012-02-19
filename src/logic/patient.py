@@ -37,11 +37,11 @@ class Patient(object):
         notes: notes about this patient as a big string
         uid: This patient's unique identification number. integer
     """
+		datamanager = None
 
     loader = None
 
     def __init__(self):
-        self.datamanager = None
         self.name_first = None
         self.name_last = None
         self.physicians = []
