@@ -41,8 +41,8 @@ class Patient(object):
     datamanager = None
     name_first = None
     name_last = None
-    physicians = None
-    photosets = None
+    physicians = []
+    photosets = []
     storage_diagnosis = None
     notes = None
     uid = None
