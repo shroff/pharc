@@ -32,8 +32,12 @@ def testFS():
 	patients = f.load_all_patients()
 	for i in patients:
 		pl.load_notes(i)
+		pl.load_physicians(i)
+		pl.load_photosets(i)
 		print i.name_first + " " + i.name_last + ": " + i.uid
 		print "\t" + i.notes
+		print "\t" + str(i.physicians)
+		print "\t" + str(i.photosets)
 
 	f.exit()
 	return
