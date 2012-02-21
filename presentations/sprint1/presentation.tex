@@ -1,0 +1,191 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%2345678901234567890123456789012345678901234567890123456789012345678901234567890
+%        1         2         3         4         5         6         7         8
+\documentclass{beamer}
+\usetheme{Berkeley}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% package declarations
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{color}
+\usepackage{graphicx}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% definitions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\mc}{\mathcal}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% stuff for algs
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\bq}{{\bf q}}
+\newcommand{\bx}{{\bf x}}
+\newcommand{\bR}{{\bf R}}
+\newcommand{\bT}{{\bf T}}
+\newcommand{\bz}{{\bf z}}
+\newcommand{\bp}{{\bf p}}
+\newcommand{\bE}{{\bf E}}
+\newcommand{\ee}{\mbox{${\epsilon}$}}
+\newcommand{\ed}{\mbox{${\delta}$}}
+\newcommand{\J}{{\bf J}}
+\newcommand{\bI}{{\bf I}}
+\newcommand{\Jo}{{{\bf J}^0}}
+\newcommand{\Jpi}{{\bf J}^\dag}
+\newcommand{\F}{\mathcal F}
+\newcommand{\M}{\mathcal M}
+
+\newtheorem{thm}{{\bf Theorem}}[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{lem}[thm]{{\bf Lemma}}
+
+
+\def\breakalg{ $\egroup\cr\global \advance\algline by 0				 %%% Mike's Hack for linebreaks in newalg
+	&\hbox\bgroup\copy\algtab$\ignorespaces \\}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% begin document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{PHARC: Photo Archiving Application}
+\date{February 22, 2012}
+\author{Saul Reynolds-Haertle, James Cline, Abhishek Shroff, Michael Polson}
+\begin{document}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% title page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frame{\titlepage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Big idea
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+\frame{
+	\frametitle{What is PHARC?}
+	Plastic Surgeons need to organize lots of pictures.
+	However, they don't have good software:
+	\begin{itemize}
+	\item Need to organize around patients, diagnoses, treatments
+	\item Have particular interface requirements
+	\item Need particular storage requirements
+	\end{itemize}
+	Client asked us to build special application
+}
+
+\section{Project Plan}
+\frame{
+	\frametitle{Basic Client Requirements}
+	\begin{itemize}
+	\item Search archive by patient, treatment, diagnosis, physician, etcetera
+	\item Easy interoperability with email, photo editing, and powerpoint
+	\item Transparent filesystem layout. No opaque databases!
+	\end{itemize}
+}
+
+\frame{
+	\frametitle{Basic Implementation}
+	\begin{itemize}
+	\item Building a local application
+	\item Using Python and Qt for cross-platform functionality
+	\item Open-source using git and github
+	\item Modular design to help with scheduling
+	\end{itemize}
+}
+
+\frame{
+	\frametitle{Basic Schedule}
+	\begin{itemize}
+	\item Sprint 1: Define project \begin{itemize}
+		\item Collect user stories
+		\item Write up project requirements
+		\item Begin backend implementation
+	\end{itemize}
+	\item Sprint 2: Initial implementation \begin{itemize}
+		\item GUI Implementation and integration
+		\item Backend fine-tuning
+	\end{itemize}
+	\item Sprint 3: Refinement \begin{itemize}
+		\item GUI Refinement
+		\item Begin multi-user support
+		\item Iterate design with client
+	\end{itemize}
+	\end{itemize}
+}
+
+\section{Storage}
+\frame{
+	\frametitle{Storage Requirements}
+	\begin{itemize}
+	\item Multiple-user simultaneous access
+	\item Works over network drives
+	\item User can access archive without using application
+	\end{itemize}
+}
+
+\frame{
+	\frametitle{Storage Architecture}
+	\begin{itemize}
+	\item Our solution: use the filesystem. \begin{itemize}
+		\item Organize photos into directories by patient and session
+		\item Store notes and other information in text files
+	\end{itemize}
+	\item This is slow, though. Solution: database cache \begin{itemize}
+		\item Cache information in local database
+		\item Maintain separate database per user
+		\item Also makes network operation bearable
+	\end{itemize}
+	\end{itemize}
+}
+
+\section{Interface}
+\frame{
+	\frametitle{Interface Implementation}
+	\begin{itemize}
+		\item Framework: Qt \begin{itemize}
+			\item Popular, well-supported
+			\item Powerful
+			\item Cross-platform
+		\end{itemize}
+		\item Python doesn't do threading, so processes instead
+	\end{itemize}
+}
+
+\frame{
+	\frametitle{Interface Design}
+	\begin{itemize}
+		\item Import window
+		\item Main window for searching/selecting patients
+		\item Patient Detail window for viewing/editing patient information
+		\item Image Edit window for lightweight editing operations
+	\end{itemize}
+}
+
+\section{Conclusion}
+\frame{
+	\frametitle{Conclusion}
+	\begin{itemize}
+		\item Where we want to be: a photo archiving application
+		\item Where we are now: \begin{itemize}
+			\item Client requirements
+			\item User stories
+			\item Working on backend
+			\item GUI design done and beginning mockups
+		\end{itemize}
+		\item Where we plan to go: \begin{itemize}
+			\item Finish GUI and backend
+			\item Integrate GUI and backend
+			\item Begin design verification and QA
+		\end{itemize}
+		\item Any questions?
+	\end{itemize}
+}
+
+\end{document}
