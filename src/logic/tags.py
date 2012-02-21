@@ -17,5 +17,14 @@
 
 
 class Tag(object):
-    def __init__(self):
-        pass
+
+    value = None # name of the tag as a string
+    
+    def __init__(self, name):
+        self.value = name
+    
+    def __eq__(self, other):
+        return self.value.lower() == other.value.lower()
+
+    def __hash__(self):
+        return hash(self.value)

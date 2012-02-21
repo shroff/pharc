@@ -17,18 +17,37 @@
 
 
 class Patient(object):
-    
-    name_first = None # first name, string
-    name_last = None # last name, string
-    physicians = None # list of physicians that this patient interacts with
-    photosets = None # list of photosets of this patient
-    diagnoses = None # list of diagnosis tags attached to this patient
-    storage_diagnosis = None # diagnosis used for persistent storage location
-    treatments = None # list of treatment tags attached to this patient
-    notes = None # notes about this patient, string
-    uid = None # this patient's unique identification number, integer
-    
-    loader = None # PatientLoader for this patient
-    
+    """A Patient stores one patient's photosets and information.
+
+    A single Patient object stores information about one patient as
+    well as pointers to that patient's photosets. It manages lazy
+    loading of photosets and thumbnails when the GUI asks for info to
+    display. Note that hte patient does not contain any treatment or
+    diagnosis tags! These are contained entirely in teh photosets, and
+    a patient's treatment and diagnosis information is dyanmically
+    constructed from their photosets.
+
+    Attributes:
+        datamanager: A pointer to this patient's root datamanager object
+        name_first: The patient's first name as a string
+        name_last: The patient's last name as a string
+        physicians: A set of physicians that this patient interacts with
+        photosets: A set of photosets of this patient
+        storage_diagnosis: The diagnosis this patient is stored under in the fs
+        notes: notes about this patient as a big string
+        uid: This patient's unique identification number. integer
+    """
+		datamanager = None
+
+    loader = None
+
     def __init__(self):
-        pass
+        self.name_first = None
+        self.name_last = None
+        self.physicians = []
+        self.photosets = []
+        self.storage_diagnosis = None
+        self.notes = None
+        self.uid = None
+
+

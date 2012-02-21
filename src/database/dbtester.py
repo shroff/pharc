@@ -18,6 +18,7 @@
 
 import db
 import fs
+import patientloader
 
 def testDB():
 	d = db.DB()
@@ -25,12 +26,20 @@ def testDB():
 	return
 
 def testFS():
-	f = fs.FS("testdir")
+	f = fs.FS("Database")
+	pl = patientloader.PatientLoader(None, f)
 
-	patients = f.loadAllPatients()
+	patients = f.load_all_patients()
 	for i in patients:
-		print i.name_first + " " + i.name_last + "\n"
+		pl.load_notes(i)
+		pl.load_physicians(i)
+		pl.load_photosets(i)
+		print i.name_first + " " + i.name_last + ": " + i.uid
+		print "\t" + i.notes
+		print "\t" + str(i.physicians)
+		print "\t" + str(i.photosets)
 
+	f.exit()
 	return
 
 def main():

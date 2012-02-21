@@ -116,12 +116,12 @@ class DB (DataLoaderInterface):
 		self.cursor.close()
 
 	# Returns if the data storage existed prior to class init
-	def isNew(self):
+	def is_new(self):
 		return self.new_DB
 
 	# Returns a list of all the patients
-	def loadAllPatients(self):
-		if isNew():
+	def load_all_patients(self):
+		if self.is_new():
 			return None
 		self.cursor.execute("select * from patients");
 		patients = []

@@ -18,11 +18,13 @@
 
 class Physician(object):
     
-    name_first = None # first name, string
-    name_last = None # last name, string
-    patients = None # list of patients that this physician interacts with
+    datamanager = None
 
     loader = None # PhysicianLoader for this Physician
     
     def __init__(self):
-        pass
+        self.name_first = None # first name, string
+        self.name_last = None # last name, string
+        self.uid = None # uid, integer
+        self.patients = None # list of patients that this physician interacts with
+
