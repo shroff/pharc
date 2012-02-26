@@ -58,6 +58,29 @@ class TagList(object):
             return None
         return results[0]
 
+    def match_common_subseq(self, query, n):
+        """Returns tag results sorted by the longest common
+        subsequence between the tag name and the query.
+
+        Returns a set of tags ranked by the length of the longest
+        common subsequence between teh name of the tag and the query
+        string. If n is None, returns an unordered list of tags that
+        each have the longest common subsequence length. If n is a
+        number, returns that many results, ordered by the length of
+        the common subsequence between teh tag's name and the
+        query.
+        
+        Args:
+            query: the string to check.
+            n: the number of results to return or None for the tags
+                with the longest common subsequence.
+
+        Returns:
+           A list of tags selected by the length of the longest common
+           subsequence between the tag's name and the query.
+        """
+        pass
+
 class Tag(object):
 
     value = None # string name of the tag
