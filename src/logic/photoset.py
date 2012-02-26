@@ -17,49 +17,69 @@
 
 class Photoset(object):
 
-    datamanager = None
+    datamanager = None # reference to the datamanger at teh top of the hierarchy
     date = None
     patient = None # Patient that this photoset belongs to
     physicians = None # list of Physicians that care about this photoset
     notes = None # notes about this photoset, string
-    diagnoses = None # list of diagnosis tags attached to this photoset
-    treatments = None # list of treatment tags attached to this photoset
+    diagnoses = None # set of diagnosis tags attached to this photoset
+    treatments = None # set of treatment tags attached to this photoset
     uid = None # this photoset's unique identification number, integer
     photos = None # list of photos in this photoset
 
     loader = None # PhotosetLoader for this photoset
     
-    def __init__(self):
-        pass
-
-
+    def __init__(self, datamanager):
+        self.datamanager = datamanager
+        self.treatments = set()
+        self.diagnoses = set()
+    
     def add_treatment_by_string(self, treatment):
-        """Adds a treatment to this photoset and updates indexes.
+        """Refers to tag list and adds appropriate tag.
+
+        Adds the named treatment to this photoset's list of
+        treatments. Looks up the list of existing treatments, finds
+        one that matches the treatment name exactly or creates one,
+        and adds this photoset to this tag and updates indices.
+
+        Args:
+            treatment: the name of the tag to add to this photoset
+
+        Returns:
+            The tag that was added to this photoset.
+        """
+
+        match = self.datamanager.treatments.match_fullstring(treatment)
+        if not match: # no matching tag, so make a new one and add it
+                      # to the list
+            match = Tag(treatment)
+            self.datamanager.treatments.add(match)
+        match.photosets.add(self)
+        self.treatments.add(match)
+        return match
+    
+    
+    def add_treatment_by_tag(self, treatment):
+        """Adds this tag to the photoset.
 
         Adds the given treatment to this photoset's list of
         treatments. Also adds this photoset to the treatment's list of
-        photosets with this diagnosis to make lookups faster.
-
+        photosets. Note that this method assumes that the given tag is
+        the correct tag!
+        
         Args:
-            treatment: tag that will be used to look up the
-                appropriate tag and add it to the photoset or, if no
-                matching tag exists, to create a new tag and add this
-                photoset to it.
+            treatment: tag to add to this photoset.
 
         Returns:
-            True if a new treatment tag was created, False otherwise
+            True if this photoset already had the tag and the tag
+                already had the photoset, False otherwise.
 
         Raises:
         """
-
-        if not isinstance(treatment, Tag):
-            raise TypeError("Adding a tag requires a Tag")
-
-        if treatment in self.datamanager.treatments:
-            self.datamanager.treatments[treatment].add(self)
+        
+        if self in treatment.photosets and treatment in self.treatments:
             return True
-        else:
-            self.datamanager.treatments = {treatment : set([self])}
-            return False
-
-                
+        
+        treatment.photosets.add(self)
+        self.treatments.add(treatment)
+        return False

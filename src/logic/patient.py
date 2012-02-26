@@ -37,7 +37,7 @@ class Patient(object):
         notes: notes about this patient as a big string
         uid: This patient's unique identification number. integer
     """
-		datamanager = None
+    datamanager = None
 
     loader = None
 

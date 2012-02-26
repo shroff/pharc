@@ -53,6 +53,9 @@ class DataManager(object):
         Raises:
             IOError: Could not initialize the DataManagerLoader
         """
-        pass
+
+        self.treatments = TagList()
+        self.diagnoses = TagList()
+
 
 
