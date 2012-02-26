@@ -34,11 +34,10 @@ class DataManager(object):
     patients = None # list of all patients in the system
     physicians = None # list of all the physicians in the system
     loader = None # DataManagerLoader for this DataManager
-    treatments = None # dict: tag -> set of photosets
-    diagnoses = None # dict: tag -> set of photosets
+    treatments = None # taglist
+    diagnoses = None # taglist
     
-    @classmethod
-    def __init__(filesystem_location):
+    def __init__(class filesystem_location):
         """Opens a datamanagerloader and begins populating the system.
         
         Initializes a DataManagerLoader and loads some initial data
