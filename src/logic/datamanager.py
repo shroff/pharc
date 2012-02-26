@@ -37,7 +37,7 @@ class DataManager(object):
     treatments = None # taglist
     diagnoses = None # taglist
     
-    def __init__(class filesystem_location):
+    def __init__(self, filesystem_location):
         """Opens a datamanagerloader and begins populating the system.
         
         Initializes a DataManagerLoader and loads some initial data
