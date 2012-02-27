@@ -130,7 +130,7 @@ class Tag(object):
             query: the string to match against
 
         Returns:
-            The compute LCS.
+            The computed LCS.
 
         Raises:
         """
