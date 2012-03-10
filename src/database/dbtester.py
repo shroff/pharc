@@ -21,33 +21,33 @@ import fs
 import patientloader
 
 def testDB():
-	d = db.DB()
-	d.exit()
-	return
+    d = db.DB()
+    d.exit()
+    return
 
 def testFS():
-	f = fs.FS("Database")
-	pl = patientloader.PatientLoader(None, f)
+    f = fs.FS("Database")
+    pl = patientloader.PatientLoader(None, f)
 
-	patients = f.load_all_patients()
-	for i in patients:
-		pl.load_notes(i)
-		pl.load_physicians(i)
-		pl.load_photosets(i)
-		print i.name_first + " " + i.name_last + ": " + i.uid
-		print "\t" + i.notes
-		print "\t" + str(i.physicians)
-		print "\t" + str(i.photosets)
+    patients = f.load_all_patients()
+    for i in patients:
+        pl.load_notes(i)
+        pl.load_physicians(i)
+        pl.load_photosets(i)
+        print i.name_first + " " + i.name_last + ": " + i.uid
+        print "\t" + i.notes
+        print "\t" + str(i.physicians)
+        print "\t" + str(i.photosets)
 
-	f.exit()
-	return
+    f.exit()
+    return
 
 def main():
-	testDB()
-	testFS()
-	return
+    testDB()
+    testFS()
+    return
 
 if __name__ == " __main__":
-	main()
+    main()
 else:
-	main()
+    main()
