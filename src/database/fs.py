@@ -157,10 +157,24 @@ class FS(DataLoaderInterface):
                 print "IOError [{0}]: {1}".format(errno, strerror)
 
     def load_photoset_tags(self, photoset):
+        if self.is_new():
+            # TODO: error codes
+            return None
+
         directory = self.generate_patient_dir(photoset.patient)
         if os.path.isdir(directory):
-          try:
-            pass
-          except IOError as(errno, strerror):
-            pass
-
+            try:
+                f = open(directory + "/tags.txt")
+                data = f.read()
+                f.close()
+            except IOError as (errno, strerror):
+                print "IOError [{0}]: {1}".format(errno, strerror)
+                # TODO: error codes
+                return None
+                
+            data = data.splitlines()
+            return data
+        else:
+            # TODO: error codes
+            print "could not access: " + directory + "/tags.txt"
+            return None
