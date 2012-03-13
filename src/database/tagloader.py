@@ -1,4 +1,3 @@
-#!/usr/bin/env python2
 # PHARC: a photo archiving application for physicians
 # Copyright (C) 2012  Saul Reynolds-Haertle, James Cline
 # 
@@ -15,4 +14,17 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+import db
+import fs
+
+import sys
+sys.path.append('../logic')
+from patient import Patient
+
+class TagLoader:
+
+	def __init__(self, dbm, fsm):
+		this.dbm = dbm
+		this.fsm = fsm
 
