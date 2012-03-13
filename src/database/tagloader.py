@@ -21,6 +21,9 @@ import fs
 import sys
 sys.path.append('../logic')
 from patient import Patient
+from photoset import Photoset
+from tags import Tag
+from tags import TagList
 
 class TagLoader:
 
@@ -28,3 +31,11 @@ class TagLoader:
 		this.dbm = dbm
 		this.fsm = fsm
 
+	def load_patient_tags(self, patient):
+
+		for photoset in patient.photosets:
+			load_photoset_tags( photoset )
+
+	def load_photoset_tags(self, photoset):
+
+		self.fsm.load_photoset_tags( photoset )
