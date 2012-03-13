@@ -156,3 +156,11 @@ class FS(DataLoaderInterface):
             except IOError as (errno, strerror):
                 print "IOError [{0}]: {1}".format(errno, strerror)
 
+    def load_photoset_tags(self, photoset):
+        directory = self.generate_patient_dir(photoset.patient)
+        if os.path.isdir(directory):
+          try:
+            pass
+          except IOError as(errno, strerror):
+            pass
+
