@@ -24,10 +24,10 @@ from patient import Photoset
 
 class PhotosetLoader:
 
-  def __init__(self, dbm, fsm):
-    # there may be a better way of handling this, but it should do
-    self.dbm = dbm
-    self.fsm = fsm
+    def __init__(self, dbm, fsm):
+        # there may be a better way of handling this, but it should do
+        self.dbm = dbm
+        self.fsm = fsm
 
-  def load_photos(self, photoset):
-    pass
+    def load_photos(self, photoset):
+        pass

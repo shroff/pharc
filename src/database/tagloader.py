@@ -1,4 +1,3 @@
-#!/usr/bin/env python2
 # PHARC: a photo archiving application for physicians
 # Copyright (C) 2012  Saul Reynolds-Haertle, James Cline
 # 
@@ -18,36 +17,25 @@
 
 import db
 import fs
-import patientloader
 
-def testDB():
-    d = db.DB()
-    d.exit()
-    return
+import sys
+sys.path.append('../logic')
+from patient import Patient
+from photoset import Photoset
+from tags import Tag
+from tags import TagList
 
-def testFS():
-    f = fs.FS("Database")
-    pl = patientloader.PatientLoader(None, f)
+class TagLoader:
 
-    patients = f.load_all_patients()
-    for i in patients:
-        pl.load_notes(i)
-        pl.load_physicians(i)
-        pl.load_photosets(i)
-        print i.name_first + " " + i.name_last + ": " + i.uid
-        print "\t" + i.notes
-        print "\t" + str(i.physicians)
-        print "\t" + str(i.photosets)
+	def __init__(self, dbm, fsm):
+		this.dbm = dbm
+		this.fsm = fsm
 
-    f.exit()
-    return
+	def load_patient_tags(self, patient):
 
-def main():
-    testDB()
-    testFS()
-    return
+		for photoset in patient.photosets:
+			load_photoset_tags( photoset )
 
-if __name__ == " __main__":
-    main()
-else:
-    main()
+	def load_photoset_tags(self, photoset):
+
+		self.fsm.load_photoset_tags( photoset )

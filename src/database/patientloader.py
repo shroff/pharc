@@ -24,35 +24,35 @@ from patient import Patient
 
 class PatientLoader:
 
-  def __init__(self, dbm, fsm):
-    # there may be a better way of handling this, but it should do
-    self.dbm = dbm
-    self.fsm = fsm
+    def __init__(self, dbm, fsm):
+        # there may be a better way of handling this, but it should do
+        self.dbm = dbm
+        self.fsm = fsm
 
-  def load_field(self, patient, fm, dm):
-    #TODO database loading
+    def load_field(self, patient, fm, dm):
+        #TODO database loading
 
-    data = fm(patient)
-    #TODO error handling
+        data = fm(patient)
+        #TODO error handling
 
-    return data
+        return data
 
 
-  def load_notes(self, patient):
-    #TODO try database before filesystem
+    def load_notes(self, patient):
+        #TODO try database before filesystem
 
-    notes = self.fsm.load_patient_notes(patient)
-    if notes is None:
-      # TODO Error code
-      return
-    else:
-      patient.notes = notes
-      # TODO Success code
-      return
-  
-  def load_physicians(self, patient):
-    patient.physicians = self.load_field(patient, self.fsm.load_patient_physicians, None)
-  
-  def load_photosets(self, patient):
-    self.fsm.load_patient_photoset_list(patient)
+        notes = self.fsm.load_patient_notes(patient)
+        if notes is None:
+            # TODO Error code
+            return
+        else:
+            patient.notes = notes
+            # TODO Success code
+            return
+
+    def load_physicians(self, patient):
+        patient.physicians = self.load_field(patient, self.fsm.load_patient_physicians, None)
+
+    def load_photosets(self, patient):
+        self.fsm.load_patient_photoset_list(patient)
 
