@@ -34,7 +34,7 @@ def generateDatabase(numPatients, databaseDir):
         physicians = []
         # Generate a list of physicians using randomly generated names, and assign them UIDs (starting at 65536)
         for x in range(0, numDocs):
-                physicians.append("%s, %s#%05d" %(firstNames[random.randint(0, len(firstNames)-1)],lastNames[random.randint(0, len(lastNames)-1)], docUID+x))
+                physicians.append("%s, %s#%d" %(firstNames[random.randint(0, len(firstNames)-1)],lastNames[random.randint(0, len(lastNames)-1)], docUID+x))
         # Generate patient folders and all associated files, as well as a random number of photosets
         for x in range(1, numPatients+1):
                 patientDir = createPatient(databaseDir, x)
@@ -53,10 +53,10 @@ Generates a random name from the list of first and last names.
 Generates the name.txt file in this folder, returns the patient's folder directory.
 """
 def createPatient(databaseDir, UID):
-        print '#%05d' %UID
+        print '#%d' %UID
         myFirstName = '%s' %firstNames[random.randint(0, len(firstNames)-1)]
         myLastName = '%s' %lastNames[random.randint(0, len(lastNames)-1)]
-        dirname = '%s, %s#%05d' %(myLastName, myFirstName, UID)
+        dirname = '%s, %s#%d' %(myLastName, myFirstName, UID)
         try:
                 os.makedirs(dirname)
         except OSError:
@@ -64,7 +64,7 @@ def createPatient(databaseDir, UID):
         os.chdir(dirname)
         filename = "name.txt"
         File = open(filename,"w")
-        File.writelines("%s, %s#%05d" %(myFirstName, myLastName, UID))
+        File.writelines("%s, %s#%d" %(myFirstName, myLastName, UID))
         return dirname
 
 """
