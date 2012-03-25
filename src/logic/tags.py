@@ -20,6 +20,7 @@
 # made the search functions a bit cleaner.
 
 import itertools
+import logic.util
 
 class TagList(object):
 
@@ -146,32 +147,4 @@ class Tag(object):
         Raises:
         """
 
-        result = ""
-        name_index = []
-        query_index = []
-        
-        lengths = \
-            [[0 for j in range(len(query)+1)] for i in range(len(self.value)+1)]
-        # row 0 and column 0 are initialized to 0 already
-        for i, x in enumerate(self.value):
-            for j, y in enumerate(query):
-                if x == y:
-                    lengths[i+1][j+1] = lengths[i][j] + 1
-                else:
-                    lengths[i+1][j+1] = \
-                        max(lengths[i+1][j], lengths[i][j+1])
-        # read the substring out from the matrix
-        x, y = len(self.value), len(query)
-        while x != 0 and y != 0:
-            if lengths[x][y] == lengths[x-1][y]:
-                x -= 1
-            elif lengths[x][y] == lengths[x][y-1]:
-                y -= 1
-            else:
-                assert self.value[x-1] == query[y-1]
-                result = self.value[x-1] + result
-                name_index.append(x-1)
-                query_index.append(y-1)
-                x -= 1
-                y -= 1
-        return (result, name_index, query_index)
+        return logic.util.lcs(self.value, query)
