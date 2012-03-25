@@ -185,14 +185,30 @@ class DataManager(object):
         # the valid_patients thing is a hack to get around python 2's
         # badwrong handling of scope in local functions.
         def constrainId((f, m, a), valid_patients=valid_patients):
-            if valid_patients is None:
-                valid_patients = set([p for p in self.patients if p.uid == a])
-            else:
-                valid_patients = set([p for p in valid_patients if p.uid == a])
+            pats = self.patients if valid_patients is None else valid_patients
+            valid_patients = set([p for p in pats if p.uid == a])
             return valid_patients
         def constrainFirstName((f, m, a), valid_patients=valid_patients):
+            pats = self.patients if valid_patients is None else valid_patients
+            if m == "exact":
+                valid_patients = set([p for p in pats if p.name_first == a])
+            elif m == "pre":
+                valid_patients = set([p for p in pats if p.name_first[:len(a)] == a])
+            elif m == "post":
+                valid_patients = set([p for p in pats if p.name_first[-len(a):] == a])
+            elif m == "sub":
+                valid_patients = set([p for p in pats if p.name_first.find(a) != -1])
             return valid_patients
         def constrainLastName((f, m, a), valid_patients=valid_patients):
+            pats = self.patients if valid_patients is None else valid_patients
+            if m == "exact":
+                valid_patients = set([p for p in pats if p.name_last == a])
+            elif m == "pre":
+                valid_patients = set([p for p in pats if p.name_last[:len(a)] == a])
+            elif m == "post":
+                valid_patients = set([p for p in pats if p.name_last[-len(a):] == a])
+            elif m == "sub":
+                valid_patients = set([p for p in pats if p.name_last.find(a) != -1])
             return valid_patients
         def constrainDiagnoses((f, m, a), valid_patients=valid_patients):
             return valid_patients
