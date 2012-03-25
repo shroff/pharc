@@ -64,6 +64,8 @@ class DataManager(object):
         self.treatments = tags.TagList()
         self.diagnoses = tags.TagList()
         self.patients = self.loader.load_all_patients()
+        for p in self.patients:
+            p.dm = self
         self.physicians = []
         
     Query = collections.namedtuple('Query', ['field', 'match', 'arg'])
