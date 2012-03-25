@@ -35,10 +35,12 @@ class Photoset(object):
 
     def __repr__(self):
         return \
-            "photoset(t:{0}, d:{1}, {2} photos)".format( \
+            "photoset({0}#{1}, t:{2}, d:{3})".format( \
+            str(self.date),
+            str(self.uid),
             self.treatments,
-            self.diagnoses,
-            "no" if self.photos is None else str(len(self.photos)))
+            self.diagnoses)
+
     
     def add_treatment_by_string(self, treatment):
         """Refers to tag list and adds appropriate tag.

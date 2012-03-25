@@ -30,6 +30,8 @@ maxPhotos = 6
 Generate a database with (numPatients) randomly generated patients at the (databaseDir) directory - creates a Database folder at the designated directory
 """
 def generateDatabase(numPatients, databaseDir):
+        global photosetUID
+        
         if not os.path.exists(databaseDir):
                 os.makedirs(databaseDir)
         os.chdir(databaseDir)
@@ -45,7 +47,8 @@ def generateDatabase(numPatients, databaseDir):
                 tempNote = createNotes(patientDir)
                 tempPhys = createPhysicians(patientDir, physicians[random.randint(0, len(physicians)-1)])
                 for x in range(0, random.randint(1, numPhotosets)):
-                        createPhotoset(patientDir, photosetUID+x, random.randint(minPhotos, maxPhotos), tempDiag, tempTreat, tempNote, tempPhys)
+                        createPhotoset(patientDir, photosetUID, random.randint(minPhotos, maxPhotos), tempDiag, tempTreat, tempNote, tempPhys)
+                        photosetUID += 1
                         os.chdir("..")
                 os.chdir("..")
 
