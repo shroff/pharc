@@ -36,7 +36,7 @@ class CommandLineInterface(cmd.Cmd):
         echo = ""
         for p in self.dm.patients:
             echo += str(p) + "\n"
-        print echo
+        print echo[:-1]
 
     def do_findPatients(self, args):
         pass
@@ -62,7 +62,7 @@ class CommandLineInterface(cmd.Cmd):
                 echo += " ├" + str(p.photosets[i]) + "\n"
             if len(p.photosets) > 0:
                 echo += " └" + str(p.photosets[-1])
-        print echo
+        print echo[:-1]
 
     def do_findPhotosets(self, args):
         pass
