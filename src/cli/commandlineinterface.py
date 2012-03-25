@@ -20,7 +20,7 @@
 import os
 import sys
 import database.fs
-import logic.datamanager
+from logic.datamanager import DataManager
 import readline
 import cmd
 
@@ -29,7 +29,7 @@ class CommandLineInterface(cmd.Cmd):
     testing."""
 
     def load_database(self, target):
-        self.dm = logic.datamanager.DataManager("test/Database")
+        self.dm = DataManager("test/Database")
         return
 
     def do_listPatients(self, args):
@@ -42,13 +42,21 @@ class CommandLineInterface(cmd.Cmd):
         pass
 
     def do_listPhotosets(self, args):
-        # figure out which patient the user is talking about
-        # p = None
-        # for pat in self.dm.patients:
-            
+        pats = None
+        if args == "":
+            pats = self.dm.patients
+        else:
+            # figure out which patient the user is talking about
+            q = DataManager.Query("id", "", int(args))
+            sresults = self.dm.searchPatients([q], None)
+            pats = map(lambda x: x[0], sresults)
         
+        if len(pats) == 0:
+            print "No patients found"
+            return
+
         echo = ""
-        for p in self.dm.patients:
+        for p in pats:
             echo += str(p) + "\n"
             for i in xrange(0, len(p.photosets) - 2):
                 echo += " ├" + str(p.photosets[i]) + "\n"
