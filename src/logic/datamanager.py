@@ -66,7 +66,14 @@ class DataManager(object):
         self.physicians = []
 
 
-    def searchPatients(self, query, n):
+    def searchPatients(self, queries, n):
+        ##########################################################
+        ##
+        ##  FIXME: is there a better way to do this than to pass
+        ##  around all these damn strings? There has to be
+        ##  something. Python doesn't do enums very well...
+        ##
+        ##########################################################
         """Does searches.
 
         A general function for advanced searches. Returns a list of
@@ -81,12 +88,13 @@ class DataManager(object):
                 ranking information. The field and match fields of a
                 search param are strings and the last is determined by
                 teh first two. The same parameter can be specified
-                multiple times and it will apply multiple times. If a
+                multiple times and it will apply multiple times; all
+                results will still satisfy all passed params. If a
                 ranking query is submitted multiple times, results are
-                undefined but rankings will attempt to reflect a 'do
-                what I mean' interpretation.
+                undefined, but the returned scores will attempt to
+                reflect a 'do what I mean' interpretation.
                 
-                field       match type
+                field       match type    semantics
                 id          int
                 first_name  string
                 last_name   string
@@ -99,50 +107,177 @@ class DataManager(object):
                 match, and how the match causes the arg to be
                 interpreted.
 
+                field  arg: type(arg)
+                       "match" constraint or ranking: semantics
                 int    arg: An int
-                       ""      exact match with UID.
+                       ""      c:  exact match with UID.
                 string arg: A string
-                       exact   _exact_ string match with arg
-                       pre     arg is a prefix of first_name
-                       post    arg is a suffix of first_name
-                       sub     arg is an exact substring
-                       lcs     rank results by longest common subsequence with arg
+                       exact   c:  _exact_ string match with arg.
+                       pre     c:  arg is a prefix of first_name
+                       post    c:  arg is a suffix of first_name
+                       sub     c:  arg is an exact substring
+                       lcs     r:  rank results by longest common subsequence with arg
                 strlst arg: a string which is then split by commas
-                       ex_one  at least one of the toks must be in the physician list
-                       ex_all  all tokens must be exactly in the physician list
-                       lcs_one rank by best single longest-common-subsequence correspondence
-                       lcs_all rank by maximum correspondence on lcs (wiki://assignment_problem)
+                       ex_one  c:  at least one of the toks must be in the physician list
+                       ex_all  c:  all tokens must be exactly in the physician list
+                       lcs_one r:  rank by best single longest-common-subsequence correspondence
+                       lcs_all r:  rank by maximum correspondence on lcs (wiki://assignment_problem)
                 tag    arg: a list of strings
-                       one     at least one tag in the query is present in the patient's list
-                       all-q   every tag in the query is present in the patient's list
-                       all-p   every tag in the patient's list is present in the query
-                       exact   the query and the patient's tag list match exactly
+                       one     cr: at least one tag in the query is present in the patient's list
+                       all-q   c:  every tag in the query is present in the patient's list
+                       all-p   cr: every tag in the patient's list is present in the query
+                       exact   c:  the query and the patient's tag list match exactly
                 notes  arg: a string
-                       one     at least one of the words in the query occur in the notes
-                       all     all of the words in the query occur in the notes
-                       exact   the exact string is in the notes
-                       without none of the words occur in the notes
+                       one     cr: at least one of the words in the query occur in the notes
+                       all     c:  all of the words in the query occur in the notes
+                       exact   cr: the exact string is in the notes
+                       without c:  none of the words occur in the notes
 
             n: how many results to return at most. If this is set to
                 None, it is entirely possible that every patient in
                 the database will be returned.
 
         Returns:
-            A list of (patient, scores) tuples. Every patient in the
-            list will satisfy _all_ of the parameters of the
-            query. scores is a dictionary that maps strings to
+            A list of (patient, scores) tuples. Returns an empty list
+            of no patients were found that fit the constraints. Every
+            patient in the list will satisfy _all_ of the parameters
+            of the query. scores is a dictionary that maps strings to
             particular scores assigned by the search function. These
             are the scores that will be returned:
             
             key         value semantics
-            "id_dist"   the distance between the specified uid and the patient's UID
             "fname_lcs" the length of the lcs between the query and the patient's first_name
             "lname_lcs" the length of the lcs between the query and the patient's last_name
             "diags"     number of diagnosis tags in both the query and the patient's list
             "treats"    number of treatment tags in both the query and the patient's list
-            "phys_one"  length of the single best lcs match in the patient's physicians
-            "phys_all"  sum of the lcs lengths in the maximum weight matching for physicians
-            "notes_one" number of words in the query string that occur in the notes
-            "notes_ex"  number of strings which occur exactly in the notes
+            "phys_one"  length of the single best lcs match in the patient's list of physicians
+            "phys_all"  sum of the lcs lengths in the max-weight matching of query params to physicians
+            "notes_one" number of times words in a query string occur in the notes
+            "notes_ex"  number of times exact string queries occur in the notes
+            
+            scores for which a query does not exist to measure against
+            will not be reported. For example, if no diagnosis tags
+            are specified, "diags" cannot be calculated and will not
+            be returned.
+
+            If multiple queries are submitted that would produce the
+            same score, results are undefined, but the implementation
+            will attempt to return a reasonable "do-what-I-mean"
+            interpretation.
             """        
-        pass
+        
+        ##########################################################
+        # first big chunk: define methods for constraining results
+
+        # The first person to touch valid_patients is going to
+        # constrain the list of patients hugely, potentially from the
+        # entire list of patients to the empty set. For that reason,
+        # the first constrain operation behaves completely
+        # differently. We pull this off by starting valid_patients as
+        # None and having the first person to touch it turn it into a
+        # set() with patients in it.
+        valid_patients = None
+        def constrainId(query):
+            pass
+        def constrainFirstName(query):
+            pass
+        def constrainLastName(query):
+            pass
+        def constrainDiagnoses(query):
+            pass
+        def constrainTreatments(query):
+            pass
+        def constrainPhysicians(query):
+            pass
+        def constrainNotes(query):
+            pass
+
+        ##########################################################
+        # second big chunk: define methods for ranking results
+
+        result = list()
+        def rankId(query):
+            pass
+        def rankFirstName(query):
+            pass
+        def rankLastName(query):
+            pass
+        def rankDiagnoses(query):
+            pass
+        def rankTreatments(query):
+            pass
+        def rankPhysicians(query):
+            pass
+        def rankNotes(query):
+            pass
+
+        ##########################################################
+        # third big chunk: map constraints over patient list
+
+        constraint_parse = {("id", ""):constrainId,
+                            ("first_name", "exact"):constrainFirstName,
+                            ("first_name", "pre"):constrainFirstName,
+                            ("first_name", "post"):constrainFirstName,
+                            ("first_name", "sub"):constrainFirstName,
+                            ("last_name", "exact"):constrainLastName,
+                            ("last_name", "pre"):constrainLastName,
+                            ("last_name", "post"):constrainLastName,
+                            ("last_name", "sub"):constrainLastName,
+                            ("diags", "one"):constrainDiagnoses,
+                            ("diags", "all-q"):constrainDiagnoses,
+                            ("diags", "all-p"):constrainDiagnoses,
+                            ("diags", "exact"):constrainDiagnoses,
+                            ("treats", "one"):constrainTreatments,
+                            ("treats", "all-q"):constrainTreatments,
+                            ("treats", "all-p"):constrainTreatments,
+                            ("treats", "exact"):constrainTreatments,
+                            ("phys", "ex_one"):constrainPhysicians,
+                            ("phys", "ex_all"):constrainPhysicians,
+                            ("notes", "one"):constrainNotes,
+                            ("notes", "all"):constrainNotes,
+                            ("notes", "exact"):constrainNotes,
+                            ("notes", "without"):constrainNotes,
+                            }
+        constraints = [q for q in queries if (q.field, q.match) in constraint_parse.keys]
+
+        ##########################################################
+        # fourth big chunk: map rankings over patient list
+
+        rankings_parse = {("first_name", "lcs"):rankFirstName,
+                          ("last_name", "lcs"):rankLastName,
+                          ("diags", "one"):rankDiagnoses,
+                          ("diags", "all-p"):rankDiagnoses,
+                          ("treats", "one"):rankDiagnoses,
+                          ("treats", "all-p"):rankTreatments,
+                          ("phys", "lcs_one"):rankPhysicians,
+                          ("phys", "lcs_all"):rankPhysicians,
+                          ("notes", "one"):rankNotes,
+                          ("notes", "exact"):rankNotes,
+                          }
+        rankings = [q for q in queries if (q.field, q.match) in rankings_parse.keys]
+
+        ##########################################################
+        # fifth big chunk: constrain, rank, and return
+
+        # apply all the constraints; valid_patients 
+        for q in constraints:
+            constraint_parse[(q.field, q.match)](q)
+        
+        # set up the results: list of (patient, scoredict) tuples.
+        for p in valid_patients:
+            result.append((p, {"fname_lcs":None,
+                               "lname_lcs":None,
+                               "diags":None,
+                               "treats":None,
+                               "phys_one":None,
+                               "phys_all":None,
+                               "notes_one":None,
+                               "notes_ex":None,
+                               }))
+
+        # now we go through the rankings and populate the score
+        # dictionaries.
+        for q in rankings:
+            constraint_parse[(q.field, q.match)](q)
+
+        return results
