@@ -20,9 +20,9 @@ import os, sys, datetime
 
 sys.path.append('../logic')
 #from ..logic import patient
-from patient import Patient
-from photoset import Photoset
-from physician import Physician
+from logic.patient import Patient
+from logic.photoset import Photoset
+from logic.physician import Physician
 
 class FS(DataLoaderInterface):
     """A filesystem manager"""
