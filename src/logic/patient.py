@@ -77,7 +77,6 @@ class Patient(object):
         if self._photosets is None:
             self._photosets = []
             self.dm.loader.load_patient_photoset_list(self)
-            print "loaded photosets"
         #print "photosets -> " + str(self._photosets)
         return self._photosets
     def setphotosets(self, value):
