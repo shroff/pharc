@@ -17,6 +17,7 @@
 
 import tags
 import database.fs
+import collections
 
 class DataManager(object):
     """The DataManager is the root object in the logic package.
@@ -64,8 +65,8 @@ class DataManager(object):
         self.diagnoses = tags.TagList()
         self.patients = self.loader.load_all_patients()
         self.physicians = []
-
-
+        
+    Query = collections.namedtuple('Query', ['field', 'match', 'arg'])
     def searchPatients(self, queries, n):
         ##########################################################
         ##
@@ -81,18 +82,19 @@ class DataManager(object):
 
         Args:
 
-            queries: a list of tuples containing parameters for the
-                search. Each element of the list is a tuple of the
-                form (field, match, arg). The result will satisfy to
-                _all_ parameters and will contain the indicated
-                ranking information. The field and match fields of a
-                search param are strings and the last is determined by
-                teh first two. The same parameter can be specified
-                multiple times and it will apply multiple times; all
-                results will still satisfy all passed params. If a
-                ranking query is submitted multiple times, results are
-                undefined, but the returned scores will attempt to
-                reflect a 'do what I mean' interpretation.
+            queries: a list of "Query" namedtuples containing
+                parameters for the search. Each element of the list is
+                a tuple of the form (field, match, arg). The result
+                will satisfy to _all_ parameters and will contain the
+                indicated ranking information. The field and match
+                fields of a search param are strings and the last is
+                determined by teh first two. The same parameter can be
+                specified multiple times and it will apply multiple
+                times; all results will still satisfy all passed
+                params. If a ranking query is submitted multiple
+                times, results are undefined, but the returned scores
+                will attempt to reflect a 'do what I mean'
+                interpretation.
                 
                 field       match type    semantics
                 id          int
@@ -165,7 +167,7 @@ class DataManager(object):
             will attempt to return a reasonable "do-what-I-mean"
             interpretation.
             """        
-        
+
         ##########################################################
         # first big chunk: define methods for constraining results
 
@@ -177,38 +179,44 @@ class DataManager(object):
         # None and having the first person to touch it turn it into a
         # set() with patients in it.
         valid_patients = None
-        def constrainId(query):
+
+        # the valid_patients thing is a hack to get around python 2's
+        # badwrong handling of scope in local functions.
+        def constrainId((f, m, a), valid_patients=valid_patients):
+            if valid_patients is None:
+                valid_patients = set([p for p in self.patients if p.uid == a])
+            else:
+                valid_patients = set([p for p in valid_patients if p.uid == a])
+        def constrainFirstName((f, m, a), valid_patients=valid_patients):
             pass
-        def constrainFirstName(query):
+        def constrainLastName((f, m, a), valid_patients=valid_patients):
             pass
-        def constrainLastName(query):
+        def constrainDiagnoses((f, m, a), valid_patients=valid_patients):
             pass
-        def constrainDiagnoses(query):
+        def constrainTreatments((f, m, a), valid_patients=valid_patients):
             pass
-        def constrainTreatments(query):
+        def constrainPhysicians((f, m, a), valid_patients=valid_patients):
             pass
-        def constrainPhysicians(query):
-            pass
-        def constrainNotes(query):
+        def constrainNotes((f, m, a), valid_patients=valid_patients):
             pass
 
         ##########################################################
         # second big chunk: define methods for ranking results
 
         result = list()
-        def rankId(query):
+        def rankId((f, m, a), valid_patients=valid_patients):
             pass
-        def rankFirstName(query):
+        def rankFirstName((f, m, a), valid_patients=valid_patients):
             pass
-        def rankLastName(query):
+        def rankLastName((f, m, a), valid_patients=valid_patients):
             pass
-        def rankDiagnoses(query):
+        def rankDiagnoses((f, m, a), valid_patients=valid_patients):
             pass
-        def rankTreatments(query):
+        def rankTreatments((f, m, a), valid_patients=valid_patients):
             pass
-        def rankPhysicians(query):
+        def rankPhysicians((f, m, a), valid_patients=valid_patients):
             pass
-        def rankNotes(query):
+        def rankNotes((f, m, a), valid_patients=valid_patients):
             pass
 
         ##########################################################
@@ -238,7 +246,7 @@ class DataManager(object):
                             ("notes", "exact"):constrainNotes,
                             ("notes", "without"):constrainNotes,
                             }
-        constraints = [q for q in queries if (q.field, q.match) in constraint_parse.keys]
+        constraints = [q for q in queries if (q.field, q.match) in constraint_parse.keys()]
 
         ##########################################################
         # fourth big chunk: map rankings over patient list
@@ -254,7 +262,7 @@ class DataManager(object):
                           ("notes", "one"):rankNotes,
                           ("notes", "exact"):rankNotes,
                           }
-        rankings = [q for q in queries if (q.field, q.match) in rankings_parse.keys]
+        rankings = [q for q in queries if (q.field, q.match) in rankings_parse.keys()]
 
         ##########################################################
         # fifth big chunk: constrain, rank, and return
@@ -262,7 +270,11 @@ class DataManager(object):
         # apply all the constraints; valid_patients 
         for q in constraints:
             constraint_parse[(q.field, q.match)](q)
-        
+
+        # if we've got nothing, return nothing
+        if valid_patients is None:
+            return []
+
         # set up the results: list of (patient, scoredict) tuples.
         for p in valid_patients:
             result.append((p, {"fname_lcs":None,
