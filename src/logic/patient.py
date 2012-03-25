@@ -39,8 +39,6 @@ class Patient(object):
     """
     datamanager = None
 
-    loader = None
-
     def __init__(self):
         self.name_first = None
         self.name_last = None
@@ -50,4 +48,6 @@ class Patient(object):
         self.notes = None
         self.uid = None
 
+    def __repr__(self):
+        return "Patient("+ self.name_first + " " + self.name_last + "#" + str(self.uid) + ", " + str(len(self.photosets)) + " sets)"
 
