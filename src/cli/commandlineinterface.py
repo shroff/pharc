@@ -43,8 +43,8 @@ class CommandLineInterface(cmd.Cmd):
 
     def do_listPhotosets(self, args):
         # figure out which patient the user is talking about
-        p = None
-        for pat in self.dm.patients:
+        # p = None
+        # for pat in self.dm.patients:
             
         
         echo = ""
