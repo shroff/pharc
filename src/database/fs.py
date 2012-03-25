@@ -91,7 +91,7 @@ class FS(DataLoaderInterface):
         return parsed_name_list
 
     def generate_patient_dir(self, patient):
-        return self.root + "/" + patient.name_last + ", " + patient.name_first + "#" + patient.uid
+        return self.root + "/" + patient.name_last + ", " + patient.name_first + "#" + str(patient.uid)
 
     def get_patient_data_from_field(self, patient, field):
         if self.is_new():
