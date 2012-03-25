@@ -187,18 +187,19 @@ class DataManager(object):
                 valid_patients = set([p for p in self.patients if p.uid == a])
             else:
                 valid_patients = set([p for p in valid_patients if p.uid == a])
+            return valid_patients
         def constrainFirstName((f, m, a), valid_patients=valid_patients):
-            pass
+            return valid_patients
         def constrainLastName((f, m, a), valid_patients=valid_patients):
-            pass
+            return valid_patients
         def constrainDiagnoses((f, m, a), valid_patients=valid_patients):
-            pass
+            return valid_patients
         def constrainTreatments((f, m, a), valid_patients=valid_patients):
-            pass
+            return valid_patients
         def constrainPhysicians((f, m, a), valid_patients=valid_patients):
-            pass
+            return valid_patients
         def constrainNotes((f, m, a), valid_patients=valid_patients):
-            pass
+            return valid_patients
 
         ##########################################################
         # second big chunk: define methods for ranking results
@@ -269,7 +270,7 @@ class DataManager(object):
 
         # apply all the constraints; valid_patients 
         for q in constraints:
-            constraint_parse[(q.field, q.match)](q)
+            valid_patients = constraint_parse[(q.field, q.match)](q)
 
         # if we've got nothing, return nothing
         if valid_patients is None:
@@ -292,4 +293,4 @@ class DataManager(object):
         for q in rankings:
             constraint_parse[(q.field, q.match)](q)
 
-        return results
+        return result
