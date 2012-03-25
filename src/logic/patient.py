@@ -40,14 +40,64 @@ class Patient(object):
     datamanager = None
 
     def __init__(self):
+        # the first three are loaded eagerly on database startup and
+        # we don't need to trigger any lazy loading for them, so they
+        # don't need to be properties
         self.name_first = None
         self.name_last = None
-        self.physicians = []
-        self.photosets = []
-        self.storage_diagnosis = None
-        self.notes = None
         self.uid = None
+        # these are all properties because they require some lazy
+        # loading.
+        self._physicians = []
+        self._photosets = []
+        self._storage_diagnosis = None
+        self._notes = None
 
     def __repr__(self):
         return "Patient("+ self.name_first + " " + self.name_last + "#" + str(self.uid) + ", " + str(len(self.photosets)) + " sets)"
 
+    def getphysicians(self):
+        #print "physicians -> " + str(self._physicians)
+        return self._physicians
+    def setphysicians(self, value):
+        #print "physicians <- " + str(value)
+        self._physicians = value
+    def delphysicians(slef):
+        del self._physicians
+    physicians = property(getphysicians, setphysicians, delphysicians, "This patient's unique identification number.")
+
+    def getphotosets(self):
+        #print "photosets -> " + str(self._photosets)
+        return self._photosets
+    def setphotosets(self, value):
+        #print "photosets <- " + str(value)
+        self._photosets = value
+    def delphotosets(slef):
+        del self._photosets
+    photosets = property(getphotosets, setphotosets, delphotosets, "This patient's unique identification number.")
+
+    def getnotes(self):
+        #print "notes -> " + str(self._notes)
+        return self._notes
+    def setnotes(self, value):
+        #print "notes <- " + str(value)
+        self._notes = value
+    def delnotes(slef):
+        del self._notes
+    notes = property(getnotes, setnotes, delnotes, "This patient's unique identification number.")
+
+    def getdiagnoses(self):
+        pass
+    def setdiagnoses(self, value):
+        pass
+    def deldiagnoses(slef):
+        pass
+    diagnoses = property(getdiagnoses, setdiagnoses, deldiagnoses, "This patient's unique identification number.")
+
+    def gettreatments(self):
+        pass
+    def settreatments(self, value):
+        pass
+    def deltreatments(slef):
+        pass
+    treatments = property(gettreatments, settreatments, deltreatments, "This patient's unique identification number.")
