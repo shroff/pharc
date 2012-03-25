@@ -28,6 +28,8 @@ class CommandLineInterface(cmd.Cmd):
     """Implements a dead simple command-line interface for interactive
     testing."""
 
+    prompt = "\033[94m[PHARC]$\033[0m "
+    
     def load_database(self, target):
         self.dm = DataManager("test/Database")
         return
@@ -58,10 +60,10 @@ class CommandLineInterface(cmd.Cmd):
         echo = ""
         for p in pats:
             echo += str(p) + "\n"
-            for i in xrange(0, len(p.photosets) - 2):
-                echo += " ├" + str(p.photosets[i]) + "\n"
+            for i in xrange(0, len(p.photosets) - 1):
+                echo += "  ├" + str(p.photosets[i]) + "\n"
             if len(p.photosets) > 0:
-                echo += " └" + str(p.photosets[-1])
+                echo += "  └" + str(p.photosets[-1]) + "\n"
         print echo[:-1]
 
     def do_findPhotosets(self, args):
