@@ -41,7 +41,15 @@ class CommandLineInterface(cmd.Cmd):
         print echo[:-1]
 
     def do_findPatients(self, args):
-        pass
+        args = args.strip().split()
+        q = DataManager.Query(args[0], args[1], args[2])
+        sresults = self.dm.searchPatients([q], None)
+        pats = map(lambda x: x[0], sresults)
+        
+        echo = ""
+        for p in pats:
+            echo += str(p) + "\n"
+        print echo[:-1]
 
     def do_listPhotosets(self, args):
         pats = None
@@ -61,9 +69,9 @@ class CommandLineInterface(cmd.Cmd):
         for p in pats:
             echo += str(p) + "\n"
             for i in xrange(0, len(p.photosets) - 1):
-                echo += "  ├" + str(p.photosets[i]) + "\n"
+                echo += "  ├─" + str(p.photosets[i]) + "\n"
             if len(p.photosets) > 0:
-                echo += "  └" + str(p.photosets[-1]) + "\n"
+                echo += "  └─" + str(p.photosets[-1]) + "\n"
         print echo[:-1]
 
     def do_findPhotosets(self, args):
