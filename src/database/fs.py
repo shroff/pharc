@@ -78,7 +78,7 @@ class FS(DataLoaderInterface):
         unparsed_name = unparsed_name.split()
         name_first = unparsed_name[1]
         name_last = unparsed_name[0][:-1]
-        uid = name.split('#')[1]
+        uid = int(name.split('#')[1])
 
         return [name_first, name_last, uid]
 
