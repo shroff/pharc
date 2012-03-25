@@ -17,6 +17,8 @@ lastNames = ["Smith", "Johnson", "Williams", "Jones", "Brown", "Davis", "Miller"
 docUID = 65536
 # Number of Doctors you wish to have in the database:
 numDocs = 5
+# UID from which photoset UIDs begin
+photosetUID = 70000
 # Maximum number of Photosets per patient
 numPhotosets = 4
 # Minimum number of Photos in a Photoset
@@ -43,7 +45,7 @@ def generateDatabase(numPatients, databaseDir):
                 tempNote = createNotes(patientDir)
                 tempPhys = createPhysicians(patientDir, physicians[random.randint(0, len(physicians)-1)])
                 for x in range(0, random.randint(1, numPhotosets)):
-                        createPhotoset(patientDir, random.randint(minPhotos, maxPhotos), tempDiag, tempTreat, tempNote, tempPhys)
+                        createPhotoset(patientDir, photosetUID+x, random.randint(minPhotos, maxPhotos), tempDiag, tempTreat, tempNote, tempPhys)
                         os.chdir("..")
                 os.chdir("..")
 
@@ -114,9 +116,9 @@ Generates all necessary .txt files (and writes the relevant info to the files
 Generates the given number of .jpg pictures in the photoset folder
 All .jpg files are empty (and thus cannot be displayed), but do exist
 """
-def createPhotoset(dirname, numPics, myDiagnosis, myTreatment, myNotes, myDoc):
+def createPhotoset(dirname, UID, numPics, myDiagnosis, myTreatment, myNotes, myDoc):
         # dd-mm-yyyy : day and month generated randomly (1-29 and 1-12 respectively).  Year is 2012 always
-        photosetDir = "%02d-%02d-2012" %(random.randint(1, 29), random.randint(1, 12))
+        photosetDir = "%02d-%02d-2012#%d" %(random.randint(1, 29), random.randint(1, 12), UID)
         try:
                 os.makedirs(photosetDir)
         except OSError:
