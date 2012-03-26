@@ -46,12 +46,7 @@ class TagList(object):
         # no indices to update right now, but there might be some
         # later.
         self.tags.add(t)
-
-    def match_substring_single(self, query):
-        """Returns a list of tags whose names contain the query as a
-        contiguous substring."""
-        return [t for t in tags if t.match_substring(query)]
-
+        
     def match_fullstring_single(self, query):
         """Returns None or a tag whose name completely matches the
         query. If multiple tags match, results are undefined. There
@@ -61,17 +56,26 @@ class TagList(object):
             return None
         return results[0]
 
+    def match_substring_single(self, query):
+        """Returns a list of tags whose names contain the query as a
+        contiguous substring."""
+        return [t for t in tags if t.match_substring(query)]
+
     def match_subsequence_single(self, query, n):
+        # TODO: implement secondary sorting criterion.
         """Returns tag results sorted by the longest common
         subsequence between the tag name and the query.
 
         Returns a list of tags ranked by the length of the longest
         common subsequence between teh name of the tag and the query
-        string. If n is None, returns an unordered list of tags that
-        each have the longest common subsequence length. If n is a
-        number, returns that many results, ordered by the length of
-        the common subsequence between teh tag's name and the
-        query.
+        string. If n is None, returns a list of tags that each have
+        the longest common subsequence length. If n is a number,
+        returns that many results. Results are ordered first by the
+        length of the longest common subsequence and second by the
+        average of the index of the last character in the tag that was
+        part of the lcs and the index of the first character in the
+        tag that was part of the lcs (this prioritizes finding
+        prefixes over spread-out or internal matches).
         
         Args:
             query: the string to check.
