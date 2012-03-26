@@ -37,10 +37,14 @@ class DataManager(object):
     """
 
     patients = None # list of all patients in the system
-    physicians = None # list of all the physicians in the system
+    physicians = None # taglist of all the physicians in the
+                      # system. Special handling becuase it's a very
+                      # common search query.
     loader = None # DataManagerLoader for this DataManager
-    treatments = None # taglist
-    diagnoses = None # taglist
+    treatments = None # taglist of all the treatments in the system
+    diagnoses = None # taglist of all the diagnoses in the system
+
+
     
     def __init__(self, filesystem_location):
         """Opens a datamanagerloader and begins populating the system.
@@ -66,8 +70,10 @@ class DataManager(object):
         self.patients = self.loader.load_all_patients()
         for p in self.patients:
             p.dm = self
-        self.physicians = []
+        self.physicians = tags.TagList()
         
+
+
     Query = collections.namedtuple('Query', ['field', 'match', 'arg'])
     def searchPatients(self, queries, n):
         ##########################################################
@@ -158,6 +164,7 @@ class DataManager(object):
             "phys_all"  sum of the lcs lengths in the max-weight matching of query params to physicians
             "notes_one" number of times words in a query string occur in the notes
             "notes_ex"  number of times exact string queries occur in the notes
+            "overall"   take all the others, normalize them, add them together, and renormalize.
             
             scores for which a query does not exist to measure against
             will not be reported. For example, if no diagnosis tags
@@ -310,5 +317,7 @@ class DataManager(object):
         # dictionaries.
         for q in rankings:
             constraint_parse[(q.field, q.match)](q)
+
+        # then create the overall ranking and return.
 
         return result
