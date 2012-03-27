@@ -19,6 +19,9 @@
 # I chose not to implement these as a pile of dictionaries because it
 # made the search functions a bit cleaner.
 
+import itertools
+import logic.util
+
 class TagList(object):
 
     """Holds a list of tags and provides methods for searching them.
@@ -44,12 +47,12 @@ class TagList(object):
         # later.
         self.tags.add(t)
 
-    def match_substring(self, query):
+    def match_substring_single(self, query):
         """Returns a list of tags whose names contain the query as a
         contiguous substring."""
         return [t for t in tags if t.match_substring(query)]
 
-    def match_fullstring(self, query):
+    def match_fullstring_single(self, query):
         """Returns None or a tag whose name completely matches the
         query. If multiple tags match, results are undefined. There
         should only be one tag in the list with a given name."""
@@ -58,11 +61,11 @@ class TagList(object):
             return None
         return results[0]
 
-    def match_common_subseq(self, query, n):
+    def match_subsequence_single(self, query, n):
         """Returns tag results sorted by the longest common
         subsequence between the tag name and the query.
 
-        Returns a set of tags ranked by the length of the longest
+        Returns a list of tags ranked by the length of the longest
         common subsequence between teh name of the tag and the query
         string. If n is None, returns an unordered list of tags that
         each have the longest common subsequence length. If n is a
@@ -79,7 +82,16 @@ class TagList(object):
            A list of tags selected by the length of the longest common
            subsequence between the tag's name and the query.
         """
-        pass
+        results = [(t, t.match_common_subseq(query)) for t in tags]
+        if n is None:
+            maxl = -1;
+            for t,tl in results:
+                if tl > maxl:
+                    maxl = tl
+            return [t[0] for t in results if t[1] == maxl]
+        else:
+            results.sort(key=lambda a: a[1])
+            return results[:n]
 
 class Tag(object):
 
@@ -130,37 +142,9 @@ class Tag(object):
             query: the string to match against
 
         Returns:
-            The compute LCS.
+            The computed LCS.
 
         Raises:
         """
 
-        result = ""
-        name_index = []
-        query_index = []
-        
-        lengths = \
-            [[0 for j in range(len(query)+1)] for i in range(len(self.value)+1)]
-        # row 0 and column 0 are initialized to 0 already
-        for i, x in enumerate(self.value):
-            for j, y in enumerate(query):
-                if x == y:
-                    lengths[i+1][j+1] = lengths[i][j] + 1
-                else:
-                    lengths[i+1][j+1] = \
-                        max(lengths[i+1][j], lengths[i][j+1])
-        # read the substring out from the matrix
-        x, y = len(self.value), len(query)
-        while x != 0 and y != 0:
-            if lengths[x][y] == lengths[x-1][y]:
-                x -= 1
-            elif lengths[x][y] == lengths[x][y-1]:
-                y -= 1
-            else:
-                assert self.value[x-1] == query[y-1]
-                result = self.value[x-1] + result
-                name_index.append(x-1)
-                query_index.append(y-1)
-                x -= 1
-                y -= 1
-        return (result, name_index, query_index)
+        return logic.util.lcs(self.value, query)

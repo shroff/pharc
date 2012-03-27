@@ -1,7 +1,5 @@
-#!/usr/bin/env python
-
 # PHARC: a photo archiving application for physicians
-# Copyright (C) 2012  Saul Reynolds-Haertle
+# Copyright (C) 2012 Abhishek Shroff
 # 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -17,17 +15,20 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
+from PyQt4.QtGui import *
 
+from searchbar import SearchBar
+from patienttable import PatientTable
 
-import os
-import sys
-import cli.commandlineinterface
+class MainPage(QWidget):
+  def __init__(self, name):
+    super(MainPage, self).__init__()
+    self.initUI(name)
 
-def doCLI():
-    print "foo!"
-    pcli = cli.commandlineinterface.CommandLineInterface()
-    pcli.load_database("test/Datbase")
-    pcli.cmdloop()
+  def initUI(self, name):
+    vbox = QVBoxLayout()
+    vbox.addWidget(QLabel('Welcome ' + name, self))
+    vbox.addWidget(SearchBar())
+    vbox.addWidget(PatientTable())
 
-if __name__ == "__main__":
-    doCLI()
+    self.setLayout(vbox)

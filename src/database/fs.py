@@ -20,9 +20,9 @@ import os, sys, datetime
 
 sys.path.append('../logic')
 #from ..logic import patient
-from patient import Patient
-from photoset import Photoset
-from physician import Physician
+from logic.patient import Patient
+from logic.photoset import Photoset
+from logic.physician import Physician
 
 class FS(DataLoaderInterface):
     """A filesystem manager"""
@@ -78,7 +78,7 @@ class FS(DataLoaderInterface):
         unparsed_name = unparsed_name.split()
         name_first = unparsed_name[1]
         name_last = unparsed_name[0][:-1]
-        uid = name.split('#')[1]
+        uid = int(name.split('#')[1])
 
         return [name_first, name_last, uid]
 
@@ -91,7 +91,7 @@ class FS(DataLoaderInterface):
         return parsed_name_list
 
     def generate_patient_dir(self, patient):
-        return self.root + "/" + patient.name_last + ", " + patient.name_first + "#" + patient.uid
+        return self.root + "/" + patient.name_last + ", " + patient.name_first + "#" + str(patient.uid)
 
     def get_patient_data_from_field(self, patient, field):
         if self.is_new():

@@ -15,6 +15,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
+from logic.datamanager import DataManager
 
 class Patient(object):
     """A Patient stores one patient's photosets and information.
@@ -37,17 +38,79 @@ class Patient(object):
         notes: notes about this patient as a big string
         uid: This patient's unique identification number. integer
     """
-    datamanager = None
-
-    loader = None
+    dm = None
 
     def __init__(self):
+        # the first three are loaded eagerly on database startup and
+        # we don't need to trigger any lazy loading for them, so they
+        # don't need to be properties
         self.name_first = None
         self.name_last = None
-        self.physicians = []
-        self.photosets = []
-        self.storage_diagnosis = None
-        self.notes = None
         self.uid = None
+        # these are all properties because they require some lazy
+        # loading.
+        self._physicians = None
+        self._photosets = None
+        self._storage_diagnosis = None
+        self._notes = None
+
+    def __repr__(self):
+        return \
+            "patient({0} {1}#{2}: {3} sets)".format(self.name_first,
+                                                    self.name_last,
+                                                    str(self.uid),
+                                                    str(len(self.photosets)))
 
 
+    def getphysicians(self):
+        #print "physicians -> " + str(self._physicians)
+        return self._physicians
+    def setphysicians(self, value):
+        #print "physicians <- " + str(value)
+        self._physicians = value
+    def delphysicians(slef):
+        del self._physicians
+    physicians = property(getphysicians, setphysicians, delphysicians, "")
+
+
+    def getphotosets(self):
+        if self._photosets is None:
+            self._photosets = []
+            self.dm.loader.load_patient_photoset_list(self)
+        #print "photosets -> " + str(self._photosets)
+        return self._photosets
+    def setphotosets(self, value):
+        #print "photosets <- " + str(value)
+        self._photosets = value
+    def delphotosets(slef):
+        del self._photosets
+    photosets = property(getphotosets, setphotosets, delphotosets, "")
+
+
+    def getnotes(self):
+        #print "notes -> " + str(self._notes)
+        return self._notes
+    def setnotes(self, value):
+        #print "notes <- " + str(value)
+        self._notes = value
+    def delnotes(slef):
+        del self._notes
+    notes = property(getnotes, setnotes, delnotes, "")
+
+
+    def getdiagnoses(self):
+        pass
+    def setdiagnoses(self, value):
+        pass
+    def deldiagnoses(slef):
+        pass
+    diagnoses = property(getdiagnoses, setdiagnoses, deldiagnoses, "")
+
+
+    def gettreatments(self):
+        pass
+    def settreatments(self, value):
+        pass
+    def deltreatments(slef):
+        pass
+    treatments = property(gettreatments, settreatments, deltreatments, "")

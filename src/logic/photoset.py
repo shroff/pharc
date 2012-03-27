@@ -15,9 +15,11 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
+from logic.datamanager import DataManager
+
 class Photoset(object):
 
-    datamanager = None # reference to the datamanger at teh top of the hierarchy
+    dm = None # reference to the datamanger at teh top of the hierarchy
     date = None
     patient = None # Patient that this photoset belongs to
     physicians = None # list of Physicians that care about this photoset
@@ -27,12 +29,18 @@ class Photoset(object):
     uid = None # this photoset's unique identification number, integer
     photos = None # list of photos in this photoset
 
-    loader = None # PhotosetLoader for this photoset
-    
-    def __init__(self, datamanager):
-        self.datamanager = datamanager
+    def __init__(self):
         self.treatments = set()
         self.diagnoses = set()
+
+    def __repr__(self):
+        return \
+            "photoset({0}#{1}, t:{2}, d:{3})".format( \
+            str(self.date),
+            str(self.uid),
+            self.treatments,
+            self.diagnoses)
+
     
     def add_treatment_by_string(self, treatment):
         """Refers to tag list and adds appropriate tag.
@@ -49,11 +57,11 @@ class Photoset(object):
             The tag that was added to this photoset.
         """
 
-        match = self.datamanager.treatments.match_fullstring(treatment)
+        match = self.dm.treatments.match_fullstring(treatment)
         if not match: # no matching tag, so make a new one and add it
                       # to the list
             match = Tag(treatment)
-            self.datamanager.treatments.add(match)
+            self.dm.treatments.add(match)
         match.photosets.add(self)
         self.treatments.add(match)
         return match

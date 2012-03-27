@@ -1,7 +1,7 @@
-#!/usr/bin/env python
+#!/usr/bin/python
 
 # PHARC: a photo archiving application for physicians
-# Copyright (C) 2012  Saul Reynolds-Haertle
+# Copyright (C) 2012  Abhishek Shroff
 # 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -17,17 +17,4 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-
-
-import os
-import sys
-import cli.commandlineinterface
-
-def doCLI():
-    print "foo!"
-    pcli = cli.commandlineinterface.CommandLineInterface()
-    pcli.load_database("test/Datbase")
-    pcli.cmdloop()
-
-if __name__ == "__main__":
-    doCLI()
+# empty file to allow imports

@@ -17,6 +17,8 @@ lastNames = ["Smith", "Johnson", "Williams", "Jones", "Brown", "Davis", "Miller"
 docUID = 65536
 # Number of Doctors you wish to have in the database:
 numDocs = 5
+# UID from which photoset UIDs begin
+photosetUID = 70000
 # Maximum number of Photosets per patient
 numPhotosets = 4
 # Minimum number of Photos in a Photoset
@@ -28,13 +30,15 @@ maxPhotos = 6
 Generate a database with (numPatients) randomly generated patients at the (databaseDir) directory - creates a Database folder at the designated directory
 """
 def generateDatabase(numPatients, databaseDir):
+        global photosetUID
+        
         if not os.path.exists(databaseDir):
                 os.makedirs(databaseDir)
         os.chdir(databaseDir)
         physicians = []
         # Generate a list of physicians using randomly generated names, and assign them UIDs (starting at 65536)
         for x in range(0, numDocs):
-                physicians.append("%s, %s#%05d" %(firstNames[random.randint(0, len(firstNames)-1)],lastNames[random.randint(0, len(lastNames)-1)], docUID+x))
+                physicians.append("%s, %s#%d" %(firstNames[random.randint(0, len(firstNames)-1)],lastNames[random.randint(0, len(lastNames)-1)], docUID+x))
         # Generate patient folders and all associated files, as well as a random number of photosets
         for x in range(1, numPatients+1):
                 patientDir = createPatient(databaseDir, x)
@@ -43,7 +47,8 @@ def generateDatabase(numPatients, databaseDir):
                 tempNote = createNotes(patientDir)
                 tempPhys = createPhysicians(patientDir, physicians[random.randint(0, len(physicians)-1)])
                 for x in range(0, random.randint(1, numPhotosets)):
-                        createPhotoset(patientDir, random.randint(minPhotos, maxPhotos), tempDiag, tempTreat, tempNote, tempPhys)
+                        createPhotoset(patientDir, photosetUID, random.randint(minPhotos, maxPhotos), tempDiag, tempTreat, tempNote, tempPhys)
+                        photosetUID += 1
                         os.chdir("..")
                 os.chdir("..")
 
@@ -53,10 +58,10 @@ Generates a random name from the list of first and last names.
 Generates the name.txt file in this folder, returns the patient's folder directory.
 """
 def createPatient(databaseDir, UID):
-        print '#%05d' %UID
+        print '#%d' %UID
         myFirstName = '%s' %firstNames[random.randint(0, len(firstNames)-1)]
         myLastName = '%s' %lastNames[random.randint(0, len(lastNames)-1)]
-        dirname = '%s, %s#%05d' %(myLastName, myFirstName, UID)
+        dirname = '%s, %s#%d' %(myLastName, myFirstName, UID)
         try:
                 os.makedirs(dirname)
         except OSError:
@@ -64,7 +69,7 @@ def createPatient(databaseDir, UID):
         os.chdir(dirname)
         filename = "name.txt"
         File = open(filename,"w")
-        File.writelines("%s, %s#%05d" %(myFirstName, myLastName, UID))
+        File.writelines("%s, %s#%d" %(myFirstName, myLastName, UID))
         return dirname
 
 """
@@ -114,9 +119,9 @@ Generates all necessary .txt files (and writes the relevant info to the files
 Generates the given number of .jpg pictures in the photoset folder
 All .jpg files are empty (and thus cannot be displayed), but do exist
 """
-def createPhotoset(dirname, numPics, myDiagnosis, myTreatment, myNotes, myDoc):
+def createPhotoset(dirname, UID, numPics, myDiagnosis, myTreatment, myNotes, myDoc):
         # dd-mm-yyyy : day and month generated randomly (1-29 and 1-12 respectively).  Year is 2012 always
-        photosetDir = "%02d-%02d-2012" %(random.randint(1, 29), random.randint(1, 12))
+        photosetDir = "%02d-%02d-2012#%d" %(random.randint(1, 29), random.randint(1, 12), UID)
         try:
                 os.makedirs(photosetDir)
         except OSError:
