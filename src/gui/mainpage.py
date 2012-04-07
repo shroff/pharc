@@ -18,18 +18,21 @@
 from PyQt4.QtGui import *
 
 from searchbar import SearchBar
-from patienttable import PatientTable
 from patientinfo import PatientInfo
 
 class MainPage(QWidget):
-  def __init__(self, name):
-    super(MainPage, self).__init__()
+  def __init__(self, parent, name):
+    super(MainPage, self).__init__(parent)
+    self.parent = parent
     self.initUI(name)
 
   def initUI(self, name):
     vbox = QVBoxLayout()
     vbox.addWidget(QLabel('Welcome ' + name, self))
     vbox.addWidget(SearchBar())
-    vbox.addWidget(PatientInfo())
+    vbox.addWidget(PatientInfo(self))
 
     self.setLayout(vbox)
+
+  def viewDetails(self):
+    self.parent.viewDetails()

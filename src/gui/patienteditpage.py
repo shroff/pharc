@@ -16,35 +16,39 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 from PyQt4.QtGui import *
-from pagemanager import *
+from PyQt4.QtCore import *
 
-class MainWindow(QMainWindow):
-  def __init__(self):
-    super(MainWindow, self).__init__()
+from patientnamerow import PatientNameRow
+from patientdetailtable import PatientDetailTable
 
+class PatientEditPage(QWidget):
+  def __init__(self, parent):
+    super(PatientEditPage, self).__init__(parent)
+    self.parent = parent
     self.initUI()
-    self.createMenus()
-
-    self.show()
 
   def initUI(self):
-    self.resize(800, 600)
-    self.setWindowTitle("Photo Archiving System")
+    vbox = QVBoxLayout()
+    vbox.addWidget(PatientNameRow())
+    vbox.addWidget(PatientDetailTable())
 
-    self.setCentralWidget(PageManager(self))
+    self.save = QPushButton('Save Changes')
+    self.cancel = QPushButton('Return')
 
+    hbox = QHBoxLayout()
+    hbox.addStretch(1)
+    hbox.addWidget(self.save)
+    hbox.addWidget(self.cancel)
 
-  def createMenus(self):
-    #exitAction = QAction(QIcon('exit.png') 'E&xit', self)
-    exitAction = QAction('E&xit', self)
-    exitAction.setShortcut('Ctrl+Q')
-    exitAction.setStatusTip('Exit Application')
-    exitAction.triggered.connect(qApp.quit)
+    vbox.addLayout(hbox)
 
-    self.statusBar()
+    QObject.connect(self.save, SIGNAL('clicked()'), self.saveChanges)
+    QObject.connect(self.cancel, SIGNAL('clicked()'), self.cancelChanges)
 
-    menuBar = self.menuBar()
-    fileMenu = menuBar.addMenu('&File')
-    fileMenu.addAction(exitAction)
+    self.setLayout(vbox)
 
+  def saveChanges(self):
+    print 'Saving'
 
+  def cancelChanges(self):
+    self.parent.viewMain()

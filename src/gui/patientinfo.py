@@ -21,15 +21,27 @@ from patienttable import PatientTable
 from patientdetail import PatientDetail
 
 class PatientInfo(QWidget):
-  def __init__(self):
-    super(PatientInfo, self).__init__()
+  def __init__(self, parent):
+    super(PatientInfo, self).__init__(parent)
+    self.parent = parent
     self.initUI()
 
   def initUI(self):
     hbox = QHBoxLayout()
-    self.patientTable = PatientTable()
-    self.patientDetail = PatientDetail()
+    self.patientTable = PatientTable(self)
+    self.patientDetail = PatientDetail(self)
+    self.patientDetail.setVisible(False)
     hbox.addWidget(self.patientTable)
     hbox.addWidget(self.patientDetail)
 
     self.setLayout(hbox)
+
+
+  def viewInfo(self, row, col):
+    self.patientDetail.setVisible(True)
+    print row
+    print col
+
+  def viewDetails(self):
+    if(self.patientDetail.isVisible()):
+      self.parent.viewDetails()

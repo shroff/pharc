@@ -16,35 +16,31 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 from PyQt4.QtGui import *
-from pagemanager import *
+from PyQt4.QtCore import *
 
-class MainWindow(QMainWindow):
+from patientdetailtablemodel import PatientDetailTableModel
+
+class PatientDetailTable(QTableView):
   def __init__(self):
-    super(MainWindow, self).__init__()
-
+    super(PatientDetailTable, self).__init__()
     self.initUI()
-    self.createMenus()
+    self.linkModel()
 
-    self.show()
+    self.connect(self, SIGNAL("clicked(QModelIndex)"), self.click)
+    self.connect(self, SIGNAL("activated(QModelIndex)"), self.click)
+    self.showMaximized()
 
   def initUI(self):
-    self.resize(800, 600)
-    self.setWindowTitle("Photo Archiving System")
+    self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+    self.horizontalHeader().ResizeMode(QHeaderView.Stretch)
+    self.horizontalHeader().setStretchLastSection(True)
 
-    self.setCentralWidget(PageManager(self))
+  def linkModel(self):
+    self.setModel(PatientDetailTableModel())
+    self.updateGeometry()
 
 
-  def createMenus(self):
-    #exitAction = QAction(QIcon('exit.png') 'E&xit', self)
-    exitAction = QAction('E&xit', self)
-    exitAction.setShortcut('Ctrl+Q')
-    exitAction.setStatusTip('Exit Application')
-    exitAction.triggered.connect(qApp.quit)
-
-    self.statusBar()
-
-    menuBar = self.menuBar()
-    fileMenu = menuBar.addMenu('&File')
-    fileMenu.addAction(exitAction)
-
+  def click(self, index):
+    print index.row();
+    print index.column();
 

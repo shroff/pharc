@@ -16,35 +16,34 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 from PyQt4.QtGui import *
-from pagemanager import *
+from PyQt4.QtCore import *
 
-class MainWindow(QMainWindow):
-  def __init__(self):
-    super(MainWindow, self).__init__()
+from mainpage import *
+from patienteditpage import *
+
+class PageManager(QWidget):
+  def __init__(self, parent):
+    super(PageManager, self).__init__(parent)
+    self.parent = parent
 
     self.initUI()
-    self.createMenus()
-
-    self.show()
+    self.viewMain()
 
   def initUI(self):
-    self.resize(800, 600)
-    self.setWindowTitle("Photo Archiving System")
+    vbox = QVBoxLayout()
 
-    self.setCentralWidget(PageManager(self))
+    self.mainpage = MainPage(self, "Doctor")
+    self.editpage = PatientEditPage(self)
 
+    vbox.addWidget(self.mainpage)
+    vbox.addWidget(self.editpage)
 
-  def createMenus(self):
-    #exitAction = QAction(QIcon('exit.png') 'E&xit', self)
-    exitAction = QAction('E&xit', self)
-    exitAction.setShortcut('Ctrl+Q')
-    exitAction.setStatusTip('Exit Application')
-    exitAction.triggered.connect(qApp.quit)
+    self.setLayout(vbox)
 
-    self.statusBar()
+  def viewDetails(self):
+    self.editpage.setVisible(True)
+    self.mainpage.setVisible(False)
 
-    menuBar = self.menuBar()
-    fileMenu = menuBar.addMenu('&File')
-    fileMenu.addAction(exitAction)
-
-
+  def viewMain(self):
+    self.editpage.setVisible(False)
+    self.mainpage.setVisible(True)

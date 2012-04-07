@@ -16,25 +16,34 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 from PyQt4.QtGui import *
+from PyQt4.QtCore import *
 
 
 class PatientDetail(QWidget):
-  def __init__(self):
-    super(PatientDetail, self).__init__()
+  def __init__(self, parent):
+    super(PatientDetail, self).__init__(parent)
+    self.parent = parent
+
     self.initUI()
 
   def initUI(self):
     self.setMinimumSize(200, 300)
     self.setMaximumSize(200, 300)
     vbox = QVBoxLayout()
+
     self.nameLabel = QLabel('Name: ')
     self.diagLabel = QLabel('Diagnosis: ')
     self.tmtLabel = QLabel('Treatment: ')
+    self.detailsButton = QPushButton('View Details')
+
     vbox.addWidget(self.nameLabel)
     vbox.addWidget(self.diagLabel)
     vbox.addWidget(self.tmtLabel)
+    vbox.addWidget(self.detailsButton)
 
     self.setLayout(vbox)
+
+    QObject.connect(self.detailsButton, SIGNAL('clicked()'), self.viewDetails)
 
   def setName(self, name):
     self.nameLabel.setText('Name: ' + name)
@@ -44,3 +53,6 @@ class PatientDetail(QWidget):
 
   def setDiagnosis(self, diag):
     self.diagLabel.setText('Name: ' + diag)
+
+  def viewDetails(self):
+    self.parent.viewDetails()
