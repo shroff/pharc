@@ -121,6 +121,7 @@ class FS(DataLoaderInterface):
 
     def load_patient_physicians(self, patient):
         data = self.get_patient_data_from_field(patient, "physicians.txt")
+        physicians = list()
         if data is None:
             # TODO error?
             return None
@@ -129,8 +130,10 @@ class FS(DataLoaderInterface):
             for i in data:
                 d = Physician()
                 d.first_name, d.last_name, d.uid = i
-                patient.physicians.append( d )
-                print patient.physicians
+                physicians.append(d)
+                #patient.physicians.append( d )
+                #print patient.physicians
+            return physicians
     
     def load_patient_photoset_list(self, patient):
         # not done
@@ -143,11 +146,13 @@ class FS(DataLoaderInterface):
                 items = os.listdir(directory)
                 for i in items:
                     if os.path.isdir(directory + "/" + i):
-                        p = Photoset()
+                        p = Photoset(None)
                         p.patient = patient
+                        #print i
                         split_name = i.split("#")
-                        uid = split_name[1]
-                        p.uid = uid
+                        #uid = split_name[1]
+                        #p.uid = uid
+                        p.uid = 0
 
                         # determine date
                         date = split_name[0].split("-")
