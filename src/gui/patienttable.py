@@ -21,18 +21,18 @@ from PyQt4.QtCore import *
 from patienttablemodel import PatientTableModel
 
 class PatientTable(QTableView):
-  def __init__(self):
-    super(PatientTable, self).__init__()
+  def __init__(self, parent):
+    super(PatientTable, self).__init__(parent)
+    self.parent = parent
     self.initUI()
     self.linkModel()
 
     self.connect(self, SIGNAL("clicked(QModelIndex)"), self.click)
     self.connect(self, SIGNAL("activated(QModelIndex)"), self.click)
-    self.connect(self, SIGNAL("doubleClicked(QModelIndex)"), self.detail)
+    #self.connect(self, SIGNAL("doubleClicked(QModelIndex)"), self.detail)
     self.showMaximized()
 
   def initUI(self):
-    self.setMaximumSize(8000, 5000)
     self.setColumnWidth(0, 200)
     self.setColumnWidth(1, 200)
 
@@ -47,10 +47,5 @@ class PatientTable(QTableView):
 
 
   def click(self, index):
-    print index.row();
-    print index.column();
+    self.parent.viewInfo(index.row(), index.column())
 
-  def detail(self, index):
-    print "Details for: "
-    print index.row();
-    print index.column();

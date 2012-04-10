@@ -16,35 +16,26 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 from PyQt4.QtGui import *
-from pagemanager import *
+from PyQt4.QtCore import *
 
-class MainWindow(QMainWindow):
+rowcount = 2;
+
+#TODO: Link Model to logic
+class PatientDetailTableModel(QStandardItemModel):
   def __init__(self):
-    super(MainWindow, self).__init__()
+    super(PatientDetailTableModel, self).__init__(rowcount, 2)
 
-    self.initUI()
-    self.createMenus()
+    self.setHeaders()
 
-    self.show()
-
-  def initUI(self):
-    self.resize(800, 600)
-    self.setWindowTitle("Photo Archiving System")
-
-    self.setCentralWidget(PageManager(self))
+    self.fakeData()
 
 
-  def createMenus(self):
-    #exitAction = QAction(QIcon('exit.png') 'E&xit', self)
-    exitAction = QAction('E&xit', self)
-    exitAction.setShortcut('Ctrl+Q')
-    exitAction.setStatusTip('Exit Application')
-    exitAction.triggered.connect(qApp.quit)
+  def setHeaders(self):
+    self.setHeaderData(0, Qt.Horizontal, 'Treatment', role=Qt.DisplayRole)
+    self.setHeaderData(1, Qt.Horizontal, 'Diagnosis', role=Qt.DisplayRole)
 
-    self.statusBar()
-
-    menuBar = self.menuBar()
-    fileMenu = menuBar.addMenu('&File')
-    fileMenu.addAction(exitAction)
-
-
+  def fakeData(self):
+    self.setItem(0, 0, QStandardItem('a'))
+    self.setItem(0, 1, QStandardItem('a'))
+    self.setItem(1, 0, QStandardItem('a'))
+    self.setItem(1, 1, QStandardItem('a'))

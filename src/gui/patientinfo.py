@@ -16,35 +16,32 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 from PyQt4.QtGui import *
-from pagemanager import *
 
-class MainWindow(QMainWindow):
-  def __init__(self):
-    super(MainWindow, self).__init__()
+from patienttable import PatientTable
+from patientdetail import PatientDetail
 
+class PatientInfo(QWidget):
+  def __init__(self, parent):
+    super(PatientInfo, self).__init__(parent)
+    self.parent = parent
     self.initUI()
-    self.createMenus()
-
-    self.show()
 
   def initUI(self):
-    self.resize(800, 600)
-    self.setWindowTitle("Photo Archiving System")
+    hbox = QHBoxLayout()
+    self.patientTable = PatientTable(self)
+    self.patientDetail = PatientDetail(self)
+    self.patientDetail.setVisible(False)
+    hbox.addWidget(self.patientTable)
+    hbox.addWidget(self.patientDetail)
 
-    self.setCentralWidget(PageManager(self))
-
-
-  def createMenus(self):
-    #exitAction = QAction(QIcon('exit.png') 'E&xit', self)
-    exitAction = QAction('E&xit', self)
-    exitAction.setShortcut('Ctrl+Q')
-    exitAction.setStatusTip('Exit Application')
-    exitAction.triggered.connect(qApp.quit)
-
-    self.statusBar()
-
-    menuBar = self.menuBar()
-    fileMenu = menuBar.addMenu('&File')
-    fileMenu.addAction(exitAction)
+    self.setLayout(hbox)
 
 
+  def viewInfo(self, row, col):
+    self.patientDetail.setVisible(True)
+    print row
+    print col
+
+  def viewDetails(self):
+    if(self.patientDetail.isVisible()):
+      self.parent.viewDetails()
