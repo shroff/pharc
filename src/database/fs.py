@@ -146,7 +146,7 @@ class FS(DataLoaderInterface):
                 items = os.listdir(directory)
                 for i in items:
                     if os.path.isdir(directory + "/" + i):
-                        p = Photoset(None)
+                        p = Photoset()
                         p.patient = patient
                         #print i
                         split_name = i.split("#")
