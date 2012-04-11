@@ -93,6 +93,10 @@ class FS(DataLoaderInterface):
     def generate_patient_dir(self, patient):
         return self.root + "/" + patient.name_last + ", " + patient.name_first + "#" + str(patient.uid)
 
+    def generate_photoset_dir(self, photoset):
+        patient = photoset.patient
+        return generate_patient_dir(self, patient) + "/"
+
     def get_patient_data_from_field(self, patient, field):
         if self.is_new():
             # TODO: error codes
@@ -169,7 +173,7 @@ class FS(DataLoaderInterface):
         directory = self.generate_patient_dir(photoset.patient)
         if os.path.isdir(directory):
             try:
-                f = open(directory + "/tags.txt")
+                f = open(directory + "/diagnoses.txt")
                 data = f.read()
                 f.close()
             except IOError as (errno, strerror):
@@ -177,6 +181,15 @@ class FS(DataLoaderInterface):
                 # TODO: error codes
                 return None
                 
+            try:
+                f = open(directory + "/treatments.txt")
+                data = data + "\n" + f.read()
+                f.close()
+            except IOError as (errno, strerror):
+                print "IOError [{0}]: {1}".format(errno, strerror)
+                # TODO: error codes
+                return None
+
             data = data.splitlines()
             return data
         else:
