@@ -31,3 +31,18 @@ class PhotosetLoader:
 
     def load_photos(self, photoset):
         pass
+
+    def load_diagnoses(self, patient):
+        pass
+
+    def load_treatments(self, patient):
+        pass
+
+    def load_diagnoses(self, photoset):
+        pass
+
+    def load_treatments(self, photoset):
+        pass
+
+    def load_tags(self, photoset):
+        pass
