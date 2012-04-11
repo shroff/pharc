@@ -47,7 +47,7 @@ class PageManager(QWidget):
     self.setLayout(vbox)
 
   def viewDetails(self, index):
-    self.editpage.setPatient(index)
+    self.editpage.setPatient(self.data.patients[index])
     self.editpage.setVisible(True)
     self.mainpage.setVisible(False)
 

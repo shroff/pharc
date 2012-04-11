@@ -18,7 +18,9 @@
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 
-imageBase = "../images/"
+import random
+
+imageBase = "images/"
 imgs = ['caesar.jpg', 'puppy.jpg', 'kitty.jpg', 'punch.jpg']
 
 class PatientDetail(QWidget):
@@ -50,9 +52,10 @@ class PatientDetail(QWidget):
     QObject.connect(self.detailsButton, SIGNAL('clicked()'), self.viewDetails)
 
   def setRandom(self):
-    pass
+    self.setPicture(imageBase + random.choice(imgs))
 
   def setPicture(self, imgpath):
+    print(imgpath)
     image = QImage(imgpath)
     pixmap = QPixmap.fromImage(image)
     if(not pixmap.isNull()):

@@ -26,15 +26,15 @@ from logic.datamanager import DataManager
 
 class PatientEditPage(QWidget):
   def __init__(self, parent, dm):
-    self.data = dm
     super(PatientEditPage, self).__init__(parent)
+    self.data = dm
     self.parent = parent
     self.initUI()
 
   def initUI(self):
     vbox = QVBoxLayout()
     self.nameRow = PatientNameRow()
-    self.detailTable = PatientDetailTable()
+    self.detailTable = PatientDetailTable(self.data)
     vbox.addWidget(self.nameRow)
     vbox.addWidget(self.detailTable)
 
@@ -59,5 +59,7 @@ class PatientEditPage(QWidget):
   def cancelChanges(self):
     self.parent.viewMain()
 
-  def setPatient(self, index):
-    self.nameRow.setName(self.data.patients[index].getname())
+  def setPatient(self, patient):
+    self.patient = patient
+    self.nameRow.setName(self.patient.name)
+    self.detailTable.setPatient(self.patient)

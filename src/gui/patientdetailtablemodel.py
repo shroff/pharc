@@ -18,12 +18,15 @@
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 
-rowcount = 2;
+import database.fs
+from logic.datamanager import DataManager
+from logic.patient import Patient
 
 #TODO: Link Model to logic
 class PatientDetailTableModel(QStandardItemModel):
-  def __init__(self):
-    super(PatientDetailTableModel, self).__init__(rowcount, 2)
+  def __init__(self, dm):
+    super(PatientDetailTableModel, self).__init__(0, 3)
+    self.data = dm
 
     self.setHeaders()
 
@@ -31,8 +34,9 @@ class PatientDetailTableModel(QStandardItemModel):
 
 
   def setHeaders(self):
-    self.setHeaderData(0, Qt.Horizontal, 'Treatment', role=Qt.DisplayRole)
-    self.setHeaderData(1, Qt.Horizontal, 'Diagnosis', role=Qt.DisplayRole)
+    self.setHeaderData(0, Qt.Horizontal, 'Date', role=Qt.DisplayRole)
+    self.setHeaderData(1, Qt.Horizontal, 'Treatments', role=Qt.DisplayRole)
+    self.setHeaderData(2, Qt.Horizontal, 'Diagnoses', role=Qt.DisplayRole)
 
   def fakeData(self):
     self.setItem(0, 0, QStandardItem('a'))
@@ -41,11 +45,8 @@ class PatientDetailTableModel(QStandardItemModel):
     self.setItem(1, 1, QStandardItem('a'))
 
   def realData(self):
-    num = 0
+    self.rowcount = 0
     for p in self.data.patients:
-      self.setItem(num, 0, QStandardItem(p.getname()))
-      self.setItem(num, 1, QStandardItem(p.getdiagnosisname()))
-      self.setItem(num, 2, QStandardItem(p.getdiagnosisname()))
-      print p.getname()
-      print p.getdiagnosisname()
-      num=num+1
+      self.setItem(self.rowcount, 0, QStandardItem(p.treatments))
+      self.setItem(self.rowcount, 1, QStandardItem(p.diagnoses))
+      self.rowcount=self.rowcount+1

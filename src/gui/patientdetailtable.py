@@ -21,10 +21,10 @@ from PyQt4.QtCore import *
 from patientdetailtablemodel import PatientDetailTableModel
 
 class PatientDetailTable(QTableView):
-  def __init__(self):
+  def __init__(self, dm):
     super(PatientDetailTable, self).__init__()
+    self.data = dm
     self.initUI()
-    self.linkModel()
 
     self.connect(self, SIGNAL("clicked(QModelIndex)"), self.click)
     self.connect(self, SIGNAL("activated(QModelIndex)"), self.click)
@@ -36,7 +36,7 @@ class PatientDetailTable(QTableView):
     self.horizontalHeader().setStretchLastSection(True)
 
   def linkModel(self):
-    self.setModel(PatientDetailTableModel())
+    self.setModel(PatientDetailTableModel(self.data, self.patient))
     self.updateGeometry()
 
 
@@ -44,3 +44,6 @@ class PatientDetailTable(QTableView):
     print index.row();
     print index.column();
 
+  def setPatient(self, patient):
+    self.patient = patient
+    self.linkModel()
