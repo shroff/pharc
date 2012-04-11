@@ -18,12 +18,12 @@
 import db
 import fs
 
-import sys
-sys.path.append('../logic')
-from patient import Patient
-from photoset import Photoset
-from tags import Tag
-from tags import TagList
+# import sys
+# sys.path.append('../logic')
+from logic.patient import Patient
+from logic.photoset import Photoset
+from logic.tags import Tag
+from logic.tags import TagList
 
 class TagLoader:
 

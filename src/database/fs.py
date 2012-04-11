@@ -18,7 +18,7 @@
 from dataloaderinterface import DataLoaderInterface
 import os, sys, datetime
 
-sys.path.append('../logic')
+# sys.path.append('../logic')
 #from ..logic import patient
 from logic.patient import Patient
 from logic.photoset import Photoset

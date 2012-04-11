@@ -18,9 +18,9 @@
 import db
 import fs
 
-import sys
-sys.path.append('../logic')
-from patient import Patient
+# import sys
+# sys.path.append('../logic')
+from logic.patient import Patient
 
 class PatientLoader:
 
