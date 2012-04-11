@@ -42,7 +42,6 @@ class Photoset(object):
             self.treatments,
             self.diagnoses)
 
-    
     def add_diagnosis_by_string(self, diagnosis):
         """Refers to tag list and adds appropriate tag.
 
@@ -173,3 +172,4 @@ class Photoset(object):
     def deldiagnoses(slef):
         del self._diagnoses
     diagnoses = property(getdiagnoses, setdiagnoses, deldiagnoses, "")
+

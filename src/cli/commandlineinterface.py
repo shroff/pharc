@@ -17,6 +17,8 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
+# TODO too much duped code for looking up entities by uid
+
 import os
 import sys
 import database.fs
@@ -74,21 +76,24 @@ class CommandLineInterface(cmd.Cmd):
                 echo += "  └─" + str(p.photosets[-1]) + "\n"
         print echo[:-1]
         
-    def do_loadTags(self, args):
+    def do_loadRecentPhotoset(self, args):
+        pats = None
         if args == "":
             pats = self.dm.patients
         else:
+            # figure out which patient the user is talking about
             q = DataManager.Query("id", "", int(args))
             sresults = self.dm.searchPatients([q], None)
             pats = map(lambda x: x[0], sresults)
-
+        
         if len(pats) == 0:
             print "No patients found"
             return
-        
-        # for p in pats:
-            
-        
+
+        echo = ""
+        for p in pats:
+            echo += p.name_first + " " + p.name_last + ": " + str(p.getMostRecentPhotoset()) + "\n"
+        print echo[:-1]
 
     def do_findPhotosets(self, args):
         pass
