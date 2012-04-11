@@ -42,6 +42,9 @@ class PatientTableModel(QStandardItemModel):
     self.rowcount = 0
     for p in self.data.patients:
       self.setItem(self.rowcount, 0, QStandardItem(p.name_first + " " + p.name_last))
-      #self.setItem(num, 1, QStandardItem(p.treatments))
-      #self.setItem(num, 2, QStandardItem(p.diagnoses))
+      ps = p.getMostRecentPhotoset()
+      self.setItem(self.rowcount, 1, QStandardItem(" ".join(map(str,
+        ps.treatments))))
+      self.setItem(self.rowcount, 2, QStandardItem(" ".join(map(str,
+        ps.diagnoses))))
       self.rowcount = self.rowcount+1

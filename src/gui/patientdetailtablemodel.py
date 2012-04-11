@@ -24,13 +24,14 @@ from logic.patient import Patient
 
 #TODO: Link Model to logic
 class PatientDetailTableModel(QStandardItemModel):
-  def __init__(self, dm):
+  def __init__(self, dm, patient):
     super(PatientDetailTableModel, self).__init__(0, 3)
     self.data = dm
+    self.patient = patient
 
     self.setHeaders()
 
-    self.fakeData()
+    self.populate()
 
 
   def setHeaders(self):
@@ -44,9 +45,13 @@ class PatientDetailTableModel(QStandardItemModel):
     self.setItem(1, 0, QStandardItem('a'))
     self.setItem(1, 1, QStandardItem('a'))
 
-  def realData(self):
+  def populate(self):
     self.rowcount = 0
-    for p in self.data.patients:
-      self.setItem(self.rowcount, 0, QStandardItem(p.treatments))
-      self.setItem(self.rowcount, 1, QStandardItem(p.diagnoses))
+    for ps in self.patient.photosets:
+      self.setItem(self.rowcount, 0, QStandardItem(str(ps.date)))
+      self.setItem(self.rowcount, 1, QStandardItem(" ".join(map(str,
+        ps.treatments))))
+      self.setItem(self.rowcount, 2, QStandardItem(" ".join(map(str,
+        ps.diagnoses))))
       self.rowcount=self.rowcount+1
+
