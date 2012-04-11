@@ -100,8 +100,8 @@ class FS(DataLoaderInterface):
             items = os.listdir(directory)
             for i in items:
                 if os.path.isdir(directory + "/" + i):
-                    if i.split("#") == uid:
-                        return directory + "/" + i
+                    #if i.split("#") == uid:
+                    return directory + "/" + i
         
 
     def get_patient_data_from_field(self, patient, field):
