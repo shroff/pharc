@@ -69,6 +69,7 @@ class FS(DataLoaderInterface):
                 p = Patient()
                 # Parse filename
                 p.name_first, p.name_last, p.uid = self.parse_name(i)
+                p.uid = int(p.uid)
                 patients.append(p)
 
         return patients
@@ -140,7 +141,7 @@ class FS(DataLoaderInterface):
             data = self.parse_names(data)
             for i in data:
                 d = Physician()
-                d.first_name, d.last_name, d.uid = i
+                d.first_name, d.last_name, d.uid = int(i)
                 physicians.append(d)
                 #patient.physicians.append( d )
                 #print patient.physicians
@@ -163,7 +164,7 @@ class FS(DataLoaderInterface):
                         #print i
                         split_name = i.split("#")
                         uid = split_name[1]
-                        p.uid = uid
+                        p.uid = int(uid)
                         # p.uid = 0
 
                         # determine date
