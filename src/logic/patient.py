@@ -74,6 +74,13 @@ class Patient(object):
         del self._physicians
     physicians = property(getphysicians, setphysicians, delphysicians, "")
 
+    def getname(self):
+        return self.name_first + self.name_last
+    def setname(self):
+        raise NotImplementedError, "I haven't figured out a good way to handle changing the name. use name_first and name_last instead"
+    def delname(self):
+        raise NotImplementedError, "I haven't figured out a good way to handle deleting the name. use name_first and name_last instead"
+    name = property(getname, setname, delname, "")
 
     def getphotosets(self):
         if self._photosets is None:
