@@ -16,6 +16,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 from logic.datamanager import DataManager
+from logic.tags import Tag
 
 class Photoset(object):
 
@@ -57,7 +58,7 @@ class Photoset(object):
             The tag that was added to this photoset.
         """
 
-        match = self.dm.diagnoses.match_fullstring(diagnosis)
+        match = self.dm.diagnoses.match_fullstring_single(diagnosis)
         if not match: # no matching tag, so make a new one and add it
                       # to the list
             match = Tag(diagnosis)
@@ -107,7 +108,7 @@ class Photoset(object):
             The tag that was added to this photoset.
         """
 
-        match = self.dm.treatments.match_fullstring(treatment)
+        match = self.dm.treatments.match_fullstring_single(treatment)
         if not match: # no matching tag, so make a new one and add it
                       # to the list
             match = Tag(treatment)
@@ -145,13 +146,11 @@ class Photoset(object):
 
     def gettreatments(self):
         if self._treatments is None:
-            self._treatments = []
+            self._treatments = set()
             tstrings = self.dm.loader.load_photoset_treatments(self)
-            print tstrings
             for s in tstrings:
-                print "adding treatment " + s
                 self.add_treatment_by_string(s)
-        print "treatments -> " + str(self._treatments)
+        # print "treatments -> " + str(self._treatments)
         return self._treatments
     def settreatments(self, value):
         #print "treatments <- " + str(value)
@@ -162,13 +161,11 @@ class Photoset(object):
 
     def getdiagnoses(self):
         if self._diagnoses is None:
-            self._diagnoses = []
+            self._diagnoses = set()
             dstrings = self.dm.loader.load_photoset_diagnoses(self)
-            print dstrings
             for s in dstrings:
-                print "adding diagnosis " + s
                 self.add_diagnosis_by_string(s)
-        print "diagnoses -> " + str(self._diagnoses)
+        # print "diagnoses -> " + str(self._diagnoses)
         return self._diagnoses
     def setdiagnoses(self, value):
         #print "diagnoses <- " + str(value)

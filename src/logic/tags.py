@@ -51,7 +51,7 @@ class TagList(object):
         """Returns None or a tag whose name completely matches the
         query. If multiple tags match, results are undefined. There
         should only be one tag in the list with a given name."""
-        results = [t for t in tags if t.match_fullstring(query)]
+        results = [t for t in self.tags if t.match_fullstring(query)]
         if not results:         # no results
             return None
         return results[0]
@@ -152,3 +152,6 @@ class Tag(object):
         """
 
         return logic.util.lcs(self.value, query)
+
+    def __repr__(self):
+        return str(self.value)
