@@ -88,6 +88,8 @@ class Patient(object):
 
 
     def getnotes(self):
+        if self._notes is None:
+            self._notes = self.dm.loader.load_patient_notes(self)
         #print "notes -> " + str(self._notes)
         return self._notes
     def setnotes(self, value):
@@ -99,18 +101,24 @@ class Patient(object):
 
 
     def getdiagnoses(self):
-        pass
+        result = set()
+        for ps in self.photosets:
+            result = result | ps.diagnoses
+        return result
     def setdiagnoses(self, value):
-        pass
+        raise NotImplementedError, "I haven't figured out a good way to handle changing patient diagnoses."
     def deldiagnoses(slef):
-        pass
+        raise NotImplementedError, "I haven't figured out a good way to handle deleting patient diagnoses."
     diagnoses = property(getdiagnoses, setdiagnoses, deldiagnoses, "")
 
 
     def gettreatments(self):
-        pass
+        result = set()
+        for ps in self.photosets:
+            result = result | ps.treatments
+        return result
     def settreatments(self, value):
-        pass
+        raise NotImplementedError, "I haven't figured out a good way to handle changing patient treatments."
     def deltreatments(slef):
-        pass
+        raise NotImplementedError, "I haven't figured out a good way to handle deleting patient treatments."
     treatments = property(gettreatments, settreatments, deltreatments, "")

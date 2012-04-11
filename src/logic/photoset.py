@@ -30,8 +30,8 @@ class Photoset(object):
     photos = None # list of photos in this photoset
 
     def __init__(self):
-        self.treatments = set()
-        self.diagnoses = set()
+        self._treatments = set()
+        self._diagnoses = set()
 
     def __repr__(self):
         return \
@@ -91,3 +91,32 @@ class Photoset(object):
         treatment.photosets.add(self)
         self.treatments.add(treatment)
         return False
+
+
+    def gettreatments(self):
+        if self._treatments is None:
+            self._treatments = []
+            self.dm.loader.load_photoset_treatment_list(self)
+            # TODO load treatments
+        #print "treatments -> " + str(self._treatments)
+        return self._treatments
+    def settreatments(self, value):
+        #print "treatments <- " + str(value)
+        self._treatments = value
+    def deltreatments(slef):
+        del self._treatments
+    treatments = property(gettreatments, settreatments, deltreatments, "")
+
+    def getdiagnoses(self):
+        if self._diagnoses is None:
+            self._diagnoses = []
+            self.dm.loader.load_photoset_diagnose_list(self)
+            # TODO load diagnoses
+        #print "diagnoses -> " + str(self._diagnoses)
+        return self._diagnoses
+    def setdiagnoses(self, value):
+        #print "diagnoses <- " + str(value)
+        self._diagnoses = value
+    def deldiagnoses(slef):
+        del self._diagnoses
+    diagnoses = property(getdiagnoses, setdiagnoses, deldiagnoses, "")
