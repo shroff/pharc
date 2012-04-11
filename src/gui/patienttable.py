@@ -20,8 +20,15 @@ from PyQt4.QtCore import *
 
 from patienttablemodel import PatientTableModel
 
+import database.fs
+from logic.datamanager import DataManager
+from logic.patient import Patient
+
+#data = None
+
 class PatientTable(QTableView):
-  def __init__(self, parent):
+  def __init__(self, parent, dm):
+    self.data = dm
     super(PatientTable, self).__init__(parent)
     self.parent = parent
     self.initUI()
@@ -42,7 +49,7 @@ class PatientTable(QTableView):
     self.horizontalHeader().setStretchLastSection(True)
 
   def linkModel(self):
-    self.setModel(PatientTableModel())
+    self.setModel(PatientTableModel(self.data))
     self.updateGeometry()
 
 

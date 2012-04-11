@@ -18,16 +18,24 @@
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 
+import database.fs
+from logic.datamanager import DataManager
+from logic.patient import Patient
+
 rowcount = 2;
+#data = None
 
 #TODO: Link Model to logic
 class PatientTableModel(QStandardItemModel):
-  def __init__(self):
+  def __init__(self, dm):
     super(PatientTableModel, self).__init__(rowcount, 3)
+    self.data = dm
+#    self.data = DataManager("C:/Users/Michael/Desktop/DB/Database")
 
     self.setHeaders()
 
-    self.fakeData()
+    #self.fakeData()
+    self.realData()
 
 
   def setHeaders(self):
@@ -42,3 +50,16 @@ class PatientTableModel(QStandardItemModel):
     self.setItem(1, 0, QStandardItem('a'))
     self.setItem(1, 1, QStandardItem('a'))
     self.setItem(1, 2, QStandardItem('a'))
+    for p in range(2,50):
+      for i in range(0,3):
+        self.setItem(p, i, QStandardItem('a'))
+
+  def realData(self):
+    num = 0
+    for p in self.data.patients:
+      self.setItem(num, 0, QStandardItem(p.name_first + " " + p.name_last))
+      #self.setItem(num, 1, QStandardItem(p.treatments))
+      #self.setItem(num, 2, QStandardItem(p.diagnoses))
+      num=num+1
+
+#  def getDataManager()

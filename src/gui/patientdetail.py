@@ -18,6 +18,8 @@
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 
+imageBase = "../images/"
+imgs = ['caesar.jpg', 'puppy.jpg', 'kitty.jpg', 'punch.jpg']
 
 class PatientDetail(QWidget):
   def __init__(self, parent):
@@ -27,15 +29,17 @@ class PatientDetail(QWidget):
     self.initUI()
 
   def initUI(self):
-    self.setMinimumSize(200, 300)
-    self.setMaximumSize(200, 300)
+    self.setFixedSize(QSize(200, 450))
     vbox = QVBoxLayout()
 
+    self.picLabel = QLabel()
+    self.picLabel.setFixedSize(QSize(150, 150))
     self.nameLabel = QLabel('Name: ')
     self.diagLabel = QLabel('Diagnosis: ')
     self.tmtLabel = QLabel('Treatment: ')
     self.detailsButton = QPushButton('View Details')
 
+    vbox.addWidget(self.picLabel)
     vbox.addWidget(self.nameLabel)
     vbox.addWidget(self.diagLabel)
     vbox.addWidget(self.tmtLabel)
@@ -44,6 +48,17 @@ class PatientDetail(QWidget):
     self.setLayout(vbox)
 
     QObject.connect(self.detailsButton, SIGNAL('clicked()'), self.viewDetails)
+
+  def setRandom(self):
+    pass
+
+  def setPicture(self, imgpath):
+    image = QImage(imgpath)
+    pixmap = QPixmap.fromImage(image)
+    if(not pixmap.isNull()):
+      pixmap = pixmap.scaledToHeight(150)
+      self.picLabel.setPixmap(pixmap)
+      self.picLabel.setFixedSize(pixmap.size())
 
   def setName(self, name):
     self.nameLabel.setText('Name: ' + name)

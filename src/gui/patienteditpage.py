@@ -21,16 +21,22 @@ from PyQt4.QtCore import *
 from patientnamerow import PatientNameRow
 from patientdetailtable import PatientDetailTable
 
+import database.fs
+from logic.datamanager import DataManager
+
 class PatientEditPage(QWidget):
-  def __init__(self, parent):
+  def __init__(self, parent, dm):
+    self.data = dm
     super(PatientEditPage, self).__init__(parent)
     self.parent = parent
     self.initUI()
 
   def initUI(self):
     vbox = QVBoxLayout()
-    vbox.addWidget(PatientNameRow())
-    vbox.addWidget(PatientDetailTable())
+    self.nameRow = PatientNameRow()
+    self.detailTable = PatientDetailTable()
+    vbox.addWidget(self.nameRow)
+    vbox.addWidget(self.detailTable)
 
     self.save = QPushButton('Save Changes')
     self.cancel = QPushButton('Return')
@@ -52,3 +58,6 @@ class PatientEditPage(QWidget):
 
   def cancelChanges(self):
     self.parent.viewMain()
+
+  def setPatient(self, index):
+    self.nameRow.setName(self.data.patients[index].getname())

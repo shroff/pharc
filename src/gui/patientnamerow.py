@@ -66,6 +66,9 @@ class PatientNameRow(QWidget):
 
     self.changing = False
 
+  def setName(self, name):
+    self.changeNameField.setText(str(name))
+
 
 
 class ChangeNameField(QLineEdit):

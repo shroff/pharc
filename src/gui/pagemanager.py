@@ -21,8 +21,14 @@ from PyQt4.QtCore import *
 from mainpage import *
 from patienteditpage import *
 
+import database.fs
+from logic.datamanager import DataManager
+
+#data = None
+
 class PageManager(QWidget):
   def __init__(self, parent):
+    self.data = DataManager("test/Database")
     super(PageManager, self).__init__(parent)
     self.parent = parent
 
@@ -32,15 +38,16 @@ class PageManager(QWidget):
   def initUI(self):
     vbox = QVBoxLayout()
 
-    self.mainpage = MainPage(self, "Doctor")
-    self.editpage = PatientEditPage(self)
+    self.mainpage = MainPage(self, "Doctor", self.data)
+    self.editpage = PatientEditPage(self, self.data)
 
     vbox.addWidget(self.mainpage)
     vbox.addWidget(self.editpage)
 
     self.setLayout(vbox)
 
-  def viewDetails(self):
+  def viewDetails(self, index):
+    self.editpage.setPatient(index)
     self.editpage.setVisible(True)
     self.mainpage.setVisible(False)
 

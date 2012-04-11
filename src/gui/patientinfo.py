@@ -20,15 +20,24 @@ from PyQt4.QtGui import *
 from patienttable import PatientTable
 from patientdetail import PatientDetail
 
+import database.fs
+from logic.datamanager import DataManager
+from logic.patient import Patient
+
+#data = None
+
 class PatientInfo(QWidget):
-  def __init__(self, parent):
+  def __init__(self, parent, dm):
+    self.data = dm
     super(PatientInfo, self).__init__(parent)
     self.parent = parent
     self.initUI()
+    self.index = 0
+
 
   def initUI(self):
     hbox = QHBoxLayout()
-    self.patientTable = PatientTable(self)
+    self.patientTable = PatientTable(self, self.data)
     self.patientDetail = PatientDetail(self)
     self.patientDetail.setVisible(False)
     hbox.addWidget(self.patientTable)
@@ -38,10 +47,15 @@ class PatientInfo(QWidget):
 
 
   def viewInfo(self, row, col):
+    patient = self.data.patients[row]
+    self.patientDetail.setName(patient.name_first + " " + patient.name_last)
+    #self.patientDetail.setTreatment(self.data.patients[row].treatments)
+    #self.patientDetail.setDiagnosis(self.data.patients[row].diagnoses)
     self.patientDetail.setVisible(True)
+    self.index = row
     print row
     print col
 
   def viewDetails(self):
     if(self.patientDetail.isVisible()):
-      self.parent.viewDetails()
+      self.parent.viewDetails(self.index)

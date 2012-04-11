@@ -39,3 +39,13 @@ class PatientDetailTableModel(QStandardItemModel):
     self.setItem(0, 1, QStandardItem('a'))
     self.setItem(1, 0, QStandardItem('a'))
     self.setItem(1, 1, QStandardItem('a'))
+
+  def realData(self):
+    num = 0
+    for p in self.data.patients:
+      self.setItem(num, 0, QStandardItem(p.getname()))
+      self.setItem(num, 1, QStandardItem(p.getdiagnosisname()))
+      self.setItem(num, 2, QStandardItem(p.getdiagnosisname()))
+      print p.getname()
+      print p.getdiagnosisname()
+      num=num+1
