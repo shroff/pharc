@@ -94,7 +94,7 @@ class FS(DataLoaderInterface):
         return self.root + "/" + patient.name_last + ", " + patient.name_first + "#" + str(patient.uid)
 
     def generate_photoset_dir(self, photoset):
-        patientDir = generate_patient_dir(self, photoset.patient) + "/"
+        patientDir = self.generate_patient_dir(photoset.patient) + "/"
         uid = str(photoset.uid)
         if os.path.isdir(patientDir):
             items = os.listdir(directory)
