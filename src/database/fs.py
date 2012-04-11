@@ -159,11 +159,12 @@ class FS(DataLoaderInterface):
                     if os.path.isdir(directory + "/" + i):
                         p = Photoset()
                         p.patient = patient
+                        p.dm = patient.dm
                         #print i
                         split_name = i.split("#")
-                        #uid = split_name[1]
-                        #p.uid = uid
-                        p.uid = 0
+                        uid = split_name[1]
+                        p.uid = uid
+                        # p.uid = 0
 
                         # determine date
                         date = split_name[0].split("-")
