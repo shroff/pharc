@@ -73,6 +73,22 @@ class CommandLineInterface(cmd.Cmd):
             if len(p.photosets) > 0:
                 echo += "  └─" + str(p.photosets[-1]) + "\n"
         print echo[:-1]
+        
+    def do_loadTags(self, args):
+        if args == "":
+            pats = self.dm.patients
+        else:
+            q = DataManager.Query("id", "", int(args))
+            sresults = self.dm.searchPatients([q], None)
+            pats = map(lambda x: x[0], sresults)
+
+        if len(pats) == 0:
+            print "No patients found"
+            return
+        
+        # for p in pats:
+            
+        
 
     def do_findPhotosets(self, args):
         pass
@@ -86,6 +102,8 @@ class CommandLineInterface(cmd.Cmd):
         self.do_findPatients(args)
     def do_lps(self,args):
         self.do_listPhotosets(args)
+    def do_lt(self,args):
+        self.do_loadTags(args)
     def do_fps(self, args):
         self.do_findPhotosets(args)
 

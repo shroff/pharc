@@ -30,8 +30,8 @@ class Photoset(object):
     photos = None # list of photos in this photoset
 
     def __init__(self):
-        self._treatments = set()
-        self._diagnoses = set()
+        self._treatments = None
+        self._diagnoses = None
 
     def __repr__(self):
         return \
@@ -42,6 +42,56 @@ class Photoset(object):
             self.diagnoses)
 
     
+    def add_diagnosis_by_string(self, diagnosis):
+        """Refers to tag list and adds appropriate tag.
+
+        Adds the named diagnosis to this photoset's list of
+        diagnosiss. Looks up the list of existing diagnosiss, finds
+        one that matches the diagnosis name exactly or creates one,
+        and adds this photoset to this tag and updates indices.
+
+        Args:
+            diagnosis: the name of the tag to add to this photoset
+
+        Returns:
+            The tag that was added to this photoset.
+        """
+
+        match = self.dm.diagnoses.match_fullstring(diagnosis)
+        if not match: # no matching tag, so make a new one and add it
+                      # to the list
+            match = Tag(diagnosis)
+            self.dm.diagnoses.add(match)
+        match.photosets.add(self)
+        self._diagnoses.add(match)
+        return match
+    
+    
+    def add_diagnosis_by_tag(self, diagnosis):
+        """Adds this tag to the photoset.
+
+        Adds the given diagnosis to this photoset's list of
+        diagnosiss. Also adds this photoset to the diagnosis's list of
+        photosets. Note that this method assumes that the given tag is
+        the correct tag!
+        
+        Args:
+            diagnosis: tag to add to this photoset.
+
+        Returns:
+            True if this photoset already had the tag and the tag
+                already had the photoset, False otherwise.
+
+        Raises:
+        """
+        
+        if self in diagnosis.photosets and diagnosis in self._diagnoses:
+            return True
+        
+        diagnosis.photosets.add(self)
+        self._diagnoses.add(diagnosis)
+        return False
+
     def add_treatment_by_string(self, treatment):
         """Refers to tag list and adds appropriate tag.
 
@@ -63,7 +113,7 @@ class Photoset(object):
             match = Tag(treatment)
             self.dm.treatments.add(match)
         match.photosets.add(self)
-        self.treatments.add(match)
+        self._treatments.add(match)
         return match
     
     
@@ -85,20 +135,23 @@ class Photoset(object):
         Raises:
         """
         
-        if self in treatment.photosets and treatment in self.treatments:
+        if self in treatment.photosets and treatment in self._treatments:
             return True
         
         treatment.photosets.add(self)
-        self.treatments.add(treatment)
+        self._treatments.add(treatment)
         return False
 
 
     def gettreatments(self):
         if self._treatments is None:
             self._treatments = []
-            self.dm.loader.load_photoset_treatment_list(self)
-            # TODO load treatments
-        #print "treatments -> " + str(self._treatments)
+            tstrings = self.dm.loader.load_photoset_treatments(self)
+            print tstrings
+            for s in tstrings:
+                print "adding treatment " + s
+                self.add_treatment_by_string(s)
+        print "treatments -> " + str(self._treatments)
         return self._treatments
     def settreatments(self, value):
         #print "treatments <- " + str(value)
@@ -110,9 +163,12 @@ class Photoset(object):
     def getdiagnoses(self):
         if self._diagnoses is None:
             self._diagnoses = []
-            self.dm.loader.load_photoset_diagnose_list(self)
-            # TODO load diagnoses
-        #print "diagnoses -> " + str(self._diagnoses)
+            dstrings = self.dm.loader.load_photoset_diagnoses(self)
+            print dstrings
+            for s in dstrings:
+                print "adding diagnosis " + s
+                self.add_diagnosis_by_string(s)
+        print "diagnoses -> " + str(self._diagnoses)
         return self._diagnoses
     def setdiagnoses(self, value):
         #print "diagnoses <- " + str(value)
