@@ -177,7 +177,7 @@ class FS(DataLoaderInterface):
             # TODO: error codes
             return None
 
-        directory = self.generate_patient_dir(photoset.patient)
+        directory = self.generate_photoset_dir(photoset)
         if os.path.isdir(directory):
             try:
                 f = open(directory + "/diagnoses.txt")
@@ -201,5 +201,51 @@ class FS(DataLoaderInterface):
             return data
         else:
             # TODO: error codes
-            print "could not access: " + directory + "/tags.txt"
+            print "could not access: " + directory 
+            return None
+
+    def load_photoset_diagnoses(self, photoset):
+        if self.is_new():
+            # TODO: error codes
+            return None
+
+        directory = self.generate_photoset_dir(photoset)
+        if os.path.isdir(directory):
+            try:
+                f = open(directory + "/diagnoses.txt")
+                data = f.read()
+                f.close()
+            except IOError as (errno, strerror):
+                print "IOError [{0}]: {1}".format(errno, strerror)
+                # TODO: error codes
+                return None
+
+            data = data.splitlines()
+            return data
+        else:
+            # TODO: error codes
+            print "could not access: " + directory 
+            return None
+
+    def load_photoset_treatments(self, photoset):
+        if self.is_new():
+            # TODO: error codes
+            return None
+
+        directory = self.generate_photoset_dir(photoset)
+        if os.path.isdir(directory):
+            try:
+                f = open(directory + "/treatments.txt")
+                data = f.read()
+                f.close()
+            except IOError as (errno, strerror):
+                print "IOError [{0}]: {1}".format(errno, strerror)
+                # TODO: error codes
+                return None
+
+            data = data.splitlines()
+            return data
+        else:
+            # TODO: error codes
+            print "could not access: " + directory 
             return None

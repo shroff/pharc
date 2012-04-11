@@ -39,10 +39,12 @@ class PhotosetLoader:
         pass
 
     def load_diagnoses(self, photoset):
-        pass
+        return self.fsm.load_photoset_diagnoses(photoset)
 
     def load_treatments(self, photoset):
-        pass
+        return self.fsm.load_photoset_treatments(photoset)
 
     def load_tags(self, photoset):
-        pass
+        list = load_diagnoses(photoset)
+        list.append(load_treatments(photoset))
+        return list
