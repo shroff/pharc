@@ -130,7 +130,7 @@ def createPhotoset(dirname, UID, numPics, myDiagnosis, myTreatment, myNotes, myD
         physFile = "physicians.txt"
         noteFile = "notes.txt"
         treatFile = "treatments.txt"
-        diagFile = "diagnosis.txt"
+        diagFile = "diagnoses.txt"
         File = open(physFile,"w")
         File.writelines(myDoc)
         File = open(noteFile,"w")

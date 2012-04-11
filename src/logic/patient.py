@@ -61,6 +61,8 @@ class Patient(object):
                                                     str(self.uid),
                                                     str(len(self.photosets)))
 
+    def getMostRecentPhotoset(self):
+        return max(self.photosets, key=lambda x: x.date)
 
     def getphysicians(self):
         #print "physicians -> " + str(self._physicians)

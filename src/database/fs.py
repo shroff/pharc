@@ -94,14 +94,14 @@ class FS(DataLoaderInterface):
         return self.root + "/" + patient.name_last + ", " + patient.name_first + "#" + str(patient.uid)
 
     def generate_photoset_dir(self, photoset):
-        patientDir = self.generate_patient_dir(photoset.patient) + "/"
+        directory = self.generate_patient_dir(photoset.patient)
         uid = str(photoset.uid)
-        if os.path.isdir(patientDir):
+        if os.path.isdir(directory):
             items = os.listdir(directory)
             for i in items:
                 if os.path.isdir(directory + "/" + i):
-                    if i.split("#") == uid:
-                        return patientDir + str(i)
+                    #if i.split("#") == uid:
+                    return directory + "/" + i
         
 
     def get_patient_data_from_field(self, patient, field):
