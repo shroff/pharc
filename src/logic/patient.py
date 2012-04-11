@@ -84,7 +84,7 @@ class Patient(object):
 
     def getphotosets(self):
         if self._photosets is None:
-            self._photosets = []
+            self._photosets = set()
             self.dm.loader.load_patient_photoset_list(self)
         #print "photosets -> " + str(self._photosets)
         return self._photosets
@@ -112,7 +112,7 @@ class Patient(object):
     def getdiagnoses(self):
         result = set()
         for ps in self.photosets:
-            result = result | ps.diagnoses
+            result |= ps.diagnoses
         return result
     def setdiagnoses(self, value):
         raise NotImplementedError, "I haven't figured out a good way to handle changing patient diagnoses."
@@ -124,7 +124,7 @@ class Patient(object):
     def gettreatments(self):
         result = set()
         for ps in self.photosets:
-            result = result | ps.treatments
+            result |= ps.treatments
         return result
     def settreatments(self, value):
         raise NotImplementedError, "I haven't figured out a good way to handle changing patient treatments."

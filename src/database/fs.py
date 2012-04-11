@@ -169,7 +169,7 @@ class FS(DataLoaderInterface):
                         # determine date
                         date = split_name[0].split("-")
                         p.date = datetime.date(int(date[2]), int(date[1]), int(date[0])) # year, month, day
-                        patient.photosets.append( p )
+                        patient.photosets |= set([p])
             except IOError as (errno, strerror):
                 print "IOError [{0}]: {1}".format(errno, strerror)
 
