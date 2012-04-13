@@ -31,11 +31,11 @@ class TagStorage:
 		this.dbm = dbm
 		this.fsm = fsm
 
-	def load_patient_tags(self, patient):
+	def loadPatientTags(self, patient):
 
 		for photoset in patient.photosets:
-			load_photoset_tags( photoset )
+			loadPhotosetTags( photoset )
 
-	def load_photoset_tags(self, photoset):
+	def loadPhotosetTags(self, photoset):
 
-		self.fsm.load_photoset_tags( photoset )
+		self.fsm.loadPhotosetTags( photoset )

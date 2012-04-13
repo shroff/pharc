@@ -29,7 +29,7 @@ class PatientStorage:
         self.dbm = dbm
         self.fsm = fsm
 
-    def load_field(self, patient, fm, dm):
+    def loadField(self, patient, fm, dm):
         #TODO database loading
 
         data = fm(patient)
@@ -38,10 +38,10 @@ class PatientStorage:
         return data
 
 
-    def load_notes(self, patient):
+    def loadNotes(self, patient):
         #TODO try database before filesystem
 
-        notes = self.fsm.load_patient_notes(patient)
+        notes = self.fsm.loadPatientNotes(patient)
         if notes is None:
             # TODO Error code
             return
@@ -50,25 +50,25 @@ class PatientStorage:
             # TODO Success code
             return
 
-    def load_physicians(self, patient):
-        patient.physicians = self.load_field(patient, self.fsm.load_patient_physicians, None)
+    def loadPhysicians(self, patient):
+        patient.physicians = self.loadField(patient, self.fsm.loadPatientPhysicians, None)
 
-    def load_photosets(self, patient):
-        self.fsm.load_patient_photoset_list(patient)
+    def loadPhotosets(self, patient):
+        self.fsm.loadPatientPhotosetList(patient)
 
-    def create_patient(self, first_name, last_name, physicians):
-        patient = self.fsm.add_patient(first_name, last_name)
-        self.fsm.add_physicians(patient, physicians)
+    def createPatient(self, firstName, lastName, physicians):
+        patient = self.fsm.addPatient(firstName, lastName)
+        self.fsm.addPhysicians(patient, physicians)
         return patient
 
-    def edit_name(self, first_name, last_name):
+    def editName(self, firstName, lastName):
         pass
 
-    def edit_physicians(self, patient, physicians):
-        pass
+    def editPhysicians(self, patient, physicians):
+        self.fsm.editPatientPhysicians(patient, physicians)
 
-    def edit_notes(self, patient, notes):
-        pass
+    def editNotes(self, patient, notes):
+        self.fsm.editPatientNotes(patient, notes)
 
-    def load_all_patients(self):
-        pass
+    def loadAllPatients(self):
+        return self.fsm.loadAllPatients()

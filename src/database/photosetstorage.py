@@ -29,31 +29,27 @@ class PhotosetStorage:
         self.dbm = dbm
         self.fsm = fsm
 
-    def load_photos(self, photoset):
+    def loadPhotos(self, photoset):
         pass
 
-    def load_diagnoses(self, patient):
-        pass
+    def loadDiagnoses(self, photoset):
+        return self.fsm.loadPhotosetDiagnoses(photoset)
 
-    def load_treatments(self, patient):
-        pass
+    def loadTreatments(self, photoset):
+        return self.fsm.loadPhotosetTreatments(photoset)
 
-    def load_diagnoses(self, photoset):
-        return self.fsm.load_photoset_diagnoses(photoset)
-
-    def load_treatments(self, photoset):
-            return self.fsm.load_photoset_treatments(photoset)
-
-    def load_tags(self, photoset):
-        list = load_diagnoses(photoset)
-        list.append(load_treatments(photoset))
+    def loadTags(self, photoset):
+        list = loadDiagnoses(photoset)
+        list.append(loadTreatments(photoset))
         return list
 
-    def move_photoset(self, photoset, to_patient):
-        pass
+    def movePhotoset(self, photoset, toPatient):
 
-    def edit_treatments(self, photoset, treatments):
-        pass
+        if photoset.patient is None:
+            pass
 
-    def edit_diagnoses(self, photoset, diagnoses):
-        pass
+    def editTreatments(self, photoset, treatments):
+        self.fsm.ediPhotosetTreatments(photoset, treatments)
+
+    def editDiagnoses(self, photoset, diagnoses):
+        self.fsm.ediPhotosetDiagnoses(photoset, diagnoses)

@@ -28,7 +28,7 @@ class FS(DataLoaderInterface):
     """A filesystem manager"""
 
     # Initialize and do appropriate operations on startup
-    def __init__(self, root):
+    def _Init_(self, root):
         # Where the FS storage is located
         self.root = root;
 
@@ -36,13 +36,13 @@ class FS(DataLoaderInterface):
 
         if not exists:
             print("FS: root directory does not exist, creating " + self.root)
-            self.new_FS = True
+            self.newFS = True
 
             # create the root directory
             os.mkdir(root)
             # there is nothing more to do until the user adds data
         else:
-            self.new_FS = False
+            self.newFS = False
 
         return
 
@@ -51,13 +51,13 @@ class FS(DataLoaderInterface):
         return
 
     # Returns if the data storage existed prior to class init
-    def is_new(self):
-        return self.new_FS
+    def isNew(self):
+        return self.newFS
 
     # Returns a list of all the patients
-    def load_all_patients(self):
+    def loadAllPatients(self):
         # There is nothing to load
-        if self.is_new():
+        if self.isNew():
             return None
 
         patients = []
@@ -68,34 +68,34 @@ class FS(DataLoaderInterface):
             if os.path.isdir(self.root + "/" + i):
                 p = Patient()
                 # Parse filename
-                p.name_first, p.name_last, p.uid = self.parse_name(i)
+                p.nameFirst, p.nameLast, p.uid = self.parseName(i)
                 p.uid = int(p.uid)
                 patients.append(p)
 
         return patients
 
-    def parse_name(self, name):
-        unparsed_name = name.split('#')[0]
-        unparsed_name = unparsed_name.split()
-        name_first = unparsed_name[1]
-        name_last = unparsed_name[0][:-1]
+    def parseName(self, name):
+        unparsedName = name.split('#')[0]
+        unparsedName = unparsedName.split()
+        nameFirst = unparsedName[1]
+        nameLast = unparsedName[0][:-1]
         uid = int(name.split('#')[1])
 
-        return [name_first, name_last, uid]
+        return [nameFirst, nameLast, uid]
 
-    def parse_names(self, names):
-        unparsed_name_list = names.split('\n')
-        parsed_name_list = []
-        for i in unparsed_name_list:
-            parsed_name_list.append( self.parse_name(i) )
+    def parseNames(self, names):
+        unparsedNameList = names.split('\n')
+        parsedNameList = []
+        for i in unparsedNameList:
+            parsedNameList.append( self.parseName(i) )
 
-        return parsed_name_list
+        return parsedNameList
 
-    def generate_patient_dir(self, patient):
-        return self.root + "/" + patient.name_last + ", " + patient.name_first + "#" + str(patient.uid)
+    def generatePatientDir(self, patient):
+        return self.root + "/" + patient.nameLast + ", " + patient.nameFirst + "#" + str(patient.uid)
 
-    def generate_photoset_dir(self, photoset):
-        directory = self.generate_patient_dir(photoset.patient)
+    def generatePhotosetDir(self, photoset):
+        directory = self.generatePatientDir(photoset.patient)
         uid = str(photoset.uid)
         if os.path.isdir(directory):
             items = os.listdir(directory)
@@ -105,19 +105,19 @@ class FS(DataLoaderInterface):
                     return directory + "/" + i
         
 
-    def get_patient_data_from_field(self, patient, field):
-        if self.is_new():
+    def getPatientDataFromField(self, patient, field):
+        if self.isNew():
             # TODO: error codes
             return None
 
-        directory = self.generate_patient_dir(patient)
+        directory = self.generatePatientDir(patient)
         if os.path.isdir(directory):
             try:
                 f = open(directory + "/" + field)
                 data = f.read()
                 f.close()
-            except IOError as xxx_todo_changeme:
-                (errno, strerror) = xxx_todo_changeme.args
+            except IOError as xxxTodoChangeme:
+                (errno, strerror) = xxxTodoChangeme.args
                 print("IOError [{0}]: {1}".format(errno, strerror))
                 # TODO: error codes
                 return None
@@ -128,32 +128,79 @@ class FS(DataLoaderInterface):
             print("could not access: " + directory)
             return None
 
-        
-    def load_patient_notes(self, patient):
-        return self.get_patient_data_from_field(patient, "notes.txt")
+    def editPatientNotes(self, patient, notes):
+        directory = self.generatePatientDir(patient)
+        if os.path.isdir(directory):
+            try:
+                f = open(directory + "/notes.txt")
+                f.write(notes)
+                f.close()
+            except IOError as error:
+                (errno, sterror) = error
+                print("IOError [{0}]: {1}".format(errno, strerror))
+                raise error
 
-    def load_patient_physicians(self, patient):
-        data = self.get_patient_data_from_field(patient, "physicians.txt")
+    def editPatientPhysicians(self, patient, physicians):
+        directory = self.generatePatientDir(patient)
+        if os.path.isdir(directory):
+            try:
+                f = open(directory + "/physicians.txt")
+                f.write(physicians)
+                f.close()
+            except IOError as error:
+                (errno, sterror) = error
+                print("IOError [{0}]: {1}".format(errno, strerror))
+                raise error
+
+    def editPhotosetTreatments(self, photoset, treatments):
+        directory = self.generatePhotosetDir(photoset)
+        if os.path.isdir(directory):
+            try:
+                f = open(directory + "/treatments.txt")
+                f.write(notes)
+                f.close()
+            except IOError as error:
+                (errno, sterror) = error
+                print("IOError [{0}]: {1}".format(errno, strerror))
+                raise error
+
+    def editPhotosetDiagnoses(self, photoset, diagnoses):
+        directory = self.generatePhotosetDir(photoset)
+        if os.path.isdir(directory):
+            try:
+                f = open(directory + "/diagnoses.txt")
+                f.write(notes)
+                f.close()
+            except IOError as error:
+                (errno, sterror) = error
+                print("IOError [{0}]: {1}".format(errno, strerror))
+                raise error
+
+    def loadPatientNotes(self, patient):
+        return self.getPatientDataFromField(patient, "notes.txt")
+
+    def loadPatientPhysicians(self, patient):
+        data = self.getPatientDataFromField(patient, "physicians.txt")
         physicians = list()
         if data is None:
             # TODO error?
             return None
         else:
-            data = self.parse_names(data)
+            data = self.parseNames(data)
             for i in data:
                 d = Physician()
-                d.first_name, d.last_name, d.uid = int(i)
+                d.firstName, d.lastName, d.uid = int(i)
                 physicians.append(d)
                 #patient.physicians.append( d )
                 #print patient.physicians
             return physicians
     
-    def load_patient_photoset_list(self, patient):
+    def loadPatientPhotosetList(self, patient):
         # not done
-        if self.is_new():
+        if self.isNew():
             return None
 
-        directory = self.generate_patient_dir(patient)
+        directory = self.generatePatientDir(patient)
         if os.path.isdir(directory):
             try:
                 items = os.listdir(directory)
@@ -163,32 +210,32 @@ class FS(DataLoaderInterface):
                         p.patient = patient
                         p.dm = patient.dm
                         #print i
-                        split_name = i.split("#")
-                        uid = split_name[1]
+                        splitName = i.split("#")
+                        uid = splitName[1]
                         p.uid = int(uid)
                         # p.uid = 0
 
                         # determine date
-                        date = split_name[0].split("-")
+                        date = splitName[0].split("-")
                         p.date = datetime.date(int(date[2]), int(date[1]), int(date[0])) # year, month, day
                         patient.photosets |= set([p])
-            except IOError as xxx_todo_changeme1:
-                (errno, strerror) = xxx_todo_changeme1.args
+            except IOError as xxxTodoChangeme1:
+                (errno, strerror) = xxxTodoChangeme1.args
                 print("IOError [{0}]: {1}".format(errno, strerror))
 
-    def load_photoset_tags(self, photoset):
-        if self.is_new():
+    def loadPhotosetTags(self, photoset):
+        if self.isNew():
             # TODO: error codes
             return None
 
-        directory = self.generate_photoset_dir(photoset)
+        directory = self.generatePhotosetDir(photoset)
         if os.path.isdir(directory):
             try:
                 f = open(directory + "/diagnoses.txt")
                 data = f.read()
                 f.close()
-            except IOError as xxx_todo_changeme2:
-                (errno, strerror) = xxx_todo_changeme2.args
+            except IOError as xxxTodoChangeme2:
+                (errno, strerror) = xxxTodoChangeme2.args
                 print("IOError [{0}]: {1}".format(errno, strerror))
                 # TODO: error codes
                 return None
@@ -197,8 +244,8 @@ class FS(DataLoaderInterface):
                 f = open(directory + "/treatments.txt")
                 data = data + "\n" + f.read()
                 f.close()
-            except IOError as xxx_todo_changeme3:
-                (errno, strerror) = xxx_todo_changeme3.args
+            except IOError as xxxTodoChangeme3:
+                (errno, strerror) = xxxTodoChangeme3.args
                 print("IOError [{0}]: {1}".format(errno, strerror))
                 # TODO: error codes
                 return None
@@ -210,19 +257,19 @@ class FS(DataLoaderInterface):
             print("could not access: " + directory) 
             return None
 
-    def load_photoset_diagnoses(self, photoset):
-        if self.is_new():
+    def loadPhotosetDiagnoses(self, photoset):
+        if self.isNew():
             # TODO: error codes
             return None
 
-        directory = self.generate_photoset_dir(photoset)
+        directory = self.generatePhotosetDir(photoset)
         if os.path.isdir(directory):
             try:
                 f = open(directory + "/diagnoses.txt")
                 data = f.read()
                 f.close()
-            except IOError as xxx_todo_changeme4:
-                (errno, strerror) = xxx_todo_changeme4.args
+            except IOError as xxxTodoChangeme4:
+                (errno, strerror) = xxxTodoChangeme4.args
                 print("IOError [{0}]: {1}".format(errno, strerror))
                 # TODO: error codes
                 return None
@@ -234,19 +281,19 @@ class FS(DataLoaderInterface):
             print("could not access: " + directory) 
             return None
 
-    def load_photoset_treatments(self, photoset):
-        if self.is_new():
+    def loadPhotosetTreatments(self, photoset):
+        if self.isNew():
             # TODO: error codes
             return None
 
-        directory = self.generate_photoset_dir(photoset)
+        directory = self.generatePhotosetDir(photoset)
         if os.path.isdir(directory):
             try:
                 f = open(directory + "/treatments.txt")
                 data = f.read()
                 f.close()
-            except IOError as xxx_todo_changeme5:
-                (errno, strerror) = xxx_todo_changeme5.args
+            except IOError as xxxTodoChangeme5:
+                (errno, strerror) = xxxTodoChangeme5.args
                 print("IOError [{0}]: {1}".format(errno, strerror))
                 # TODO: error codes
                 return None
