@@ -98,16 +98,19 @@ class DataManager(object):
             queries: a list of "Query" namedtuples containing
                 parameters for the search. Each element of the list is
                 a tuple of the form (field, match, arg). The result
-                will satisfy to _all_ parameters and will contain the
+                will satisfy _all_ parameters and will contain the
                 indicated ranking information. The field and match
                 fields of a search param are strings and the last is
                 determined by teh first two. The same parameter can be
                 specified multiple times and it will apply multiple
                 times; all results will still satisfy all passed
-                params. If a ranking query is submitted multiple
-                times, results are undefined, but the returned scores
-                will attempt to reflect a 'do what I mean'
-                interpretation.
+                params. There are two types of queries: constraint
+                queries and ranking queries. Constraint queries
+                constrain results. Ranking queries rank results in the
+                returned list of patients. If a ranking query is
+                submitted multiple times, results are undefined, but
+                the returned scores will attempt to reflect a 'do what
+                I mean' interpretation.
                 
                 field       match type    semantics
                 id          int
