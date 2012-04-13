@@ -22,6 +22,6 @@ import sys
 sys.path.append('../logic')
 from patient import Photoset
 
-class PhotoLoader:
+class PhotoStorage:
     def __init__(self):
         pass

@@ -25,7 +25,7 @@ from logic.photoset import Photoset
 from logic.tags import Tag
 from logic.tags import TagList
 
-class TagLoader:
+class TagStorage:
 
 	def __init__(self, dbm, fsm):
 		this.dbm = dbm

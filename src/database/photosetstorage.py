@@ -22,7 +22,7 @@ from . import fs
 # sys.path.append('../logic')
 from logic.patient import Photoset
 
-class PhotosetLoader:
+class PhotosetStorage:
 
     def __init__(self, dbm, fsm):
         # there may be a better way of handling this, but it should do

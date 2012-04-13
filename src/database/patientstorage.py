@@ -22,7 +22,7 @@ from . import fs
 # sys.path.append('../logic')
 from logic.patient import Patient
 
-class PatientLoader:
+class PatientStorage:
 
     def __init__(self, dbm, fsm):
         # there may be a better way of handling this, but it should do
