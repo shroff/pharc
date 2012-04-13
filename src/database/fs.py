@@ -131,53 +131,29 @@ class FS:
             print("could not access: " + directory)
             return None
 
-    def editPatientNotes(self, patient, notes):
-        directory = self.generatePatientDir(patient)
+    def editField(self, parent, generateDir, field, data):
+        directory = generateDir(parent)
         if os.path.isdir(directory):
             try:
-                f = open(directory + "/notes.txt")
-                f.write(notes)
+                f = open(directory + "/" + field + ".txt")
+                f.write(data)
                 f.close()
             except IOError as error:
                 (errno, sterror) = error
                 print("IOError [{0}]: {1}".format(errno, strerror))
                 raise error
+
+    def editPatientNotes(self, patient, notes):
+        self.editField(patient, self.generatePatientDir, "notes", notes)
 
     def editPatientPhysicians(self, patient, physicians):
-        directory = self.generatePatientDir(patient)
-        if os.path.isdir(directory):
-            try:
-                f = open(directory + "/physicians.txt")
-                f.write(physicians)
-                f.close()
-            except IOError as error:
-                (errno, sterror) = error
-                print("IOError [{0}]: {1}".format(errno, strerror))
-                raise error
+        self.editField(patient, self.generatePatientDir, "physicians", physicians)
 
     def editPhotosetTreatments(self, photoset, treatments):
-        directory = self.generatePhotosetDir(photoset, photoset.patient)
-        if os.path.isdir(directory):
-            try:
-                f = open(directory + "/treatments.txt")
-                f.write(notes)
-                f.close()
-            except IOError as error:
-                (errno, sterror) = error
-                print("IOError [{0}]: {1}".format(errno, strerror))
-                raise error
+        self.editField(photoset, self.generatePhotosetDir, "treatments", treatments)
 
     def editPhotosetDiagnoses(self, photoset, diagnoses):
-        directory = self.generatePhotosetDir(photoset, photoset.patient)
-        if os.path.isdir(directory):
-            try:
-                f = open(directory + "/diagnoses.txt")
-                f.write(notes)
-                f.close()
-            except IOError as error:
-                (errno, sterror) = error
-                print("IOError [{0}]: {1}".format(errno, strerror))
-                raise error
+        self.editField(photoset, self.generatePhotosetDir, "diagnoses", diagnoses)
 
     def loadPatientNotes(self, patient):
         return self.getPatientDataFromField(patient, "notes.txt")
