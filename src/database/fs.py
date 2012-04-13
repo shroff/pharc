@@ -97,8 +97,8 @@ class FS:
     def generatePatientDir(self, patient):
         return self.root + "/" + patient.nameLast + ", " + patient.nameFirst + "#" + str(patient.uid)
 
-    def generatePhotosetDir(self, photoset, patient):
-        directory = self.generatePatientDir(patient)
+    def generatePhotosetDir(self, photoset):
+        directory = self.generatePatientDir(photoset.patient)
         uid = str(photoset.uid)
         if os.path.isdir(directory):
             items = os.listdir(directory)
@@ -242,7 +242,7 @@ class FS:
             # TODO: error codes
             return None
 
-        directory = self.generatePhotosetDir(photoset, photoset.patient)
+        directory = self.generatePhotosetDir(photoset)
         if os.path.isdir(directory):
             try:
                 f = open(directory + "/diagnoses.txt")
@@ -266,7 +266,7 @@ class FS:
             # TODO: error codes
             return None
 
-        directory = self.generatePhotosetDir(photoset, photoset.patient)
+        directory = self.generatePhotosetDir(photoset)
         if os.path.isdir(directory):
             try:
                 f = open(directory + "/treatments.txt")
