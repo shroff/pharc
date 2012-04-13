@@ -46,10 +46,10 @@ class DataStorageInterface:
     """
 
     # Initialize and do appropriate operations on startup
-    def __init__(self, path):
+    def __init__(self, dbpath, fspath):
 
-			self.FS = FS(path)
-			self.DB = DB()
+			self.FS = FS(fspath)
+			self.DB = DB(dbpath)
 
 			self.PatientStorage = PatientStorage(self.DB, self.FS)
 			self.PhotosetStorage = PhotosetStorage(self.DB, self.FS)
