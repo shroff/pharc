@@ -25,6 +25,8 @@ import database.datastorageinterface as dsi
 from logic.datamanager import DataManager
 import readline
 import cmd
+import datetime
+import dateutil.parser
 
 class CommandLineInterface(cmd.Cmd):
     """Implements a dead simple command-line interface for interactive
@@ -132,6 +134,43 @@ class CommandLineInterface(cmd.Cmd):
                 echo += "  └─" + str(psl[-1]) + "\n"
         print(echo[:-1])
         
+    def do_editPhotoset(self, args):
+        args = args.split(" ")
+        ps = [x for x in self.dm.searchPhotosets(None, None) if x.uid == int(args[0])]
+        if not ps:
+            return
+        ps = ps[0]
+        if args[1] == "date":
+            # TODO: implement editDate
+            d = dateutil.parser.parse(args[2])
+            ps.date = d
+            self.dm.loader.PhotosetStorage.editDate(ps, d)
+        if args[1] == "+treat":
+            ps.add_treatment_by_string(args[2])
+            self.dm.loader.PhotosetStorage.editTreatments(ps)
+        if args[1] == "-treat":
+            pass
+        if args[1] == "+diag":
+            t = self.dm.diagnoses.match_fullstring_single(args[2])
+            if t is None:
+                return
+            ps.add_treatment_by_tag(t)
+            self.dm.loader.PhotosetStorage.editDiagnoses(ps)
+            pass
+        if args[1] == "-diag":
+            pass
+    def do_editPatient(self, args):
+        if args[1] == "fname":
+            pass
+        if args[1] == "lname":
+            pass
+        if args[1] == "notes":
+            pass
+        if args[1] == "+phys":
+            pass
+        if args[1] == "-phys":
+            pass
+
     def do_loadRecentPhotoset(self, args):
         pats = None
         if args == "":
@@ -167,5 +206,9 @@ class CommandLineInterface(cmd.Cmd):
         self.do_loadTags(args)
     def do_fps(self, args):
         self.do_findPhotosets(args)
+    def do_eps(self, args):
+        self.do_editPhotoset(args)
+    def do_ep(self, args):
+        self.do_editPatient(args)
 
     
