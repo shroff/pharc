@@ -48,12 +48,12 @@ class DataStorageInterface:
     # Initialize and do appropriate operations on startup
     def __init__(self, dbpath, fspath):
 
-			self.FS = FS(fspath)
-			self.DB = DB(dbpath)
+        self.FS = FS(fspath)
+        self.DB = DB(dbpath)
 
-			self.PatientStorage = PatientStorage(self.DB, self.FS)
-			self.PhotosetStorage = PhotosetStorage(self.DB, self.FS)
-			self.PhotoStorage = PhotoStorage(self.DB, self.FS)
+        self.PatientStorage = PatientStorage(self.DB, self.FS)
+        self.PhotosetStorage = PhotosetStorage(self.DB, self.FS)
+        self.PhotoStorage = PhotoStorage(self.DB, self.FS)
 
     # Cleanup/validation before program termination
     def exit(self): abstract()

@@ -56,6 +56,7 @@ class FS(DataLoaderInterface):
 
     def createPhotoset(self, photoset, patient):
         directory = generatePhotosetDir(photoset, patient)
+        os.makedirs(directory)
 
     def deletePhotoset(self, photoset):
         pass
@@ -268,7 +269,7 @@ class FS(DataLoaderInterface):
             # TODO: error codes
             return None
 
-        directory = self.generatePhotosetDir(photoset, patient.photoset)
+        directory = self.generatePhotosetDir(photoset, photoset.patient)
         if os.path.isdir(directory):
             try:
                 f = open(directory + "/diagnoses.txt")
