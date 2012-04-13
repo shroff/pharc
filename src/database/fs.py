@@ -28,7 +28,7 @@ class FS(DataLoaderInterface):
     """A filesystem manager"""
 
     # Initialize and do appropriate operations on startup
-    def _Init_(self, root):
+    def __init__(self, root):
         # Where the FS storage is located
         self.root = root;
 
