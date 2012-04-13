@@ -23,5 +23,5 @@ from . import fs
 from logic.patient import Patient
 
 class PhotoStorage:
-    def __init__(self):
+    def __init__(self, FS, DB):
         pass
