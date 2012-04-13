@@ -28,7 +28,7 @@ from logic.datamanager import DataManager
 
 class PageManager(QWidget):
   def __init__(self, parent):
-    self.data = DataManager("../database")
+    self.data = DataManager("test/database")
     super(PageManager, self).__init__(parent)
     self.parent = parent
 

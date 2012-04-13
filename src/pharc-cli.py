@@ -26,7 +26,7 @@ import cli.commandlineinterface
 def doCLI():
     print("foo!")
     pcli = cli.commandlineinterface.CommandLineInterface()
-    pcli.load_database("../database")
+    pcli.load_database("test/database")
     pcli.cmdloop()
 
 if __name__ == "__main__":

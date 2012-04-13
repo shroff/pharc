@@ -18,8 +18,6 @@
 from . import db
 from . import fs
 
-# import sys
-# sys.path.append('../logic')
 from logic.photoset import Photoset
 
 class PhotosetStorage:
