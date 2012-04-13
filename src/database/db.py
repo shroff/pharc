@@ -23,7 +23,7 @@ class DB (DataLoaderInterface):
     """A sqlite3 wrapper"""
 
     # Initialize and do appropriate operations on startup
-    def __init__(self):
+    def __init__(self, path):
 
         # Check if the DB exists before we open it
         exists = True
@@ -37,7 +37,7 @@ class DB (DataLoaderInterface):
             f.close()
 
         # Open database or create it if it didn't exist
-        self.connection = sqlite3.connect("db.sqlite")
+        self.connection = sqlite3.connect(path + "db.sqlite")
         # Create object to make queries to the database
         self.cursor = self.connection.cursor()
 
