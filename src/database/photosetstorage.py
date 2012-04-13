@@ -51,3 +51,7 @@ class PhotosetStorage:
 
     def editDiagnoses(self, photoset):
         self.fsm.editPhotosetDiagnoses(photoset)
+
+    def editDate(self, photoset, date):
+        pass
+
