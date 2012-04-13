@@ -109,7 +109,7 @@ class CommandLineInterface(cmd.Cmd):
     def do_listPhotosets(self, args):
         if int(args) >= 70000:
             ps = [x for x in self.dm.searchPhotosets(None, None) if x.uid == int(args)]
-            print ps
+            print str(ps[0].patient) + ": " + str(ps[0])
             return
         
         pats = None
