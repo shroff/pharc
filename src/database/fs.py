@@ -15,7 +15,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-from .dataloaderinterface import DataLoaderInterface
+from .datastorageinterface import DataStorageInterface
 import os, sys, datetime
 
 # sys.path.append('../logic')
@@ -24,7 +24,7 @@ from logic.patient import Patient
 from logic.photoset import Photoset
 from logic.physician import Physician
 
-class FS(DataLoaderInterface):
+class FS(DataStorageInterface):
     """A filesystem manager"""
 
     # Initialize and do appropriate operations on startup
