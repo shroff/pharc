@@ -146,7 +146,7 @@ class Photoset(object):
     def gettreatments(self):
         if self._treatments is None:
             self._treatments = set()
-            tstrings = self.dm.loader.load_photoset_treatments(self)
+            tstrings = self.dm.loader.PhotosetStorage.loadTreatments(self)
             for s in tstrings:
                 self.add_treatment_by_string(s)
         # print "treatments -> " + str(self._treatments)
@@ -161,7 +161,7 @@ class Photoset(object):
     def getdiagnoses(self):
         if self._diagnoses is None:
             self._diagnoses = set()
-            dstrings = self.dm.loader.load_photoset_diagnoses(self)
+            dstrings = self.dm.loader.PhotosetStorage.loadDiagnoses(self)
             for s in dstrings:
                 self.add_diagnosis_by_string(s)
         # print "diagnoses -> " + str(self._diagnoses)

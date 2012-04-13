@@ -85,7 +85,7 @@ class Patient(object):
     def getphotosets(self):
         if self._photosets is None:
             self._photosets = set()
-            self.dm.loader.load_patient_photoset_list(self)
+            self.dm.loader.PatientStorage.loadPhotosets(self)
         #print "photosets -> " + str(self._photosets)
         return self._photosets
     def setphotosets(self, value):
@@ -98,7 +98,7 @@ class Patient(object):
 
     def getnotes(self):
         if self._notes is None:
-            self._notes = self.dm.loader.load_patient_notes(self)
+            self._notes = self.dm.loader.PatientStorage.loadNotes(self)
         #print "notes -> " + str(self._notes)
         return self._notes
     def setnotes(self, value):

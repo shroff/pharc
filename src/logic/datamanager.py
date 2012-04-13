@@ -67,7 +67,7 @@ class DataManager(object):
 
         self.treatments = tags.TagList()
         self.diagnoses = tags.TagList()
-        self.patients = self.loader.PatientStorage.load_all_patients()
+        self.patients = self.loader.PatientStorage.loadAllPatients()
         for p in self.patients:
             p.dm = self
         self.physicians = tags.TagList()
