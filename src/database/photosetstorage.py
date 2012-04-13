@@ -46,8 +46,8 @@ class PhotosetStorage:
 
         photoset.patient = toPatient
 
-    def editTreatments(self, photoset, treatments):
-        self.fsm.ediPhotosetTreatments(photoset, treatments)
+    def editTreatments(self, photoset):
+        self.fsm.editPhotosetTreatments(photoset)
 
-    def editDiagnoses(self, photoset, diagnoses):
-        self.fsm.ediPhotosetDiagnoses(photoset, diagnoses)
+    def editDiagnoses(self, photoset):
+        self.fsm.editPhotosetDiagnoses(photoset)

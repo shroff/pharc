@@ -148,17 +148,17 @@ class FS:
                 print("IOError [{0}]: {1}".format(errno, strerror))
                 raise error
 
-    def editPatientNotes(self, patient, notes):
-        self.editField(patient, self.generatePatientDir, "notes", notes)
+    def editPatientNotes(self, patient):
+        self.editField(patient, self.generatePatientDir, "notes", patient.notes)
 
-    def editPatientPhysicians(self, patient, physicians):
-        self.editField(patient, self.generatePatientDir, "physicians", physicians)
+    def editPatientPhysicians(self, patient):
+        self.editField(patient, self.generatePatientDir, "physicians", "\n".join(map(str, patient.physicians)))
 
-    def editPhotosetTreatments(self, photoset, treatments):
-        self.editField(photoset, self.generatePhotosetDir, "treatments", treatments)
+    def editPhotosetTreatments(self, photoset):
+        self.editField(photoset, self.generatePhotosetDir, "treatments", "\n".join(map(str, photoset.treatments)))
 
-    def editPhotosetDiagnoses(self, photoset, diagnoses):
-        self.editField(photoset, self.generatePhotosetDir, "diagnoses", diagnoses)
+    def editPhotosetDiagnoses(self, photoset):
+        self.editField(photoset, self.generatePhotosetDir, "diagnoses", "\n".join(map(str, photoset.diagnoses)))
 
     def loadPatientNotes(self, patient):
         return self.getPatientDataFromField(patient, "notes.txt")
