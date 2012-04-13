@@ -15,11 +15,11 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-from .fs import FS
-from .db import DB
-from .patientstorage import PatientStorage
-from .photosetstorage import PhotosetStorage
-from .photostorage import PhotoStorage
+import database.fs
+import database.db
+import database.patientstorage as patientstor
+import database.photosetstorage as photosetstor
+import database.photostorage as photostor
 
 class DataStorageInterface:
     """The interface for data loader classes.
@@ -28,10 +28,10 @@ class DataStorageInterface:
     # Initialize and do appropriate operations on startup
     def __init__(self, dbpath, fspath):
 
-        self.FS = FS(fspath)
-        self.DB = DB(dbpath)
+        self.FS = database.fs.FS(fspath)
+        self.DB = database.db.DB(dbpath)
 
-        self.PatientStorage = PatientStorage(self.DB, self.FS)
-        self.PhotosetStorage = PhotosetStorage(self.DB, self.FS)
-        self.PhotoStorage = PhotoStorage(self.DB, self.FS)
+        self.PatientStorage = patientstor.PatientStorage(self.DB, self.FS)
+        self.PhotosetStorage = photosetstor.PhotosetStorage(self.DB, self.FS)
+        self.PhotoStorage = photostor.PhotoStorage(self.DB, self.FS)
 

@@ -17,10 +17,8 @@
 
 import os, sys, datetime
 
-# sys.path.append('../logic')
-#from ..logic import patient
-from logic.patient import Patient
-from logic.photoset import Photoset
+import logic.patient as patient
+import logic.photoset as photoset
 
 class FS:
     """A filesystem manager"""
@@ -71,7 +69,7 @@ class FS:
         # TODO: Probably not right
         for i in items:
             if os.path.isdir(self.root + "/" + i):
-                p = Patient()
+                p = patient.Patient()
                 # Parse filename
                 p.nameFirst, p.nameLast, p.uid = self.parseName(i)
                 p.uid = int(p.uid)
@@ -99,8 +97,8 @@ class FS:
     def generatePatientDir(self, patient):
         return self.root + "/" + patient.nameLast + ", " + patient.nameFirst + "#" + str(patient.uid)
 
-    def generatePhotosetDir(self, photoset, patient):
-        directory = self.generatePatientDir(patient)
+    def generatePhotosetDir(self, photoset):
+        directory = self.generatePatientDir(photoset.patient)
         uid = str(photoset.uid)
         if os.path.isdir(directory):
             items = os.listdir(directory)
@@ -133,53 +131,34 @@ class FS:
             print("could not access: " + directory)
             return None
 
-    def editPatientNotes(self, patient, notes):
-        directory = self.generatePatientDir(patient)
+    def editField(self, parent, generateDir, field, data):
+        """writes the field string into the proper directory.
+
+        Note that this function will overwrite any previous data! Be
+        sure to provide the new data in totality so you don't lose
+        anything."""
+        directory = generateDir(parent)
         if os.path.isdir(directory):
             try:
-                f = open(directory + "/notes.txt")
-                f.write(notes)
+                f = open(directory + "/" + field + ".txt", "w")
+                f.write(data)
                 f.close()
             except IOError as error:
                 (errno, sterror) = error
                 print("IOError [{0}]: {1}".format(errno, strerror))
                 raise error
 
-    def editPatientPhysicians(self, patient, physicians):
-        directory = self.generatePatientDir(patient)
-        if os.path.isdir(directory):
-            try:
-                f = open(directory + "/physicians.txt")
-                f.write(physicians)
-                f.close()
-            except IOError as error:
-                (errno, sterror) = error
-                print("IOError [{0}]: {1}".format(errno, strerror))
-                raise error
+    def editPatientNotes(self, patient):
+        self.editField(patient, self.generatePatientDir, "notes", patient.notes)
 
-    def editPhotosetTreatments(self, photoset, treatments):
-        directory = self.generatePhotosetDir(photoset, photoset.patient)
-        if os.path.isdir(directory):
-            try:
-                f = open(directory + "/treatments.txt")
-                f.write(notes)
-                f.close()
-            except IOError as error:
-                (errno, sterror) = error
-                print("IOError [{0}]: {1}".format(errno, strerror))
-                raise error
+    def editPatientPhysicians(self, patient):
+        self.editField(patient, self.generatePatientDir, "physicians", "\n".join(map(str, patient.physicians)))
 
-    def editPhotosetDiagnoses(self, photoset, diagnoses):
-        directory = self.generatePhotosetDir(photoset, photoset.patient)
-        if os.path.isdir(directory):
-            try:
-                f = open(directory + "/diagnoses.txt")
-                f.write(notes)
-                f.close()
-            except IOError as error:
-                (errno, sterror) = error
-                print("IOError [{0}]: {1}".format(errno, strerror))
-                raise error
+    def editPhotosetTreatments(self, photoset):
+        self.editField(photoset, self.generatePhotosetDir, "treatments", "\n".join(map(str, photoset.treatments)))
+
+    def editPhotosetDiagnoses(self, photoset):
+        self.editField(photoset, self.generatePhotosetDir, "diagnoses", "\n".join(map(str, photoset.diagnoses)))
 
     def loadPatientNotes(self, patient):
         return self.getPatientDataFromField(patient, "notes.txt")
@@ -212,7 +191,7 @@ class FS:
                 items = os.listdir(directory)
                 for i in items:
                     if os.path.isdir(directory + "/" + i):
-                        p = Photoset()
+                        p = photoset.Photoset()
                         p.patient = patient
                         p.dm = patient.dm
                         #print i
@@ -268,7 +247,7 @@ class FS:
             # TODO: error codes
             return None
 
-        directory = self.generatePhotosetDir(photoset, photoset.patient)
+        directory = self.generatePhotosetDir(photoset)
         if os.path.isdir(directory):
             try:
                 f = open(directory + "/diagnoses.txt")
@@ -292,7 +271,7 @@ class FS:
             # TODO: error codes
             return None
 
-        directory = self.generatePhotosetDir(photoset, photoset.patient)
+        directory = self.generatePhotosetDir(photoset)
         if os.path.isdir(directory):
             try:
                 f = open(directory + "/treatments.txt")

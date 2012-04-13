@@ -24,7 +24,6 @@ import sys
 import cli.commandlineinterface
 
 def doCLI():
-    print("foo!")
     pcli = cli.commandlineinterface.CommandLineInterface()
     pcli.load_database("test/database")
     pcli.cmdloop()

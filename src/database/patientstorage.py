@@ -15,14 +15,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-from . import db
-from . import fs
-
-# import sys
-# sys.path.append('../logic')
-from logic.patient import Patient
-
-class PatientStorage:
+class PatientStorage(object):
 
     def __init__(self, dbm, fsm):
         # there may be a better way of handling this, but it should do

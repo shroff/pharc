@@ -15,11 +15,6 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-from . import db
-from . import fs
-
-from logic.photoset import Photoset
-
 class PhotosetStorage:
 
     def __init__(self, dbm, fsm):
@@ -51,8 +46,12 @@ class PhotosetStorage:
 
         photoset.patient = toPatient
 
-    def editTreatments(self, photoset, treatments):
-        self.fsm.ediPhotosetTreatments(photoset, treatments)
+    def editTreatments(self, photoset):
+        self.fsm.editPhotosetTreatments(photoset)
 
-    def editDiagnoses(self, photoset, diagnoses):
-        self.fsm.ediPhotosetDiagnoses(photoset, diagnoses)
+    def editDiagnoses(self, photoset):
+        self.fsm.editPhotosetDiagnoses(photoset)
+
+    def editDate(self, photoset, date):
+        pass
+

@@ -18,9 +18,8 @@
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 
-import database.fs
-from logic.datamanager import DataManager
-from logic.patient import Patient
+# import logic.datamanager as datamanager
+# import logic.patient import patient
 
 
 class PatientTableModel(QStandardItemModel):
@@ -41,7 +40,7 @@ class PatientTableModel(QStandardItemModel):
   def populate(self):
     self.rowcount = 0
     for p in self.data.patients:
-      self.setItem(self.rowcount, 0, QStandardItem(p.name_first + " " + p.name_last))
+      self.setItem(self.rowcount, 0, QStandardItem(p.nameFirst + " " + p.nameLast))
       ps = p.getMostRecentPhotoset()
       self.setItem(self.rowcount, 1, QStandardItem(" ".join(map(str,
         ps.treatments))))

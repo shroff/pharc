@@ -34,7 +34,7 @@ def testFS():
         pl.load_notes(i)
         pl.load_physicians(i)
         pl.load_photosets(i)
-        print(i.name_first + " " + i.name_last + ": " + i.uid)
+        print(i.nameFirst + " " + i.nameLast + ": " + i.uid)
         print("\t" + i.notes)
         print("\t" + str(i.physicians))
         print("\t" + str(i.photosets))
