@@ -132,10 +132,15 @@ class FS:
             return None
 
     def editField(self, parent, generateDir, field, data):
+        """writes the field string into the proper directory.
+
+        Note that this function will overwrite any previous data! Be
+        sure to provide the new data in totality so you don't lose
+        anything."""
         directory = generateDir(parent)
         if os.path.isdir(directory):
             try:
-                f = open(directory + "/" + field + ".txt")
+                f = open(directory + "/" + field + ".txt", "w")
                 f.write(data)
                 f.close()
             except IOError as error:
