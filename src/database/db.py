@@ -24,6 +24,7 @@ class DB (DataLoaderInterface):
 
     # Initialize and do appropriate operations on startup
     def __init__(self, path):
+        return
 
         # Check if the DB exists before we open it
         exists = True
