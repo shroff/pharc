@@ -23,7 +23,7 @@ class DB (DataLoaderInterface):
     """A sqlite3 wrapper"""
 
     # Initialize and do appropriate operations on startup
-    def _Init_(self, path):
+    def __init__(self, path):
 
         # Check if the DB exists before we open it
         exists = True

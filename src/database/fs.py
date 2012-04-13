@@ -28,7 +28,7 @@ class FS(DataLoaderInterface):
     """A filesystem manager"""
 
     # Initialize and do appropriate operations on startup
-    def _Init_(self, root):
+    def __init__(self, root):
         # Where the FS storage is located
         self.root = root;
 
@@ -53,6 +53,12 @@ class FS(DataLoaderInterface):
     # Returns if the data storage existed prior to class init
     def isNew(self):
         return self.newFS
+
+    def createPhotoset(self, photoset, patient):
+        directory = generatePhotosetDir(photoset, patient)
+
+    def deletePhotoset(self, photoset):
+        pass
 
     # Returns a list of all the patients
     def loadAllPatients(self):
@@ -94,8 +100,8 @@ class FS(DataLoaderInterface):
     def generatePatientDir(self, patient):
         return self.root + "/" + patient.nameLast + ", " + patient.nameFirst + "#" + str(patient.uid)
 
-    def generatePhotosetDir(self, photoset):
-        directory = self.generatePatientDir(photoset.patient)
+    def generatePhotosetDir(self, photoset, patient):
+        directory = self.generatePatientDir(patient)
         uid = str(photoset.uid)
         if os.path.isdir(directory):
             items = os.listdir(directory)
@@ -153,7 +159,7 @@ class FS(DataLoaderInterface):
                 raise error
 
     def editPhotosetTreatments(self, photoset, treatments):
-        directory = self.generatePhotosetDir(photoset)
+        directory = self.generatePhotosetDir(photoset, photoset.patient)
         if os.path.isdir(directory):
             try:
                 f = open(directory + "/treatments.txt")
@@ -165,7 +171,7 @@ class FS(DataLoaderInterface):
                 raise error
 
     def editPhotosetDiagnoses(self, photoset, diagnoses):
-        directory = self.generatePhotosetDir(photoset)
+        directory = self.generatePhotosetDir(photoset, photoset.patient)
         if os.path.isdir(directory):
             try:
                 f = open(directory + "/diagnoses.txt")
@@ -228,7 +234,7 @@ class FS(DataLoaderInterface):
             # TODO: error codes
             return None
 
-        directory = self.generatePhotosetDir(photoset)
+        directory = self.generatePhotosetDir(photoset, photoset.patient)
         if os.path.isdir(directory):
             try:
                 f = open(directory + "/diagnoses.txt")
@@ -262,7 +268,7 @@ class FS(DataLoaderInterface):
             # TODO: error codes
             return None
 
-        directory = self.generatePhotosetDir(photoset)
+        directory = self.generatePhotosetDir(photoset, patient.photoset)
         if os.path.isdir(directory):
             try:
                 f = open(directory + "/diagnoses.txt")
@@ -286,7 +292,7 @@ class FS(DataLoaderInterface):
             # TODO: error codes
             return None
 
-        directory = self.generatePhotosetDir(photoset)
+        directory = self.generatePhotosetDir(photoset, photoset.patient)
         if os.path.isdir(directory):
             try:
                 f = open(directory + "/treatments.txt")
