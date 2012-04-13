@@ -61,5 +61,5 @@ class PatientEditPage(QWidget):
 
   def setPatient(self, patient):
     self.patient = patient
-    self.nameRow.setName(self.patient.name_first + " " + self.patient.name_last)
+    self.nameRow.setName(self.patient.nameFirst + " " + self.patient.nameLast)
     self.detailTable.setPatient(self.patient)

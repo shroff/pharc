@@ -48,7 +48,7 @@ class PatientInfo(QWidget):
 
   def viewInfo(self, row, col):
     patient = self.data.patients[row]
-    self.patientDetail.setName(patient.name_first + " " + patient.name_last)
+    self.patientDetail.setName(patient.nameFirst + " " + patient.nameLast)
     ps = patient.getMostRecentPhotoset()
     self.patientDetail.setTreatment(" ".join(map(str, ps.treatments)))
     self.patientDetail.setDiagnosis(" ".join(map(str, ps.diagnoses)))

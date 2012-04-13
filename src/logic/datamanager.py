@@ -208,25 +208,25 @@ class DataManager(object):
             (f, m, a) = xxx_todo_changeme1
             pats = self.patients if valid_patients is None else valid_patients
             if m == "exact":
-                valid_patients = set([p for p in pats if p.name_first == a])
+                valid_patients = set([p for p in pats if p.nameFirst == a])
             elif m == "pre":
-                valid_patients = set([p for p in pats if p.name_first[:len(a)] == a])
+                valid_patients = set([p for p in pats if p.nameFirst[:len(a)] == a])
             elif m == "post":
-                valid_patients = set([p for p in pats if p.name_first[-len(a):] == a])
+                valid_patients = set([p for p in pats if p.nameFirst[-len(a):] == a])
             elif m == "sub":
-                valid_patients = set([p for p in pats if p.name_first.find(a) != -1])
+                valid_patients = set([p for p in pats if p.nameFirst.find(a) != -1])
             return valid_patients
         def constrainLastName(xxx_todo_changeme2, valid_patients=valid_patients):
             (f, m, a) = xxx_todo_changeme2
             pats = self.patients if valid_patients is None else valid_patients
             if m == "exact":
-                valid_patients = set([p for p in pats if p.name_last == a])
+                valid_patients = set([p for p in pats if p.nameLast == a])
             elif m == "pre":
-                valid_patients = set([p for p in pats if p.name_last[:len(a)] == a])
+                valid_patients = set([p for p in pats if p.nameLast[:len(a)] == a])
             elif m == "post":
-                valid_patients = set([p for p in pats if p.name_last[-len(a):] == a])
+                valid_patients = set([p for p in pats if p.nameLast[-len(a):] == a])
             elif m == "sub":
-                valid_patients = set([p for p in pats if p.name_last.find(a) != -1])
+                valid_patients = set([p for p in pats if p.nameLast.find(a) != -1])
             return valid_patients
         def constrainDiagnoses(xxx_todo_changeme3, valid_patients=valid_patients):
             (f, m, a) = xxx_todo_changeme3

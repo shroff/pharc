@@ -40,7 +40,7 @@ class PatientTableModel(QStandardItemModel):
   def populate(self):
     self.rowcount = 0
     for p in self.data.patients:
-      self.setItem(self.rowcount, 0, QStandardItem(p.name_first + " " + p.name_last))
+      self.setItem(self.rowcount, 0, QStandardItem(p.nameFirst + " " + p.nameLast))
       ps = p.getMostRecentPhotoset()
       self.setItem(self.rowcount, 1, QStandardItem(" ".join(map(str,
         ps.treatments))))

@@ -28,8 +28,8 @@ class Patient(object):
 
     Attributes:
         datamanager: A pointer to this patient's root datamanager object
-        name_first: The patient's first name as a string
-        name_last: The patient's last name as a string
+        nameFirst: The patient's first name as a string
+        nameLast: The patient's last name as a string
         physicians: A set of physicians that this patient interacts with
         photosets: A set of photosets of this patient
         storage_diagnosis: The diagnosis this patient is stored under in the fs
@@ -42,8 +42,8 @@ class Patient(object):
         # the first three are loaded eagerly on database startup and
         # we don't need to trigger any lazy loading for them, so they
         # don't need to be properties
-        self.name_first = None
-        self.name_last = None
+        self.nameFirst = None
+        self.nameLast = None
         self.uid = None
         # these are all properties because they require some lazy
         # loading.
@@ -54,8 +54,8 @@ class Patient(object):
 
     def __repr__(self):
         return \
-            "patient({0} {1}#{2}: {3} sets)".format(self.name_first,
-                                                    self.name_last,
+            "patient({0} {1}#{2}: {3} sets)".format(self.nameFirst,
+                                                    self.nameLast,
                                                     str(self.uid),
                                                     str(len(self.photosets)))
 
@@ -73,11 +73,11 @@ class Patient(object):
     physicians = property(getphysicians, setphysicians, delphysicians, "")
 
     def getname(self):
-        return self.name_first + self.name_last
+        return self.nameFirst + self.nameLast
     def setname(self):
-        raise NotImplementedError("I haven't figured out a good way to handle changing the name. use name_first and name_last instead")
+        raise NotImplementedError("I haven't figured out a good way to handle changing the name. use nameFirst and nameLast instead")
     def delname(self):
-        raise NotImplementedError("I haven't figured out a good way to handle deleting the name. use name_first and name_last instead")
+        raise NotImplementedError("I haven't figured out a good way to handle deleting the name. use nameFirst and nameLast instead")
     name = property(getname, setname, delname, "")
 
     def getphotosets(self):

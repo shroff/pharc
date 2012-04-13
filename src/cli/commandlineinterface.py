@@ -148,7 +148,7 @@ class CommandLineInterface(cmd.Cmd):
 
         echo = ""
         for p in pats:
-            echo += p.name_first + " " + p.name_last + ": " + str(p.getMostRecentPhotoset()) + "\n"
+            echo += p.nameFirst + " " + p.nameLast + ": " + str(p.getMostRecentPhotoset()) + "\n"
         print(echo[:-1])
 
     def do_findPhotosets(self, args):
