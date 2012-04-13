@@ -17,9 +17,7 @@
 
 import sqlite3
 
-from .datastorageinterface import DataStorageInterface
-
-class DB (DataStorageInterface):
+class DB:
     """A sqlite3 wrapper"""
 
     # Initialize and do appropriate operations on startup

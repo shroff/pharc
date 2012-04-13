@@ -15,16 +15,14 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-from .datastorageinterface import DataStorageInterface
 import os, sys, datetime
 
 # sys.path.append('../logic')
 #from ..logic import patient
 from logic.patient import Patient
 from logic.photoset import Photoset
-from logic.physician import Physician
 
-class FS(DataStorageInterface):
+class FS:
     """A filesystem manager"""
 
     # Initialize and do appropriate operations on startup
@@ -195,9 +193,10 @@ class FS(DataStorageInterface):
         else:
             data = self.parseNames(data)
             for i in data:
-                d = Physician()
-                d.firstName, d.lastName, d.uid = int(i)
-                physicians.append(d)
+                pass
+                #d = Physician()
+                #d.firstName, d.lastName, d.uid = int(i)
+                #physicians.append(d)
                 #patient.physicians.append( d )
                 #print patient.physicians
             return physicians
