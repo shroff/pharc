@@ -152,6 +152,30 @@ class FS(DataLoaderInterface):
                 print("IOError [{0}]: {1}".format(errno, strerror))
                 raise error
 
+    def editPhotosetTreatments(self, photoset, treatments):
+        directory = self.generatePhotosetDir(photoset)
+        if os.path.isdir(directory):
+            try:
+                f = open(directory + "/treatments.txt")
+                f.write(notes)
+                f.close()
+            except IOError as error:
+                (errno, sterror) = error
+                print("IOError [{0}]: {1}".format(errno, strerror))
+                raise error
+
+    def editPhotosetDiagnoses(self, photoset, diagnoses):
+        directory = self.generatePhotosetDir(photoset)
+        if os.path.isdir(directory):
+            try:
+                f = open(directory + "/diagnoses.txt")
+                f.write(notes)
+                f.close()
+            except IOError as error:
+                (errno, sterror) = error
+                print("IOError [{0}]: {1}".format(errno, strerror))
+                raise error
+
     def loadPatientNotes(self, patient):
         return self.getPatientDataFromField(patient, "notes.txt")
 

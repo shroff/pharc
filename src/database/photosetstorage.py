@@ -49,7 +49,7 @@ class PhotosetStorage:
             pass
 
     def editTreatments(self, photoset, treatments):
-        pass
+        self.fsm.ediPhotosetTreatments(photoset, treatments)
 
     def editDiagnoses(self, photoset, diagnoses):
-        pass
+        self.fsm.ediPhotosetDiagnoses(photoset, diagnoses)
