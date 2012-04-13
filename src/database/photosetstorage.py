@@ -42,9 +42,18 @@ class PhotosetStorage:
         return self.fsm.load_photoset_diagnoses(photoset)
 
     def load_treatments(self, photoset):
-        return self.fsm.load_photoset_treatments(photoset)
+            return self.fsm.load_photoset_treatments(photoset)
 
     def load_tags(self, photoset):
         list = load_diagnoses(photoset)
         list.append(load_treatments(photoset))
         return list
+
+    def move_photoset(self, photoset, to_patient):
+        pass
+
+    def edit_treatments(self, photoset, treatments):
+        pass
+
+    def edit_diagnoses(self, photoset, diagnoses):
+        pass

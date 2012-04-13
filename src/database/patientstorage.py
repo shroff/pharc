@@ -56,3 +56,19 @@ class PatientStorage:
     def load_photosets(self, patient):
         self.fsm.load_patient_photoset_list(patient)
 
+    def create_patient(self, first_name, last_name, physicians):
+        patient = self.fsm.add_patient(first_name, last_name)
+        self.fsm.add_physicians(patient, physicians)
+        return patient
+
+    def edit_name(self, first_name, last_name):
+        pass
+
+    def edit_physicians(self, patient, physicians):
+        pass
+
+    def edit_notes(self, patient, notes):
+        pass
+
+    def load_all_patients(self):
+        pass

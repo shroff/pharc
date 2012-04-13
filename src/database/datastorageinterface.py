@@ -40,7 +40,14 @@ class DataLoaderInterface:
     """
 
     # Initialize and do appropriate operations on startup
-    def __init__(self): abstract()
+    def __init__(self, path):
+
+			self.FS = FS(path)
+			self.DB = DB()
+
+			self.PatientStorage = PatientStorage(self.DB, self.FS)
+			self.PhotosetStorage = PhotosetStorage(self.DB, self.FS)
+			self.PhotoStorage = PhotoStorage(self.DB, self.FS)
 
     # Cleanup/validation before program termination
     def exit(self): abstract()
