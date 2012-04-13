@@ -23,7 +23,7 @@ class DB (DataLoaderInterface):
     """A sqlite3 wrapper"""
 
     # Initialize and do appropriate operations on startup
-    def __init__(self):
+    def _Init_(self):
 
         # Check if the DB exists before we open it
         exists = True
@@ -44,7 +44,7 @@ class DB (DataLoaderInterface):
         # Create tables if the DB didn't exist
         if not exists:
             # Indicate there is nothing to load from the DB
-            self.new_DB = True
+            self.newDB = True
             self.cursor.executescript("""
                 create table patients(
                     name text primary key asc not null,
@@ -68,10 +68,10 @@ class DB (DataLoaderInterface):
 
                 create table photosets(
                     date int not null,
-                    directory_hash text,
-                    diagnosis_txt_hash text,
-                    physicians_txt_hash text,
-                    treatment_txt_hash text,
+                    directoryHash text,
+                    diagnosisTxtHash text,
+                    physiciansTxtHash text,
+                    treatmentTxtHash text,
                     id int primary key not null,
                     path text unique not null,
                     patient int references patients(id) on delete cascade on update cascade,
@@ -86,11 +86,11 @@ class DB (DataLoaderInterface):
                     );
 
                 create table configuration(
-                    root_dir text not null,
-                    new_image_dir text not null,
-                    last_user text,
-                    current_user text not null,
-                    db_version text not null
+                    rootDir text not null,
+                    newImageDir text not null,
+                    lastUser text,
+                    currentUser text not null,
+                    dbVersion text not null
                     );
 
                 create table users(
@@ -116,12 +116,12 @@ class DB (DataLoaderInterface):
         self.cursor.close()
 
     # Returns if the data storage existed prior to class init
-    def is_new(self):
-        return self.new_DB
+    def isNew(self):
+        return self.newDB
 
     # Returns a list of all the patients
-    def load_all_patients(self):
-        if self.is_new():
+    def loadAllPatients(self):
+        if self.isNew():
             return None
         self.cursor.execute("select * from patients");
         patients = []
@@ -129,8 +129,8 @@ class DB (DataLoaderInterface):
             p = Patient()
             # TODO: this cannot be right...
             name = row[0].split()
-            p.name_first = name[1]
-            p.name_last = name[0]
+            p.nameFirst = name[1]
+            p.nameLast = name[0]
             p.uid = row[1]
             patients.append( p )
 
