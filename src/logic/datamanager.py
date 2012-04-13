@@ -321,3 +321,23 @@ class DataManager(object):
         # then create the overall ranking and return.
 
         return result
+
+
+    def searchPhotosets(self, queries, n):
+        ##########################################################
+        ##
+        ##  FIXME: is there a better way to do this than to pass
+        ##  around all these damn strings? There has to be
+        ##  something. Python doesn't do enums very well...
+        ##
+        ##########################################################
+        """Searches for photosets. Syntax and semantics will be pretty
+        much the same as searchPatients. For now, it just returns a
+        set of all photosets and you can muck around with it
+        yourself.
+        """
+        
+        result = set()
+        for p in self.patients:
+            result |= p.photosets
+        return result

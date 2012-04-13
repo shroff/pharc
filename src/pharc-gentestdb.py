@@ -58,7 +58,6 @@ Generates a random name from the list of first and last names.
 Generates the name.txt file in this folder, returns the patient's folder directory.
 """
 def createPatient(databaseDir, UID):
-        print '#%d' %UID
         myFirstName = '%s' %firstNames[random.randint(0, len(firstNames)-1)]
         myLastName = '%s' %lastNames[random.randint(0, len(lastNames)-1)]
         dirname = '%s, %s#%d' %(myLastName, myFirstName, UID)

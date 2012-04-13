@@ -31,7 +31,60 @@ class CommandLineInterface(cmd.Cmd):
     testing."""
 
     prompt = "\033[94m[PHARC]$\033[0m "
-    
+
+    def getEntitiesByUID(self, target, rtype="patient"):
+        """Gets a list of entities using the UID "target".
+
+        Will always return a list, even if only one entity is found.
+
+        rtpye is a string denoting what type of entity to return. The
+        semantics are determined by exactly what is given and what is
+        requested. Generally, returns everything even remotedly
+        related. For example, requesting physicians and giving a
+        patient UID will return all of that patient's
+        physicians. Physician-photoset relations are a bit weird as a
+        result. rtype can be any of "patient", "physician", or
+        "photoset".
+        
+        this function will return patients by default.
+        """
+        
+        ents = None
+        if target < 65536:      # target is patient
+            # figure out which patient the user is talking about
+            q = DataManager.Query("id", "", int(target))
+            sresults = self.dm.searchPatients([q], None)
+            pats = map(lambda x: x[0], sresults)
+            if rtype == "patient":
+                return pats
+            elif rtype == "physician":
+                # TODO get physician entities
+                pass
+            elif rtype == "photoset":
+                result = []
+                for p in pats:
+                    result |= p.photosets
+                return result
+        elif target < 70000:    # target is physician
+            # TODO get entity by physician
+            if rtype == "patient":
+                pass
+            elif rtype == "physician":
+                pass
+            elif rtype == "photoset":
+                pass
+        else:                   # target is photoset
+            q = DataManager.Query("id", "", int(args))
+            sresults = self.dm.searchPhotosets([q], None)
+            psets = filter(lambda x: x.uid == target, sresults)
+            if rtype == "patient":
+                return map(lambda x: x.patient, psets)
+            elif rtype == "physician":
+                # TODO get physician entities
+                pass
+            elif rtype == "photoset":
+                return psets
+
     def load_database(self, target):
         self.dm = DataManager("test/Database")
         return
@@ -54,15 +107,17 @@ class CommandLineInterface(cmd.Cmd):
         print echo[:-1]
 
     def do_listPhotosets(self, args):
+        if int(args) >= 70000:
+            ps = [x for x in self.dm.searchPhotosets(None, None) if x.uid == int(args)]
+            print ps
+            return
+        
         pats = None
         if args == "":
             pats = self.dm.patients
         else:
-            # figure out which patient the user is talking about
-            q = DataManager.Query("id", "", int(args))
-            sresults = self.dm.searchPatients([q], None)
-            pats = map(lambda x: x[0], sresults)
-        
+            pats = self.getEntitiesByUID(int(args), rtype="patient")
+
         if len(pats) == 0:
             print "No patients found"
             return
@@ -70,10 +125,11 @@ class CommandLineInterface(cmd.Cmd):
         echo = ""
         for p in pats:
             echo += str(p) + "\n"
-            for i in xrange(0, len(p.photosets) - 1):
-                echo += "  ├─" + str(p.photosets[i]) + "\n"
-            if len(p.photosets) > 0:
-                echo += "  └─" + str(p.photosets[-1]) + "\n"
+            psl = list(p.photosets)
+            for i in xrange(0, len(psl) - 1):
+                echo += "  ├─" + str(psl[i]) + "\n"
+            if len(psl) > 0:
+                echo += "  └─" + str(psl[-1]) + "\n"
         print echo[:-1]
         
     def do_loadRecentPhotoset(self, args):
