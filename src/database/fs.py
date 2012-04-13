@@ -128,7 +128,30 @@ class FS(DataLoaderInterface):
             print("could not access: " + directory)
             return None
 
-        
+    def editPatientNotes(self, patient, notes):
+        directory = self.generatePatientDir(patient)
+        if os.path.isdir(directory):
+            try:
+                f = open(directory + "/notes.txt")
+                f.write(notes)
+                f.close()
+            except IOError as error:
+                (errno, sterror) = error
+                print("IOError [{0}]: {1}".format(errno, strerror))
+                raise error
+
+    def editPatientPhysicians(self, patient, physicians):
+        directory = self.generatePatientDir(patient)
+        if os.path.isdir(directory):
+            try:
+                f = open(directory + "/physicians.txt")
+                f.write(physicians)
+                f.close()
+            except IOError as error:
+                (errno, sterror) = error
+                print("IOError [{0}]: {1}".format(errno, strerror))
+                raise error
+
     def loadPatientNotes(self, patient):
         return self.getPatientDataFromField(patient, "notes.txt")
 

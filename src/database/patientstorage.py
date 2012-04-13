@@ -65,10 +65,10 @@ class PatientStorage:
         pass
 
     def editPhysicians(self, patient, physicians):
-        pass
+        self.fsm.editPatientPhysicians(patient, physicians)
 
     def editNotes(self, patient, notes):
-        pass
+        self.fsm.editPatientNotes(patient, notes)
 
     def loadAllPatients(self):
-        pass
+        return self.fsm.loadAllPatients()
