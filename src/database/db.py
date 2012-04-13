@@ -17,9 +17,7 @@
 
 import sqlite3
 
-from .dataloaderinterface import DataLoaderInterface
-
-class DB (DataLoaderInterface):
+class DB:
     """A sqlite3 wrapper"""
 
     # Initialize and do appropriate operations on startup

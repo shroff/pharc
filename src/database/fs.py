@@ -15,16 +15,14 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-from .dataloaderinterface import DataLoaderInterface
 import os, sys, datetime
 
 # sys.path.append('../logic')
 #from ..logic import patient
 from logic.patient import Patient
 from logic.photoset import Photoset
-from logic.physician import Physician
 
-class FS(DataLoaderInterface):
+class FS:
     """A filesystem manager"""
 
     # Initialize and do appropriate operations on startup
@@ -56,6 +54,7 @@ class FS(DataLoaderInterface):
 
     def createPhotoset(self, photoset, patient):
         directory = generatePhotosetDir(photoset, patient)
+        os.makedirs(directory)
 
     def deletePhotoset(self, photoset):
         pass
@@ -194,9 +193,10 @@ class FS(DataLoaderInterface):
         else:
             data = self.parseNames(data)
             for i in data:
-                d = Physician()
-                d.firstName, d.lastName, d.uid = int(i)
-                physicians.append(d)
+                pass
+                #d = Physician()
+                #d.firstName, d.lastName, d.uid = int(i)
+                #physicians.append(d)
                 #patient.physicians.append( d )
                 #print patient.physicians
             return physicians
@@ -268,7 +268,7 @@ class FS(DataLoaderInterface):
             # TODO: error codes
             return None
 
-        directory = self.generatePhotosetDir(photoset, patient.photoset)
+        directory = self.generatePhotosetDir(photoset, photoset.patient)
         if os.path.isdir(directory):
             try:
                 f = open(directory + "/diagnoses.txt")
