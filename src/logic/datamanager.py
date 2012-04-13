@@ -63,7 +63,7 @@ class DataManager(object):
             IOError: Could not initialize the DataManagerLoader
         """
 
-        self.loader = database.datastorageinterface.DataStorageInterface(filesystem_location)
+        self.loader = database.datastorageinterface.DataStorageInterface(filesystem_location + "/..", filesystem_location)
 
         self.treatments = tags.TagList()
         self.diagnoses = tags.TagList()
