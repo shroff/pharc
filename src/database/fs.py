@@ -134,7 +134,7 @@ class FS:
             return None
 
     def editField(self, parent, generateDir, field, data):
-        directory = self.generateDir(patient)
+        directory = generateDir(patient)
         if os.path.isdir(directory):
             try:
                 f = open(directory + "/" + field + ".txt")
