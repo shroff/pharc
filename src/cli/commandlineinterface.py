@@ -54,7 +54,7 @@ class CommandLineInterface(cmd.Cmd):
             # figure out which patient the user is talking about
             q = DataManager.Query("id", "", int(target))
             sresults = self.dm.searchPatients([q], None)
-            pats = map(lambda x: x[0], sresults)
+            pats = [x[0] for x in sresults]
             if rtype == "patient":
                 return pats
             elif rtype == "physician":
@@ -76,9 +76,9 @@ class CommandLineInterface(cmd.Cmd):
         else:                   # target is photoset
             q = DataManager.Query("id", "", int(args))
             sresults = self.dm.searchPhotosets([q], None)
-            psets = filter(lambda x: x.uid == target, sresults)
+            psets = [x for x in sresults if x.uid == target]
             if rtype == "patient":
-                return map(lambda x: x.patient, psets)
+                return [x.patient for x in psets]
             elif rtype == "physician":
                 # TODO get physician entities
                 pass
@@ -86,30 +86,30 @@ class CommandLineInterface(cmd.Cmd):
                 return psets
 
     def load_database(self, target):
-        self.dm = DataManager("test/Database")
+        self.dm = DataManager(target)
         return
 
     def do_listPatients(self, args):
         echo = ""
         for p in self.dm.patients:
             echo += str(p) + "\n"
-        print echo[:-1]
+        print(echo[:-1])
 
     def do_findPatients(self, args):
         args = args.strip().split()
         q = DataManager.Query(args[0], args[1], args[2])
         sresults = self.dm.searchPatients([q], None)
-        pats = map(lambda x: x[0], sresults)
+        pats = [x[0] for x in sresults]
         
         echo = ""
         for p in pats:
             echo += str(p) + "\n"
-        print echo[:-1]
+        print(echo[:-1])
 
     def do_listPhotosets(self, args):
         if int(args) >= 70000:
             ps = [x for x in self.dm.searchPhotosets(None, None) if x.uid == int(args)]
-            print str(ps[0].patient) + ": " + str(ps[0])
+            print(str(ps[0].patient) + ": " + str(ps[0]))
             return
         
         pats = None
@@ -119,18 +119,18 @@ class CommandLineInterface(cmd.Cmd):
             pats = self.getEntitiesByUID(int(args), rtype="patient")
 
         if len(pats) == 0:
-            print "No patients found"
+            print("No patients found")
             return
 
         echo = ""
         for p in pats:
             echo += str(p) + "\n"
             psl = list(p.photosets)
-            for i in xrange(0, len(psl) - 1):
+            for i in range(0, len(psl) - 1):
                 echo += "  ├─" + str(psl[i]) + "\n"
             if len(psl) > 0:
                 echo += "  └─" + str(psl[-1]) + "\n"
-        print echo[:-1]
+        print(echo[:-1])
         
     def do_loadRecentPhotoset(self, args):
         pats = None
@@ -140,16 +140,16 @@ class CommandLineInterface(cmd.Cmd):
             # figure out which patient the user is talking about
             q = DataManager.Query("id", "", int(args))
             sresults = self.dm.searchPatients([q], None)
-            pats = map(lambda x: x[0], sresults)
+            pats = [x[0] for x in sresults]
         
         if len(pats) == 0:
-            print "No patients found"
+            print("No patients found")
             return
 
         echo = ""
         for p in pats:
             echo += p.name_first + " " + p.name_last + ": " + str(p.getMostRecentPhotoset()) + "\n"
-        print echo[:-1]
+        print(echo[:-1])
 
     def do_findPhotosets(self, args):
         pass

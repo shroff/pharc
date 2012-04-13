@@ -18,7 +18,7 @@
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 
-from patienttablemodel import PatientTableModel
+from .patienttablemodel import PatientTableModel
 
 import database.fs
 from logic.datamanager import DataManager

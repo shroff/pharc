@@ -15,7 +15,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-from dataloaderinterface import DataLoaderInterface
+from .dataloaderinterface import DataLoaderInterface
 import os, sys, datetime
 
 # sys.path.append('../logic')
@@ -35,7 +35,7 @@ class FS(DataLoaderInterface):
         exists = os.path.isdir(root)
 
         if not exists:
-            print "FS: root directory does not exist, creating " + self.root
+            print("FS: root directory does not exist, creating " + self.root)
             self.new_FS = True
 
             # create the root directory
@@ -116,15 +116,16 @@ class FS(DataLoaderInterface):
                 f = open(directory + "/" + field)
                 data = f.read()
                 f.close()
-            except IOError as (errno, strerror):
-                print "IOError [{0}]: {1}".format(errno, strerror)
+            except IOError as xxx_todo_changeme:
+                (errno, strerror) = xxx_todo_changeme.args
+                print("IOError [{0}]: {1}".format(errno, strerror))
                 # TODO: error codes
                 return None
                 
             return data
         else:
             # TODO: error codes
-            print "could not access: " + directory
+            print("could not access: " + directory)
             return None
 
         
@@ -171,8 +172,9 @@ class FS(DataLoaderInterface):
                         date = split_name[0].split("-")
                         p.date = datetime.date(int(date[2]), int(date[1]), int(date[0])) # year, month, day
                         patient.photosets |= set([p])
-            except IOError as (errno, strerror):
-                print "IOError [{0}]: {1}".format(errno, strerror)
+            except IOError as xxx_todo_changeme1:
+                (errno, strerror) = xxx_todo_changeme1.args
+                print("IOError [{0}]: {1}".format(errno, strerror))
 
     def load_photoset_tags(self, photoset):
         if self.is_new():
@@ -185,8 +187,9 @@ class FS(DataLoaderInterface):
                 f = open(directory + "/diagnoses.txt")
                 data = f.read()
                 f.close()
-            except IOError as (errno, strerror):
-                print "IOError [{0}]: {1}".format(errno, strerror)
+            except IOError as xxx_todo_changeme2:
+                (errno, strerror) = xxx_todo_changeme2.args
+                print("IOError [{0}]: {1}".format(errno, strerror))
                 # TODO: error codes
                 return None
                 
@@ -194,8 +197,9 @@ class FS(DataLoaderInterface):
                 f = open(directory + "/treatments.txt")
                 data = data + "\n" + f.read()
                 f.close()
-            except IOError as (errno, strerror):
-                print "IOError [{0}]: {1}".format(errno, strerror)
+            except IOError as xxx_todo_changeme3:
+                (errno, strerror) = xxx_todo_changeme3.args
+                print("IOError [{0}]: {1}".format(errno, strerror))
                 # TODO: error codes
                 return None
 
@@ -203,7 +207,7 @@ class FS(DataLoaderInterface):
             return data
         else:
             # TODO: error codes
-            print "could not access: " + directory 
+            print("could not access: " + directory) 
             return None
 
     def load_photoset_diagnoses(self, photoset):
@@ -217,8 +221,9 @@ class FS(DataLoaderInterface):
                 f = open(directory + "/diagnoses.txt")
                 data = f.read()
                 f.close()
-            except IOError as (errno, strerror):
-                print "IOError [{0}]: {1}".format(errno, strerror)
+            except IOError as xxx_todo_changeme4:
+                (errno, strerror) = xxx_todo_changeme4.args
+                print("IOError [{0}]: {1}".format(errno, strerror))
                 # TODO: error codes
                 return None
 
@@ -226,7 +231,7 @@ class FS(DataLoaderInterface):
             return data
         else:
             # TODO: error codes
-            print "could not access: " + directory 
+            print("could not access: " + directory) 
             return None
 
     def load_photoset_treatments(self, photoset):
@@ -240,8 +245,9 @@ class FS(DataLoaderInterface):
                 f = open(directory + "/treatments.txt")
                 data = f.read()
                 f.close()
-            except IOError as (errno, strerror):
-                print "IOError [{0}]: {1}".format(errno, strerror)
+            except IOError as xxx_todo_changeme5:
+                (errno, strerror) = xxx_todo_changeme5.args
+                print("IOError [{0}]: {1}".format(errno, strerror))
                 # TODO: error codes
                 return None
 
@@ -249,5 +255,5 @@ class FS(DataLoaderInterface):
             return data
         else:
             # TODO: error codes
-            print "could not access: " + directory 
+            print("could not access: " + directory) 
             return None

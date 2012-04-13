@@ -38,7 +38,7 @@ class SearchBar(QWidget):
       return
 
 #TODO: Implement searching
-    print "Searching for " + self.searchField.text()
+    print("Searching for " + self.searchField.text())
 
 
 class SearchField(QLineEdit):

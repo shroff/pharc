@@ -54,7 +54,7 @@ class PatientNameRow(QWidget):
 
   def change(self):
     if (self.changeNameField.text() != ''):
-      print "Changing name to: " + self.changeNameField.text()
+      print("Changing name to: " + self.changeNameField.text())
 
     self.cancel()
 

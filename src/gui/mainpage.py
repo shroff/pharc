@@ -17,8 +17,8 @@
 
 from PyQt4.QtGui import *
 
-from searchbar import SearchBar
-from patientinfo import PatientInfo
+from .searchbar import SearchBar
+from .patientinfo import PatientInfo
 
 import database.fs
 from logic.datamanager import DataManager

@@ -17,8 +17,8 @@
 
 from PyQt4.QtGui import *
 
-from patienttable import PatientTable
-from patientdetail import PatientDetail
+from .patienttable import PatientTable
+from .patientdetail import PatientDetail
 
 import database.fs
 from logic.datamanager import DataManager

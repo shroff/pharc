@@ -20,7 +20,7 @@
 import sys
 from PyQt4.QtGui import *
 
-from mainwindow import *
+from .mainwindow import *
 
 
 def main():

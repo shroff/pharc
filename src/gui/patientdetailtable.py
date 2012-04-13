@@ -18,7 +18,7 @@
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 
-from patientdetailtablemodel import PatientDetailTableModel
+from .patientdetailtablemodel import PatientDetailTableModel
 
 class PatientDetailTable(QTableView):
   def __init__(self, dm):
@@ -41,8 +41,8 @@ class PatientDetailTable(QTableView):
 
 
   def click(self, index):
-    print index.row();
-    print index.column();
+    print(index.row());
+    print(index.column());
 
   def setPatient(self, patient):
     self.patient = patient

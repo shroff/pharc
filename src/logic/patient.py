@@ -77,9 +77,9 @@ class Patient(object):
     def getname(self):
         return self.name_first + self.name_last
     def setname(self):
-        raise NotImplementedError, "I haven't figured out a good way to handle changing the name. use name_first and name_last instead"
+        raise NotImplementedError("I haven't figured out a good way to handle changing the name. use name_first and name_last instead")
     def delname(self):
-        raise NotImplementedError, "I haven't figured out a good way to handle deleting the name. use name_first and name_last instead"
+        raise NotImplementedError("I haven't figured out a good way to handle deleting the name. use name_first and name_last instead")
     name = property(getname, setname, delname, "")
 
     def getphotosets(self):
@@ -115,9 +115,9 @@ class Patient(object):
             result |= ps.diagnoses
         return result
     def setdiagnoses(self, value):
-        raise NotImplementedError, "I haven't figured out a good way to handle changing patient diagnoses."
+        raise NotImplementedError("I haven't figured out a good way to handle changing patient diagnoses.")
     def deldiagnoses(slef):
-        raise NotImplementedError, "I haven't figured out a good way to handle deleting patient diagnoses."
+        raise NotImplementedError("I haven't figured out a good way to handle deleting patient diagnoses.")
     diagnoses = property(getdiagnoses, setdiagnoses, deldiagnoses, "")
 
 
@@ -127,7 +127,7 @@ class Patient(object):
             result |= ps.treatments
         return result
     def settreatments(self, value):
-        raise NotImplementedError, "I haven't figured out a good way to handle changing patient treatments."
+        raise NotImplementedError("I haven't figured out a good way to handle changing patient treatments.")
     def deltreatments(slef):
-        raise NotImplementedError, "I haven't figured out a good way to handle deleting patient treatments."
+        raise NotImplementedError("I haven't figured out a good way to handle deleting patient treatments.")
     treatments = property(gettreatments, settreatments, deltreatments, "")

@@ -18,8 +18,8 @@
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 
-from patientnamerow import PatientNameRow
-from patientdetailtable import PatientDetailTable
+from .patientnamerow import PatientNameRow
+from .patientdetailtable import PatientDetailTable
 
 import database.fs
 from logic.datamanager import DataManager
@@ -54,7 +54,7 @@ class PatientEditPage(QWidget):
     self.setLayout(vbox)
 
   def saveChanges(self):
-    print 'Saving'
+    print('Saving')
 
   def cancelChanges(self):
     self.parent.viewMain()

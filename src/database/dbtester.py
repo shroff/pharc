@@ -16,9 +16,9 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-import db
-import fs
-import patientloader
+from . import db
+from . import fs
+from . import patientloader
 
 def testDB():
     d = db.DB()
@@ -34,10 +34,10 @@ def testFS():
         pl.load_notes(i)
         pl.load_physicians(i)
         pl.load_photosets(i)
-        print i.name_first + " " + i.name_last + ": " + i.uid
-        print "\t" + i.notes
-        print "\t" + str(i.physicians)
-        print "\t" + str(i.photosets)
+        print(i.name_first + " " + i.name_last + ": " + i.uid)
+        print("\t" + i.notes)
+        print("\t" + str(i.physicians))
+        print("\t" + str(i.photosets))
 
     f.exit()
     return

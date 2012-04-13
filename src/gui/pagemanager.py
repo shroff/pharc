@@ -18,8 +18,8 @@
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 
-from mainpage import *
-from patienteditpage import *
+from .mainpage import *
+from .patienteditpage import *
 
 import database.fs
 from logic.datamanager import DataManager
@@ -28,7 +28,7 @@ from logic.datamanager import DataManager
 
 class PageManager(QWidget):
   def __init__(self, parent):
-    self.data = DataManager("test/Database")
+    self.data = DataManager("../database")
     super(PageManager, self).__init__(parent)
     self.parent = parent
 
