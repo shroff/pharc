@@ -17,10 +17,8 @@
 
 import os, sys, datetime
 
-# sys.path.append('../logic')
-#from ..logic import patient
-from logic.patient import Patient
-from logic.photoset import Photoset
+import logic.patient as patient
+import logic.photoset as photoset
 
 class FS:
     """A filesystem manager"""
@@ -71,7 +69,7 @@ class FS:
         # TODO: Probably not right
         for i in items:
             if os.path.isdir(self.root + "/" + i):
-                p = Patient()
+                p = patient.Patient()
                 # Parse filename
                 p.nameFirst, p.nameLast, p.uid = self.parseName(i)
                 p.uid = int(p.uid)
@@ -212,7 +210,7 @@ class FS:
                 items = os.listdir(directory)
                 for i in items:
                     if os.path.isdir(directory + "/" + i):
-                        p = Photoset()
+                        p = photoset.Photoset()
                         p.patient = patient
                         p.dm = patient.dm
                         #print i

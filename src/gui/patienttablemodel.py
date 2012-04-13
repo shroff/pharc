@@ -18,9 +18,8 @@
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 
-import database.fs
-from logic.datamanager import DataManager
-from logic.patient import Patient
+# import logic.datamanager as datamanager
+# import logic.patient import patient
 
 
 class PatientTableModel(QStandardItemModel):

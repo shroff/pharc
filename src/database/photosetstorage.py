@@ -15,11 +15,6 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-from . import db
-from . import fs
-
-from logic.photoset import Photoset
-
 class PhotosetStorage:
 
     def __init__(self, dbm, fsm):

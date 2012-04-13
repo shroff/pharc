@@ -15,8 +15,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-from logic.datamanager import DataManager
-from logic.tags import Tag
+import logic.tags as tags
 
 class Photoset(object):
 
@@ -60,7 +59,7 @@ class Photoset(object):
         match = self.dm.diagnoses.match_fullstring_single(diagnosis)
         if not match: # no matching tag, so make a new one and add it
                       # to the list
-            match = Tag(diagnosis)
+            match = tags.Tag(diagnosis)
             self.dm.diagnoses.add(match)
         match.photosets.add(self)
         self._diagnoses.add(match)
@@ -110,7 +109,7 @@ class Photoset(object):
         match = self.dm.treatments.match_fullstring_single(treatment)
         if not match: # no matching tag, so make a new one and add it
                       # to the list
-            match = Tag(treatment)
+            match = tags.Tag(treatment)
             self.dm.treatments.add(match)
         match.photosets.add(self)
         self._treatments.add(match)
