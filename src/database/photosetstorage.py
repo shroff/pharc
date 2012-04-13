@@ -20,7 +20,7 @@ from . import fs
 
 # import sys
 # sys.path.append('../logic')
-from logic.patient import Photoset
+from logic.photoset import Photoset
 
 class PhotosetStorage:
 

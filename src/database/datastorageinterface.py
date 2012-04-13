@@ -15,6 +15,12 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
+from .fs import FS
+from .db import DB
+from .patientstorage import PatientStorage
+from .photosetstorage import PhotosetStorage
+from .photostorage import PhotoStorage
+
 # norvig.com/python-iaq.html
 def abstract():
     """ This is a trick to enable abstract methods.

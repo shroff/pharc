@@ -21,7 +21,7 @@
 
 import os
 import sys
-import database.fs
+import database.datastorageinterface as dsi
 from logic.datamanager import DataManager
 import readline
 import cmd
