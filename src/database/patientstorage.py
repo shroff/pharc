@@ -18,11 +18,32 @@
 class PatientStorage(object):
 
     def __init__(self, dbm, fsm):
+        """
+            Initialize a PatientStorage object.
+
+            Arguments:
+                dbm: Reference to a DB object.
+                fsm: Reference to a FS object.
+        """
         # there may be a better way of handling this, but it should do
         self.dbm = dbm
         self.fsm = fsm
 
     def loadField(self, patient, fm, dm):
+        """
+            Loads a field for a Patient, e.g. notes, physicians.
+
+            Arguments:
+                patient: The patient who's field we want to load.
+                fm:      The FS method to call.
+                dm:      The DB method to call.
+
+            Returns:
+                The data from the field that was loaded.
+
+            Throws:
+                ?
+        """
         #TODO database loading
 
         data = fm(patient)
@@ -32,6 +53,18 @@ class PatientStorage(object):
 
 
     def loadNotes(self, patient):
+        """
+            Wrapper for loading notes using loadField().
+
+            Arguments:
+                patient: The patient who's notes we want.
+
+            Returns:
+                N/A -- Sets the notes field of patient directly
+
+            Throws:
+                ?
+        """
         #TODO try database before filesystem
 
         notes = self.fsm.loadPatientNotes(patient)
@@ -44,33 +77,134 @@ class PatientStorage(object):
             return
 
     def checkNewFS(self):
+        """
+            Determines whether or not the filesystem is brand new.
+            
+            Arguments:
+                N/A
+
+            Returns:
+                True if the filesystem is newly made, False otherwise.
+
+            Throws:
+                N/A
+        """
         return self.fsm.isNew()
 
     def loadPhysicians(self, patient):
+        """
+            Load the physicians list for a patient.
+
+            Arguments:
+                patient: The patient who's physicians we want.
+
+            Returns:
+                N/A -- sets the physicians field directly
+
+            Throws:
+                ?
+        """
         if not self.checkNewFS():
             patient.physicians = self.loadField(patient, self.fsm.loadPatientPhysicians, None)
 
     def loadPhotosets(self, patient):
+        """
+            Load the list of photosets for a patient.
+
+            Arguments:
+                patient: The patient who's photosets we want.
+
+            Returns:
+                N/A -- sets the photosets list directly
+
+            Throws:
+                ?
+        """
         if not self.checkNewFS():
             self.fsm.loadPatientPhotosetList(patient)
 
     def createPatient(self, firstName, lastName, physicians):
+        """
+            Creates a new patient.
+
+            Arguments:
+                firstName:  The first name of the patient.
+                lastName:   The last name of the patient.
+                physicians: A list of the physicians who own this patient.
+
+            Returns:
+                A new patient object.
+
+            Throws:
+                ?
+        """
         patient = self.fsm.createPatient(firstName, lastName)
         self.fsm.addPhysicians(patient, physicians)
         return patient
 
     def editName(self, firstName, lastName):
+        """
+            Changes the name of a patient and adjusts it's database entries.
+
+            Arguments:
+                firstName: The first name of the patient.
+                lastName:  The last name of the patient.
+
+            Returns:
+                N/A
+
+            Throws:
+                ?
+        """
         if not self.checkNewFS():
             pass
 
     def editPhysicians(self, patient, physicians):
+        """
+            Changes the physician list in the database for the patient.
+
+            Arguments:
+                patient:    The patient who's physicians we want to change.
+                physicians: The new list of physicians.
+
+            Returns:
+                N/A
+
+            Throws:
+                ?
+        """
         if not self.checkNewFS():
             self.fsm.editPatientPhysicians(patient, physicians)
 
     def editNotes(self, patient, notes):
+        """
+            Changes the notes in the database for the patient.
+
+            Arguments:
+                patient: The patient who's notes we want to change.
+                notes:   The new notes for the patient.
+
+            Returns:
+                N/A
+
+            Throws:
+                ?
+        """
         if not self.checkNewFS():
             self.fsm.editPatientNotes(patient, notes)
 
     def loadAllPatients(self):
+        """
+            Loads a list of all of the patients in the database.
+
+            Arguments:
+                N/A
+
+            Returns:
+                The list of patients in the database.
+
+            Throws:
+                ?
+        """
         if not self.checkNewFS():
             return self.fsm.loadAllPatients()
