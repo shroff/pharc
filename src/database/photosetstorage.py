@@ -37,11 +37,11 @@ class PhotosetStorage:
         return list
 
     def movePhotoset(self, photoset, toPatient):
-        self.fsm.createPhotoset(photoset, toPatient)
 
         if photoset.patient is None:
-            pass
+            self.fsm.createPhotoset(photoset, toPatient)
         else:
+            self.fsm.copyPatient(photoset, toPatient)
             self.fsm.deletePhotoset(photoset)
 
         photoset.patient = toPatient

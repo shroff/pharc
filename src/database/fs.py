@@ -114,6 +114,19 @@ class FS:
 
         self.photosetUID = uid
 
+    def copyPhotoset(self, photoset, toPatient):
+        fromDirectory = self.generatePhotosetDir(photoset, photoset.patient)
+        toDirectory = self.generatePhotosetDir(photoset, photoset.toPatient)
+
+        if not os.path.isdir(fromDirectory):
+            return
+        if os.path.isdir(toDirectory):
+            # We have a database inconsistency, how should we handle it?
+            # For now, die.
+            raise Exception
+
+        shutil.copytree(fromDirectory, toDirectory)
+
 
     def deletePhotoset(self, photoset):
         pass
