@@ -140,10 +140,8 @@ class CommandLineInterface(cmd.Cmd):
             return
         ps = ps[0]
         if args[1] == "date":
-            # TODO: implement editDate
             d = dateutil.parser.parse(args[2])
             ps.date = d
-            self.dm.loader.PhotosetStorage.editDate(ps, d)
         if args[1] == "+treat":
             str(ps.addTreatment(args[2]))
         if args[1] == "-treat":
