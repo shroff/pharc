@@ -68,11 +68,32 @@ class FS:
     def isNew(self):
         return self.newFS
 
+    def makeFile(self, path, data=''):
+        f = open(path, 'w')
+        f.write(data)
+        f.close()
+
     def createPatient(self, firstName, lastName):
         if not self.isNew():
             if not self.knownPatientUIDs():
                 # if you see this, then you did not call loadAllPatients() on program startup
                 raise Exception
+            uid = self.patientUID + 1
+        else:
+            uid = self.patientUID
+
+
+        p = patient.Patient()
+        p.firstName = firstName
+        p.lastName = lastName
+        p.uid = uid
+
+        directory = self.generatePatientDir(p)
+
+        shutil.makedirs(directory)
+        self.makeFile(directory + "/name.txt", firstName + ", " + lastName + "#" + str(uid))
+        self.makeFile(directory + "/physicians.txt")
+        self.makeFile(directory + "/notes.txt")
 
         self.newFS = False
 
@@ -86,6 +107,10 @@ class FS:
 
         directory = generatePhotosetDir(photoset, patient)
         os.makedirs(directory)
+        self.makeFile(directory + "/physicians.txt")
+        self.makeFile(directory + "/notes.txt")
+        self.makeFile(directory + "/treatments.txt")
+        self.makeFile(directory + "/diagnoses.txt")
 
         self.photosetUID = uid
 
