@@ -151,7 +151,7 @@ class Photoset(object):
 
     def getdate(self):
         return self._date
-    def setdate(self):
+    def setdate(self, value):
         pass
     def deldate(self):
         pass
@@ -159,7 +159,7 @@ class Photoset(object):
 
     def getpatient(self):
         return self._patient
-    def setpatient(self):
+    def setpatient(self, value):
         pass
     def delpatient(self):
         pass
