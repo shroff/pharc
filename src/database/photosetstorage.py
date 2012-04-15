@@ -46,11 +46,11 @@ class PhotosetStorage:
 
         photoset.patient = toPatient
 
-    def editTreatments(self, photoset):
-        self.fsm.editPhotosetTreatments(photoset)
+    def editTreatments(self, photoset, treatments):
+        self.fsm.editPhotosetTreatments(photoset, treatments)
 
-    def editDiagnoses(self, photoset):
-        self.fsm.editPhotosetDiagnoses(photoset)
+    def editDiagnoses(self, photoset, diagnoses):
+        self.fsm.editPhotosetDiagnoses(photoset, diagnoses)
 
     def editDate(self, photoset, date):
         pass
