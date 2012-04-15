@@ -470,6 +470,20 @@ class FS:
         return self.getPatientDataFromField(patient, "notes.txt")
 
     def loadPatientPhysicians(self, patient):
+        """
+            Wrapper for getPatientDataFromField which loads the physicians' data.
+            Parses the data into tuples for easy processing later.
+
+            Arguments:
+                patient: The patient who's physicians we want.
+
+            Returns:
+                Tuple representation of the physicians field, parsed by parseNames()
+                None if no physicians.
+            
+            Throws:
+                IOError
+        """
         data = self.getPatientDataFromField(patient, "physicians.txt")
         physicians = list()
         if data is None:
@@ -480,6 +494,18 @@ class FS:
             return physicians
     
     def loadPatientPhotosetList(self, patient):
+        """
+            Loads a patient's list of photosets.
+
+            Arguments:
+                patient: The patient who's photoset list we want.
+
+            Returns:
+                N/A -- Fills the photoset list field in patient
+            
+            Throws:
+                IOError
+        """
         directory = self.generatePatientDir(patient)
         if os.path.isdir(directory):
             try:
@@ -502,6 +528,7 @@ class FS:
             except IOError as error:
                 (errno, strerror) = error.args
                 print("IOError [{0}]: {1}".format(errno, strerror))
+                raise error
 
     def loadPhotosetTags(self, photoset):
         directory = self.generatePhotosetDir(photoset)
