@@ -242,16 +242,17 @@ class FS:
                 items = os.listdir(directory)
                 for i in items:
                     if os.path.isdir(directory + "/" + i):
-                        p = photoset.Photoset()
-                        p.patient = patient
-                        p.dm = patient.dm
                         splitName = i.split("#")
                         uid = splitName[1]
+
+                        date = splitName[0].split("-")
+                        date = datetime.date(int(date[2]), int(date[1]), int(date[0])) # year, month, day
+
+                        p = photoset.Photoset(patientinit=patient, dateinit=date)
+                        p.dm = patient.dm
                         p.uid = int(uid)
 
                         # determine date
-                        date = splitName[0].split("-")
-                        p.date = datetime.date(int(date[2]), int(date[1]), int(date[0])) # year, month, day
                         patient.photosets |= set([p])
 
             except IOError as error:
