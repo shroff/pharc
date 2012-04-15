@@ -50,12 +50,11 @@ class FS:
     def isNew(self):
         return self.newFS
 
-    def createPhotosetDir(self, photoset, patient=None):
-        directory = self.generatePhotosetDir(photoset, patient)
-        if not os.path.exists(directory):
-            os.makedirs(directory)
+    def createPhotoset(self, photoset, patient):
+        directory = generatePhotosetDir(photoset, patient)
+        os.makedirs(directory)
 
-    def deletePhotosetDir(self, photoset):
+    def deletePhotoset(self, photoset):
         pass
 
     # Returns a list of all the patients
@@ -98,11 +97,9 @@ class FS:
     def generatePatientDir(self, patient):
         return self.root + "/" + patient.nameLast + ", " + patient.nameFirst + "#" + str(patient.uid)
 
-    def generatePhotosetDir(self, ps, p=None):
-        if p is None:
-            p = ps.patient
-        directory = self.generatePatientDir(p)
-        uid = str(ps.uid)
+    def generatePhotosetDir(self, photoset, patient):
+        directory = self.generatePatientDir(patient)
+        uid = str(photoset.uid)
         if os.path.isdir(directory):
             items = os.listdir(directory)
             for i in items:
@@ -135,15 +132,10 @@ class FS:
             return None
 
     def editField(self, parent, generateDir, field, data):
-        """writes the field string into the proper directory.
-
-        Note that this function will overwrite any previous data! Be
-        sure to provide the new data in totality so you don't lose
-        anything."""
         directory = generateDir(parent)
         if os.path.isdir(directory):
             try:
-                f = open(directory + "/" + field + ".txt", "w")
+                f = open(directory + "/" + field + ".txt")
                 f.write(data)
                 f.close()
             except IOError as error:
@@ -151,17 +143,17 @@ class FS:
                 print("IOError [{0}]: {1}".format(errno, strerror))
                 raise error
 
-    def editPatientNotes(self, patient):
-        self.editField(patient, self.generatePatientDir, "notes", patient.notes)
+    def editPatientNotes(self, patient, notes):
+        self.editField(patient, self.generatePatientDir, "notes", notes)
 
-    def editPatientPhysicians(self, patient):
-        self.editField(patient, self.generatePatientDir, "physicians", "\n".join(map(str, patient.physicians)))
+    def editPatientPhysicians(self, patient, physicians):
+        self.editField(patient, self.generatePatientDir, "physicians", physicians)
 
-    def editPhotosetTreatments(self, photoset):
-        self.editField(photoset, self.generatePhotosetDir, "treatments", "\n".join(map(str, photoset.treatments)))
+    def editPhotosetTreatments(self, photoset, treatments):
+        self.editField(photoset, self.generatePhotosetDir, "treatments", treatments)
 
-    def editPhotosetDiagnoses(self, photoset):
-        self.editField(photoset, self.generatePhotosetDir, "diagnoses", "\n".join(map(str, photoset.diagnoses)))
+    def editPhotosetDiagnoses(self, photoset, diagnoses):
+        self.editField(photoset, self.generatePhotosetDir, "diagnoses", diagnoses)
 
     def loadPatientNotes(self, patient):
         return self.getPatientDataFromField(patient, "notes.txt")
@@ -194,15 +186,18 @@ class FS:
                 items = os.listdir(directory)
                 for i in items:
                     if os.path.isdir(directory + "/" + i):
+                        p = photoset.Photoset()
+                        p.patient = patient
+                        p.dm = patient.dm
+                        #print i
                         splitName = i.split("#")
                         uid = splitName[1]
-                        date = splitName[0].split("-")
-                        d = datetime.date(int(date[2]), int(date[1]), int(date[0])) # year, month, day
-
-                        p = photoset.Photoset(patientinit=patient, dateinit=d)
-                        p.dm = patient.dm
                         p.uid = int(uid)
+                        # p.uid = 0
 
+                        # determine date
+                        date = splitName[0].split("-")
+                        p.date = datetime.date(int(date[2]), int(date[1]), int(date[0])) # year, month, day
                         patient.photosets |= set([p])
             except IOError as xxxTodoChangeme1:
                 (errno, strerror) = xxxTodoChangeme1.args
@@ -247,7 +242,7 @@ class FS:
             # TODO: error codes
             return None
 
-        directory = self.generatePhotosetDir(photoset)
+        directory = self.generatePhotosetDir(photoset, photoset.patient)
         if os.path.isdir(directory):
             try:
                 f = open(directory + "/diagnoses.txt")
@@ -271,7 +266,7 @@ class FS:
             # TODO: error codes
             return None
 
-        directory = self.generatePhotosetDir(photoset)
+        directory = self.generatePhotosetDir(photoset, photoset.patient)
         if os.path.isdir(directory):
             try:
                 f = open(directory + "/treatments.txt")
