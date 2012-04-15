@@ -129,7 +129,7 @@ class Photoset(object):
         #print "treatments <- " + str(value)
         self._treatments = value
         self.dm.loader.editTreatments(self)
-    def deltreatments(slef):
+    def deltreatments(self):
         del self._treatments
     treatments = property(gettreatments, settreatments, deltreatments, "")
 
@@ -145,7 +145,7 @@ class Photoset(object):
         #print "diagnoses <- " + str(value)
         self._diagnoses = value
         self.dm.loader.PhotosetStorage.editDiagnoses(self)
-    def deldiagnoses(slef):
+    def deldiagnoses(self):
         del self._diagnoses
     diagnoses = property(getdiagnoses, setdiagnoses, deldiagnoses, "")
 
