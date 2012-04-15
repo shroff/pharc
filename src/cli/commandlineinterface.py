@@ -150,6 +150,14 @@ class CommandLineInterface(cmd.Cmd):
             str(ps.addDiagnosis(args[2]))
         if args[1] == "-diag":
             pass
+        if args[1] == "patient":
+            patients = self.getEntitiesByUID(int(args[2]), rtype="patient")
+            if not patients:
+                print("no patient found")
+                return
+            p = patients[0]
+            ps.patient = p
+            
     def do_editPatient(self, args):
         if args[1] == "fname":
             pass
