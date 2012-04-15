@@ -66,7 +66,6 @@ class FS:
         patients = []
 
         items = os.listdir(self.root)
-        # TODO: Probably not right
         for i in items:
             if os.path.isdir(self.root + "/" + i):
                 p = patient.Patient()
