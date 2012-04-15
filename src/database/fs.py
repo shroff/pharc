@@ -97,8 +97,8 @@ class FS:
         uid = str(photoset.uid)
 				date = photoset.date
         if os.path.isdir(directory):
-					return directory + "/" + str(date.day).zfill(2) + "-" + str(date.month).zfill(2) + \
-							"-" + str(date.year) + "#" + uid
+            return directory + "/" + str(date.day).zfill(2) + "-" + str(date.month).zfill(2) + \
+                "-" + str(date.year) + "#" + uid
         
 
     def getPatientDataFromField(self, patient, field):
