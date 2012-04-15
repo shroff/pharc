@@ -152,7 +152,8 @@ class Photoset(object):
     def getdate(self):
         return self._date
     def setdate(self, value):
-        pass
+        self.dm.loader.PhotosetStorage.editDate(self, value)
+        self._date = value
     def deldate(self):
         pass
     date = property(getdate, setdate, deldate, "")
@@ -160,7 +161,8 @@ class Photoset(object):
     def getpatient(self):
         return self._patient
     def setpatient(self, value):
-        pass
+        self.dm.loader.PhotosetStorage.movePhotoset(self, value)
+        self._patient = value
     def delpatient(self):
         pass
     patient = property(getpatient, setpatient, delpatient, "")

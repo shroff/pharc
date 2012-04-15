@@ -50,11 +50,11 @@ class FS:
     def isNew(self):
         return self.newFS
 
-    def createPhotoset(self, photoset, patient):
-        directory = generatePhotosetDir(photoset, patient)
+    def createPhotosetDir(self, photoset, patient=None):
+        directory = self.generatePhotosetDir(photoset, patient)
         os.makedirs(directory)
 
-    def deletePhotoset(self, photoset):
+    def deletePhotosetDir(self, photoset):
         pass
 
     # Returns a list of all the patients
@@ -97,9 +97,11 @@ class FS:
     def generatePatientDir(self, patient):
         return self.root + "/" + patient.nameLast + ", " + patient.nameFirst + "#" + str(patient.uid)
 
-    def generatePhotosetDir(self, photoset):
-        directory = self.generatePatientDir(photoset.patient)
-        uid = str(photoset.uid)
+    def generatePhotosetDir(self, ps, p=None):
+        if p is None:
+            p = ps.patient
+        directory = self.generatePatientDir(p)
+        uid = str(ps.uid)
         if os.path.isdir(directory):
             items = os.listdir(directory)
             for i in items:
