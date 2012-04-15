@@ -24,7 +24,6 @@ import sys
 import gui.guiMain
 
 def doGUI():
-    print("foo!")
     pgui = gui.guiMain.main()
 
 if __name__ == "__main__":
