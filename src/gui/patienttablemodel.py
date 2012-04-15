@@ -40,10 +40,14 @@ class PatientTableModel(QStandardItemModel):
   def populate(self):
     self.rowcount = 0
     for p in self.data.patients:
-      self.setItem(self.rowcount, 0, QStandardItem(p.nameFirst + " " + p.nameLast))
-      ps = p.getMostRecentPhotoset()
-      self.setItem(self.rowcount, 1, QStandardItem(" ".join(map(str,
-        ps.treatments))))
-      self.setItem(self.rowcount, 2, QStandardItem(" ".join(map(str,
-        ps.diagnoses))))
+      c1 = QStandardItem(p.nameFirst + " " + p.nameLast)
+      c1.setEditable(False)
+      c2 = QStandardItem(", ".join(map(str, p.treatments)))
+      c2.setEditable(False)
+      c3 = QStandardItem(", ".join(map(str, p.diagnoses)))
+      c3.setEditable(False)
+      
+      self.setItem(self.rowcount, 0, c1)
+      self.setItem(self.rowcount, 1, c2)
+      self.setItem(self.rowcount, 2, c3)
       self.rowcount = self.rowcount+1
