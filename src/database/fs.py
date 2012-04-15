@@ -55,6 +55,15 @@ class FS:
         """
             Determines the highest Photoset UID in the database so that we
             can continue generating unique IDs for new photosets.
+
+            Arguments:
+                N/A
+
+            Returns:
+                N/A -- Sets self.photosetUID
+
+            Throws:
+                ?
         """
         items = os.listdir(self.root)
         for i in items:
@@ -65,8 +74,8 @@ class FS:
                     photosetDirectory = directory + "/" + j
                     if os.path.isdir(photosetDirectory):
                         uid = int(j.split("#")[1])
-                        if uid > photosetUID:
-                            photosetUID = uid
+                        if uid > self.photosetUID:
+                            self.photosetUID = uid
 
     # Returns if the data storage existed prior to class init
     def isNew(self):
