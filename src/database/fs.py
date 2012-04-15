@@ -115,7 +115,7 @@ class FS:
         self.photosetUID = uid
 
     def copyPhotoset(self, photoset, toPatient):
-        fromDirectory = self.generatePhotosetDir(photoset, photoset.patient)
+        fromDirectory = self.generatePhotosetDir(photoset)
         toDirectory = self.generatePhotosetDir(photoset, photoset.toPatient)
 
         if not os.path.isdir(fromDirectory):
@@ -130,7 +130,7 @@ class FS:
 
     def deletePhotoset(self, photoset):
         # How do we handle UIDs?
-        directory = self.generatePhotosetDir(photoset, photoset.patient)
+        directory = self.generatePhotosetDir(photoset)
         shutil.rmtree(directory)
 
     # Returns a list of all the patients
@@ -170,7 +170,10 @@ class FS:
     def generatePatientDir(self, patient):
         return self.root + "/" + patient.nameLast + ", " + patient.nameFirst + "#" + str(patient.uid)
 
-    def generatePhotosetDir(self, photoset, patient):
+    def generatePhotosetDir(self, photoset, patient=None):
+        if patient is None:
+            patient = photoset.patient
+
         directory = self.generatePatientDir(patient)
         uid = str(photoset.uid)
         date = photoset.date
@@ -203,11 +206,10 @@ class FS:
         if os.path.isdir(directory):
             try:
                 f = open(directory + "/" + field + ".txt")
-                f.write(data)
-                f.close()
+                #f.write(data)
+                #f.close()
             except IOError as error:
-                (errno, sterror) = error
-                print("IOError [{0}]: {1}".format(errno, strerror))
+                print error
                 raise error
 
     def editPatientNotes(self, patient, notes):
@@ -260,7 +262,7 @@ class FS:
                 print("IOError [{0}]: {1}".format(errno, strerror))
 
     def loadPhotosetTags(self, photoset):
-        directory = self.generatePhotosetDir(photoset, photoset.patient)
+        directory = self.generatePhotosetDir(photoset)
         if os.path.isdir(directory):
             try:
                 f = open(directory + "/diagnoses.txt")
@@ -290,7 +292,7 @@ class FS:
             return None
 
     def loadPhotosetDiagnoses(self, photoset):
-        directory = self.generatePhotosetDir(photoset, photoset.patient)
+        directory = self.generatePhotosetDir(photoset)
         if os.path.isdir(directory):
             try:
                 f = open(directory + "/diagnoses.txt")
@@ -310,7 +312,7 @@ class FS:
             return None
 
     def loadPhotosetTreatments(self, photoset):
-        directory = self.generatePhotosetDir(photoset, photoset.patient)
+        directory = self.generatePhotosetDir(photoset)
         if os.path.isdir(directory):
             try:
                 f = open(directory + "/treatments.txt")

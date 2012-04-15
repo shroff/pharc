@@ -75,7 +75,7 @@ class Photoset(object):
             self._diagnoses.add(t)
 
         # update fs
-        self.dm.loader.PhotosetStorage.editDiagnoses(self)
+        self.dm.loader.PhotosetStorage.editDiagnoses(self, "\n".join(map(str, self.diagnoses)))
             
         return t
 
@@ -144,7 +144,7 @@ class Photoset(object):
     def setdiagnoses(self, value):
         #print "diagnoses <- " + str(value)
         self._diagnoses = value
-        self.dm.loader.PhotosetStorage.editDiagnoses(self)
+        self.dm.loader.PhotosetStorage.editDiagnoses(self, "\n".join(map(str, self.diagnoses)))
     def deldiagnoses(self):
         del self._diagnoses
     diagnoses = property(getdiagnoses, setdiagnoses, deldiagnoses, "")
