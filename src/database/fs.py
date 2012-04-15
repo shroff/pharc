@@ -59,10 +59,6 @@ class FS:
 
     # Returns a list of all the patients
     def loadAllPatients(self):
-        # There is nothing to load
-        if self.isNew():
-            return None
-
         patients = []
 
         items = os.listdir(self.root)
@@ -106,10 +102,6 @@ class FS:
         
 
     def getPatientDataFromField(self, patient, field):
-        if self.isNew():
-            # TODO: error codes
-            return None
-
         directory = self.generatePatientDir(patient)
         if os.path.isdir(directory):
             try:
@@ -166,10 +158,6 @@ class FS:
             return physicians
     
     def loadPatientPhotosetList(self, patient):
-        # not done
-        if self.isNew():
-            return None
-
         directory = self.generatePatientDir(patient)
         if os.path.isdir(directory):
             try:
@@ -193,10 +181,6 @@ class FS:
                 print("IOError [{0}]: {1}".format(errno, strerror))
 
     def loadPhotosetTags(self, photoset):
-        if self.isNew():
-            # TODO: error codes
-            return None
-
         directory = self.generatePhotosetDir(photoset, photoset.patient)
         if os.path.isdir(directory):
             try:
@@ -227,10 +211,6 @@ class FS:
             return None
 
     def loadPhotosetDiagnoses(self, photoset):
-        if self.isNew():
-            # TODO: error codes
-            return None
-
         directory = self.generatePhotosetDir(photoset, photoset.patient)
         if os.path.isdir(directory):
             try:
@@ -251,10 +231,6 @@ class FS:
             return None
 
     def loadPhotosetTreatments(self, photoset):
-        if self.isNew():
-            # TODO: error codes
-            return None
-
         directory = self.generatePhotosetDir(photoset, photoset.patient)
         if os.path.isdir(directory):
             try:
