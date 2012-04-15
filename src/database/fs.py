@@ -173,7 +173,7 @@ class FS:
     def generatePhotosetDir(self, photoset, patient):
         directory = self.generatePatientDir(patient)
         uid = str(photoset.uid)
-				date = photoset.date
+        date = photoset.date
         if os.path.isdir(directory):
             return directory + "/" + str(date.day).zfill(2) + "-" + str(date.month).zfill(2) + \
                 "-" + str(date.year) + "#" + uid
