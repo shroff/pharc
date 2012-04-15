@@ -100,12 +100,10 @@ class FS:
     def generatePhotosetDir(self, photoset, patient):
         directory = self.generatePatientDir(patient)
         uid = str(photoset.uid)
+				date = photoset.date
         if os.path.isdir(directory):
-            items = os.listdir(directory)
-            for i in items:
-                if os.path.isdir(directory + "/" + i):
-                    #if i.split("#") == uid:
-                    return directory + "/" + i
+					return directory + "/" + str(date.day).zfill(2) + "-" + str(date.month).zfill(2) + \
+							"-" + str(date.year) + "#" + uid
         
 
     def getPatientDataFromField(self, patient, field):
