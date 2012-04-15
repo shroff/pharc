@@ -117,8 +117,8 @@ class FS:
                 f = open(directory + "/" + field)
                 data = f.read()
                 f.close()
-            except IOError as xxxTodoChangeme:
-                (errno, strerror) = xxxTodoChangeme.args
+            except IOError as error:
+                (errno, strerror) = error.args
                 print("IOError [{0}]: {1}".format(errno, strerror))
                 # TODO: error codes
                 return None
@@ -164,13 +164,6 @@ class FS:
             return None
         else:
             data = self.parseNames(data)
-            for i in data:
-                pass
-                #d = Physician()
-                #d.firstName, d.lastName, d.uid = int(i)
-                #physicians.append(d)
-                #patient.physicians.append( d )
-                #print patient.physicians
             return physicians
     
     def loadPatientPhotosetList(self, patient):
@@ -187,18 +180,17 @@ class FS:
                         p = photoset.Photoset()
                         p.patient = patient
                         p.dm = patient.dm
-                        #print i
                         splitName = i.split("#")
                         uid = splitName[1]
                         p.uid = int(uid)
-                        # p.uid = 0
 
                         # determine date
                         date = splitName[0].split("-")
                         p.date = datetime.date(int(date[2]), int(date[1]), int(date[0])) # year, month, day
                         patient.photosets |= set([p])
-            except IOError as xxxTodoChangeme1:
-                (errno, strerror) = xxxTodoChangeme1.args
+
+            except IOError as error:
+                (errno, strerror) = error.args
                 print("IOError [{0}]: {1}".format(errno, strerror))
 
     def loadPhotosetTags(self, photoset):
@@ -212,8 +204,8 @@ class FS:
                 f = open(directory + "/diagnoses.txt")
                 data = f.read()
                 f.close()
-            except IOError as xxxTodoChangeme2:
-                (errno, strerror) = xxxTodoChangeme2.args
+            except IOError as error:
+                (errno, strerror) = error.args
                 print("IOError [{0}]: {1}".format(errno, strerror))
                 # TODO: error codes
                 return None
@@ -222,8 +214,8 @@ class FS:
                 f = open(directory + "/treatments.txt")
                 data = data + "\n" + f.read()
                 f.close()
-            except IOError as xxxTodoChangeme3:
-                (errno, strerror) = xxxTodoChangeme3.args
+            except IOError as error:
+                (errno, strerror) = error.args
                 print("IOError [{0}]: {1}".format(errno, strerror))
                 # TODO: error codes
                 return None
@@ -246,8 +238,8 @@ class FS:
                 f = open(directory + "/diagnoses.txt")
                 data = f.read()
                 f.close()
-            except IOError as xxxTodoChangeme4:
-                (errno, strerror) = xxxTodoChangeme4.args
+            except IOError as error:
+                (errno, strerror) = error.args
                 print("IOError [{0}]: {1}".format(errno, strerror))
                 # TODO: error codes
                 return None
@@ -270,8 +262,8 @@ class FS:
                 f = open(directory + "/treatments.txt")
                 data = f.read()
                 f.close()
-            except IOError as xxxTodoChangeme5:
-                (errno, strerror) = xxxTodoChangeme5.args
+            except IOError as error:
+                (errno, strerror) = error.args
                 print("IOError [{0}]: {1}".format(errno, strerror))
                 # TODO: error codes
                 return None
