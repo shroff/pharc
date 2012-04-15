@@ -109,16 +109,15 @@ class CommandLineInterface(cmd.Cmd):
         print(echo[:-1])
 
     def do_listPhotosets(self, args):
-        if int(args) >= 70000:
+        pats = None
+        if args == "":          # list all photosets
+            pats = self.dm.patients
+        elif int(args) <= 70000: # list all photosets from a patient
+            pats = self.getEntitiesByUID(int(args), rtype="patient")
+        else:                   # list a particualr photoset
             ps = [x for x in self.dm.searchPhotosets(None, None) if x.uid == int(args)]
             print(str(ps[0].patient) + ": " + str(ps[0]))
             return
-        
-        pats = None
-        if args == "":
-            pats = self.dm.patients
-        else:
-            pats = self.getEntitiesByUID(int(args), rtype="patient")
 
         if len(pats) == 0:
             print("No patients found")
