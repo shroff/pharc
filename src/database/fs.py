@@ -40,19 +40,55 @@ class FS:
         else:
             self.newFS = False
 
+        self.patientUID = 0
+        self.photosetUID = 70000
+        self.knownPatientUIDs = False
+        self.knownPhotosetUIDs = False
         return
 
     # Cleanup/validation before program termination
     def exit(self):
         return
 
+    # this will be very slow... should probably be spun off on its own after loadAllPatients()
+    def discoverPhotosetUIDs(self):
+        items = os.listdir(self.root)
+        for i in items:
+            directory = self.root + "/" + i
+            if os.path.isdir(directory):
+                photosets = os.listdir(directory)
+                for j in photosets:
+                    photosetDirectory = directory + "/" + j
+                    if os.path.isdir(photosetDirectory):
+                        uid = int(j.split("#")[1])
+                        if uid > photosetUID:
+                            photosetUID = uid
+
     # Returns if the data storage existed prior to class init
     def isNew(self):
         return self.newFS
 
+    def createPatient(self, firstName, lastName):
+        if not self.isNew():
+            if not self.knownPatientUIDs():
+                # if you see this, then you did not call loadAllPatients() on program startup
+                raise Exception
+
+        self.newFS = False
+
     def createPhotoset(self, photoset, patient):
+        if not self.knownPhotosetUIDs:
+            self.discoverPhotosetUIDs()
+
+        uid = self.photosetUID
+        uid = uid + 1
+        photoset.uid = uid
+
         directory = generatePhotosetDir(photoset, patient)
         os.makedirs(directory)
+
+        self.photosetUID = uid
+
 
     def deletePhotoset(self, photoset):
         pass
@@ -68,6 +104,8 @@ class FS:
                 # Parse filename
                 p.nameFirst, p.nameLast, p.uid = self.parseName(i)
                 p.uid = int(p.uid)
+                if p.uid > self.patientUID:
+                    self.patientUID = p.uid
                 patients.append(p)
 
         return patients

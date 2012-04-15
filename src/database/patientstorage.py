@@ -43,25 +43,34 @@ class PatientStorage(object):
             # TODO Success code
             return
 
+    def checkNewFS(self):
+        return self.fsm.isNew()
+
     def loadPhysicians(self, patient):
-        patient.physicians = self.loadField(patient, self.fsm.loadPatientPhysicians, None)
+        if not self.checkNewFS():
+            patient.physicians = self.loadField(patient, self.fsm.loadPatientPhysicians, None)
 
     def loadPhotosets(self, patient):
-        self.fsm.loadPatientPhotosetList(patient)
+        if not self.checkNewFS():
+            self.fsm.loadPatientPhotosetList(patient)
 
     def createPatient(self, firstName, lastName, physicians):
-        patient = self.fsm.addPatient(firstName, lastName)
+        patient = self.fsm.createPatient(firstName, lastName)
         self.fsm.addPhysicians(patient, physicians)
         return patient
 
     def editName(self, firstName, lastName):
-        pass
+        if not self.checkNewFS():
+            pass
 
     def editPhysicians(self, patient, physicians):
-        self.fsm.editPatientPhysicians(patient, physicians)
+        if not self.checkNewFS():
+            self.fsm.editPatientPhysicians(patient, physicians)
 
     def editNotes(self, patient, notes):
-        self.fsm.editPatientNotes(patient, notes)
+        if not self.checkNewFS():
+            self.fsm.editPatientNotes(patient, notes)
 
     def loadAllPatients(self):
-        return self.fsm.loadAllPatients()
+        if not self.checkNewFS():
+            return self.fsm.loadAllPatients()
