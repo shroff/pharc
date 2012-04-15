@@ -39,7 +39,7 @@ class PhotosetStorage:
     def movePhotoset(self, photoset, toPatient):
         self.fsm.createPhotosetDir(photoset, toPatient)
         if photoset.patient is not None:
-            self.fsm.deletePhotoset(photoset)
+            self.fsm.deletePhotosetDir(photoset)
 
     def editTreatments(self, photoset):
         self.fsm.editPhotosetTreatments(photoset)
