@@ -41,105 +41,79 @@ class Photoset(object):
             self.treatments,
             self.diagnoses)
 
-    def add_diagnosis_by_string(self, diagnosis):
+    def addDiagnosis(self, diagnosis):
         """Refers to tag list and adds appropriate tag.
 
-        Adds the named diagnosis to this photoset's list of
-        diagnosiss. Looks up the list of existing diagnosiss, finds
-        one that matches the diagnosis name exactly or creates one,
-        and adds this photoset to this tag and updates indices.
+        Adds the diagnosis to this photoset's list of diagnosiss. If
+        diagnosis is a string, looks up the list of existing
+        diagnosiss, finds one that matches the diagnosis name exactly
+        or creates one if no suitable tags exist, and adds this
+        photoset to this tag and updates indices. If a tag, just adds
+        it and updates indices.
 
         Args:
             diagnosis: the name of the tag to add to this photoset
 
         Returns:
-            The tag that was added to this photoset.
-        """
-
-        match = self.dm.diagnoses.match_fullstring_single(diagnosis)
-        if not match: # no matching tag, so make a new one and add it
-                      # to the list
-            match = tags.Tag(diagnosis)
-            self.dm.diagnoses.add(match)
-        match.photosets.add(self)
-        self._diagnoses.add(match)
-        return match
-    
-    
-    def add_diagnosis_by_tag(self, diagnosis):
-        """Adds this tag to the photoset.
-
-        Adds the given diagnosis to this photoset's list of
-        diagnosiss. Also adds this photoset to the diagnosis's list of
-        photosets. Note that this method assumes that the given tag is
-        the correct tag!
-        
-        Args:
-            diagnosis: tag to add to this photoset.
-
-        Returns:
-            True if this photoset already had the tag and the tag
-                already had the photoset, False otherwise.
-
-        Raises:
+            The tag that was added to this photoset (useful if
+            creating by string)
         """
         
-        if self in diagnosis.photosets and diagnosis in self._diagnoses:
-            return True
-        
-        diagnosis.photosets.add(self)
-        self._diagnoses.add(diagnosis)
-        return False
+        t = None
+        if isinstance(diagnosis, str):
+            t = self.dm.diagnoses.match_fullstring_single(diagnosis)
+            if not t: # no matching tag, so make a new one
+                t = self.dm.diagnoses.create(diagnosis)
+        else:
+            t = diagnosis
 
-    def add_treatment_by_string(self, treatment):
+        # update indices
+        if self not in t.photosets:
+            t.photosets.add(self)
+        if t not in self._diagnoses:
+            self._diagnoses.add(t)
+
+        # update fs
+        self.dm.loader.PhotosetStorage.editDiagnoses(self)
+            
+        return t
+
+    def addTreatment(self, treatment):
         """Refers to tag list and adds appropriate tag.
 
-        Adds the named treatment to this photoset's list of
-        treatments. Looks up the list of existing treatments, finds
-        one that matches the treatment name exactly or creates one,
-        and adds this photoset to this tag and updates indices.
+        Adds the treatment to this photoset's list of treatments. If
+        treatment is a string, looks up the list of existing
+        treatments, finds one that matches the treatment name exactly
+        or creates one if no suitable tags exist, and adds this
+        photoset to this tag and updates indices. If a tag, just adds
+        it and updates indices.
 
         Args:
             treatment: the name of the tag to add to this photoset
 
         Returns:
-            The tag that was added to this photoset.
-        """
-
-        match = self.dm.treatments.match_fullstring_single(treatment)
-        if not match: # no matching tag, so make a new one and add it
-                      # to the list
-            match = tags.Tag(treatment)
-            self.dm.treatments.add(match)
-        match.photosets.add(self)
-        self._treatments.add(match)
-        return match
-    
-    
-    def add_treatment_by_tag(self, treatment):
-        """Adds this tag to the photoset.
-
-        Adds the given treatment to this photoset's list of
-        treatments. Also adds this photoset to the treatment's list of
-        photosets. Note that this method assumes that the given tag is
-        the correct tag!
-        
-        Args:
-            treatment: tag to add to this photoset.
-
-        Returns:
-            True if this photoset already had the tag and the tag
-                already had the photoset, False otherwise.
-
-        Raises:
+            The tag that was added to this photoset (useful if
+            creating by string)
         """
         
-        if self in treatment.photosets and treatment in self._treatments:
-            return True
-        
-        treatment.photosets.add(self)
-        self._treatments.add(treatment)
-        return False
+        t = None
+        if isinstance(treatment, str):
+            t = self.dm.treatments.match_fullstring_single(treatment)
+            if not t: # no matching tag, so make a new one
+                t = self.dm.treatments.create(treatment)
+        else:
+            t = treatment
+
+        # update indices
+        if self not in t.photosets:
+            t.photosets.add(self)
+        if t not in self._treatments:
+            self._treatments.add(t)
+
+        # update fs
+        self.dm.loader.PhotosetStorage.editTreatments(self)
+            
+        return t
 
 
     def gettreatments(self):
@@ -147,12 +121,13 @@ class Photoset(object):
             self._treatments = set()
             tstrings = self.dm.loader.PhotosetStorage.loadTreatments(self)
             for s in tstrings:
-                self.add_treatment_by_string(s)
+                self.addTreatment(s)
         # print "treatments -> " + str(self._treatments)
         return self._treatments
     def settreatments(self, value):
         #print "treatments <- " + str(value)
         self._treatments = value
+        self.dm.loader.editTreatments(self)
     def deltreatments(slef):
         del self._treatments
     treatments = property(gettreatments, settreatments, deltreatments, "")
@@ -162,12 +137,13 @@ class Photoset(object):
             self._diagnoses = set()
             dstrings = self.dm.loader.PhotosetStorage.loadDiagnoses(self)
             for s in dstrings:
-                self.add_diagnosis_by_string(s)
+                self.addDiagnosis(s)
         # print "diagnoses -> " + str(self._diagnoses)
         return self._diagnoses
     def setdiagnoses(self, value):
         #print "diagnoses <- " + str(value)
         self._diagnoses = value
+        self.dm.loader.PhotosetStorage.editDiagnoses(self)
     def deldiagnoses(slef):
         del self._diagnoses
     diagnoses = property(getdiagnoses, setdiagnoses, deldiagnoses, "")

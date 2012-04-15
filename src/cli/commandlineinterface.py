@@ -146,17 +146,11 @@ class CommandLineInterface(cmd.Cmd):
             ps.date = d
             self.dm.loader.PhotosetStorage.editDate(ps, d)
         if args[1] == "+treat":
-            ps.add_treatment_by_string(args[2])
-            self.dm.loader.PhotosetStorage.editTreatments(ps)
+            str(ps.addTreatment(args[2]))
         if args[1] == "-treat":
             pass
         if args[1] == "+diag":
-            t = self.dm.diagnoses.match_fullstring_single(args[2])
-            if t is None:
-                return
-            ps.add_treatment_by_tag(t)
-            self.dm.loader.PhotosetStorage.editDiagnoses(ps)
-            pass
+            str(ps.addDiagnosis(args[2]))
         if args[1] == "-diag":
             pass
     def do_editPatient(self, args):

@@ -46,6 +46,11 @@ class TagList(object):
         # no indices to update right now, but there might be some
         # later.
         self.tags.add(t)
+
+    def create(self, val):
+        n = Tag(val)
+        self.add(n)
+        return n
         
     def match_fullstring_single(self, query):
         """Returns None or a tag whose name completely matches the
