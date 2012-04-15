@@ -129,7 +129,9 @@ class FS:
 
 
     def deletePhotoset(self, photoset):
-        pass
+        # How do we handle UIDs?
+        directory = self.generatePhotosetDir(photoset, photoset.patient)
+        shutil.rmtree(directory)
 
     # Returns a list of all the patients
     def loadAllPatients(self):
