@@ -26,18 +26,68 @@ class PhotosetStorage:
         pass
 
     def loadDiagnoses(self, photoset):
+        """
+            Load the diagnoses for a given photoset.
+
+            Arguments:
+                photoset: The photoset who's diagnoses we want.
+
+            Returns:
+                The list of diagnoses.
+
+            Throws:
+                ?
+
+        """
         return self.fsm.loadPhotosetDiagnoses(photoset)
 
     def loadTreatments(self, photoset):
+        """
+            Load the treatments for a given photoset.
+            
+            Arguments:
+                photoset: The photoset who's treatments we want.
+
+             Returns:
+                The list of treatments.
+
+             Throws:
+                ?
+        """
         return self.fsm.loadPhotosetTreatments(photoset)
 
     def loadTags(self, photoset):
+        """
+            Load the tags for a given photoset, that is both the diagnoses 
+            and the treatments.
+
+            Arguments:
+                photoset: The photoset who's tags we want.
+
+            Returns:
+                The list of diagnoses and treatments.
+
+            Throws:
+                ?
+        """
         list = loadDiagnoses(photoset)
         list.append(loadTreatments(photoset))
         return list
 
     def movePhotoset(self, photoset, toPatient):
+        """
+            Moves a photoset from one patient to another.
 
+            Arguments:
+                photoset:  The photoset we want to move.
+                toPatient: The patient we want to move it to.
+
+            Returns:
+                N/A -- Sets photoset.patient to toPatient
+
+            Throws:
+                ?
+        """
         if photoset.patient is None:
             self.fsm.createPhotoset(photoset, toPatient)
         else:
@@ -47,9 +97,35 @@ class PhotosetStorage:
         photoset.patient = toPatient
 
     def editTreatments(self, photoset, treatments):
+        """
+            Change the treatments of a photoset.
+
+            Arguments:
+                photoset:   The photoset who's treatments we want to change.
+                treatments: What we want to set the treatments to.
+
+            Returns:
+                N/A
+
+            Throws:
+                ?
+        """
         self.fsm.editPhotosetTreatments(photoset, treatments)
 
     def editDiagnoses(self, photoset, diagnoses):
+        """
+            Change the diagnoses of a photoset.
+
+            Arguments:
+                photoset:  The photoset who's treatments we want to change.
+                diagnoses: What we want to set the diagnoses to.
+
+            Returns:
+                N/A
+
+            Throws:
+                ?
+        """
         self.fsm.editPhotosetDiagnoses(photoset, diagnoses)
 
     def editDate(self, photoset, date):
