@@ -52,7 +52,8 @@ class FS:
 
     def createPhotosetDir(self, photoset, patient=None):
         directory = self.generatePhotosetDir(photoset, patient)
-        os.makedirs(directory)
+        if not os.path.exists(directory):
+            os.makedirs(directory)
 
     def deletePhotosetDir(self, photoset):
         pass
