@@ -531,6 +531,19 @@ class FS:
                 raise error
 
     def loadPhotosetTags(self, photoset):
+        """
+            Loads the tags for a photoset. Collated from diagnoses.txt and
+            treatments.txt.
+
+            Arguments:
+                photoset: The photoset who's tag list we want.
+
+            Returns:
+                A list of tag strings.
+            
+            Throws:
+                IOError
+        """
         directory = self.generatePhotosetDir(photoset)
         if os.path.isdir(directory):
             try:
@@ -540,8 +553,6 @@ class FS:
             except IOError as error:
                 (errno, strerror) = error.args
                 print("IOError [{0}]: {1}".format(errno, strerror))
-                # TODO: error codes
-                return None
                 
             try:
                 f = open(directory + "/treatments.txt")
@@ -550,8 +561,6 @@ class FS:
             except IOError as error:
                 (errno, strerror) = error.args
                 print("IOError [{0}]: {1}".format(errno, strerror))
-                # TODO: error codes
-                return None
 
             data = data.splitlines()
             return data
@@ -561,6 +570,18 @@ class FS:
             return None
 
     def loadPhotosetDiagnoses(self, photoset):
+        """
+            Loads the diagnoses for a photoset. 
+
+            Arguments:
+                photoset: The photoset who's tag list we want.
+
+            Returns:
+                A list of tag strings.
+            
+            Throws:
+                IOError
+        """
         directory = self.generatePhotosetDir(photoset)
         if os.path.isdir(directory):
             try:
@@ -581,6 +602,18 @@ class FS:
             return None
 
     def loadPhotosetTreatments(self, photoset):
+        """
+            Loads the treatments for a photoset. 
+
+            Arguments:
+                photoset: The photoset who's tag list we want.
+
+            Returns:
+                A list of tag strings.
+            
+            Throws:
+                IOError
+        """
         directory = self.generatePhotosetDir(photoset)
         if os.path.isdir(directory):
             try:
