@@ -20,18 +20,19 @@ import logic.tags as tags
 class Photoset(object):
 
     dm = None # reference to the datamanger at teh top of the hierarchy
-    date = None
-    patient = None # Patient that this photoset belongs to
     physicians = None # list of Physicians that care about this photoset
-    notes = None # notes about this photoset, string
-    diagnoses = None # set of diagnosis tags attached to this photoset
-    treatments = None # set of treatment tags attached to this photoset
     uid = None # this photoset's unique identification number, integer
     photos = None # list of photos in this photoset
+    _date = None
+    _patient = None # Patient that this photoset belongs to
+    _diagnoses = None # set of diagnosis tags attached to this photoset
+    _treatments = None # set of treatment tags attached to this photoset
 
-    def __init__(self):
+    def __init__(self, dateinit=None, patientinit=None):
         self._treatments = None
         self._diagnoses = None
+        self._date = dateinit
+        self._patient = patientinit
 
     def __repr__(self):
         return \
@@ -148,3 +149,18 @@ class Photoset(object):
         del self._diagnoses
     diagnoses = property(getdiagnoses, setdiagnoses, deldiagnoses, "")
 
+    def getdate(self):
+        return self._date
+    def setdate(self):
+        pass
+    def deldate(self):
+        pass
+    date = property(getdate, setdate, deldate, "")
+
+    def getpatient(self):
+        return self._patient
+    def setpatient(self):
+        pass
+    def delpatient(self):
+        pass
+    patient = property(getpatient, setpatient, delpatient, "")
