@@ -112,7 +112,7 @@ class Photoset(object):
             self._treatments.add(t)
 
         # update fs
-        self.dm.loader.PhotosetStorage.editTreatments(self)
+        self.dm.loader.PhotosetStorage.editTreatments(self, "\n".join(map(str, self.treatments)))
             
         return t
 
