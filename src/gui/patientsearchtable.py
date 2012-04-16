@@ -55,5 +55,5 @@ class PatientSearchTable(QTableView):
 
 
   def click(self, index):
-    pass
+    self.parent.select(self.data.patients[index.row()])
 

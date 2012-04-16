@@ -21,6 +21,8 @@ from PyQt4.QtCore import *
 import database.fs
 from logic.datamanager import DataManager
 
+from .patientdetailtable import PatientDetailTable
+
 class PhotosetAdd(QWidget):
   def __init__(self, parent, dm):
     super(PhotosetAdd, self).__init__(parent)
@@ -30,4 +32,30 @@ class PhotosetAdd(QWidget):
     self.initUI()
 
   def initUI(self):
+    vbox = QVBoxLayout()
+
+    self.photosets = PatientDetailTable(self.data)
+
+    hbox = QHBoxLayout()
+    addToPhotoset = QPushButton("Add to Photoset")
+    createPhotoset = QPushButton("Create Photoset")
+    hbox.addStretch(1)
+    hbox.addWidget(addToPhotoset)
+    hbox.addWidget(createPhotoset)
+
+    vbox.addWidget(self.photosets)
+    vbox.addLayout(hbox)
+    self.setLayout(vbox)
+
+    QObject.connect(addToPhotoset, SIGNAL('clicked()'), self.addToPhotoset)
+    QObject.connect(createPhotoset, SIGNAL('clicked()'), self.createPhotoset)
+
+
+  def setPatient(self, patient):
+    self.photosets.setPatient(patient)
+
+  def addToPhotoset(self):
+    pass
+
+  def createPhotoset(self):
     pass

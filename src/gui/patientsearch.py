@@ -54,6 +54,8 @@ class PatientSearch(QWidget):
     QObject.connect(createPatient, SIGNAL('clicked()'), self.createPatient)
 
 
+  def select(self, patient):
+    self.parent.select(patient)
 
   def research(self, flt):
     print ("Search for " + flt);
