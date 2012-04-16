@@ -656,6 +656,21 @@ class FS:
             return data
 
     def renamePatient(self, patient, firstName, lastName):
+        """
+            Moves a patient that we want to rename in the filesystem.
+
+            Arguments:
+                patient:   The patient whom we wish to move.
+                firstName: The new first name of the patient.
+                lastName:  The new last name of the patient.
+
+            Returns:
+                N/A
+
+            Throws:
+                Error
+                ?
+        """
         uid = patient.uid
         fromDirectory = self.generatePatientDir(patient)
         toDirectory = self.root + "/" + lastName + ", " + firstName + "#" + str(uid)
@@ -683,7 +698,8 @@ class FS:
                 Error
         """
         directory = self.generatePhotosetDir(photo.photoset)
+        fromPath = directory + "/" + photo.name
         if os.path.isdir(directory):
-            shutil.copy(directory + "/" + photo.name, directory + "/" + name)
-            #shutil.rm
+            shutil.copy(fromPath, directory + "/" + name)
+            shutil.rmtree(fromPath)
 
