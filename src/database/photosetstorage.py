@@ -91,7 +91,9 @@ class PhotosetStorage:
         if photoset.patient is None:
             self.fsm.createPhotoset(photoset, toPatient)
         else:
-            self.fsm.copyPatient(photoset, toPatient)
+            fromDirectory = self.fsm.generatePhotosetDir(photoset)
+            toDirectory = self.fsm.generatePhotosetDir(photoset, photoset.toPatient)
+            self.fsm.copyPatient(photoset, fromDirectory, toDirectory)
             self.fsm.deletePhotoset(photoset)
 
         photoset.patient = toPatient
@@ -129,5 +131,25 @@ class PhotosetStorage:
         self.fsm.editPhotosetDiagnoses(photoset, diagnoses)
 
     def editDate(self, photoset, date):
-        pass
+        """
+            Change the date of a photoset in the database.
+
+            Arguments:
+                photoset: The photoset who's date we want to change, 
+                          photoset.date should be the old date.
+                date:     A datetime object representing the new date for this photoset.
+
+            Returns:
+                N/A
+
+            Throws:
+                ?
+        """
+        fromDirectory = self.fsm.generatePhotosetDir(photoset, photoset.patient)
+        uid = str(photoset.uid)
+        toDirectory = self.fsm.generatePatientDir(photoset.patient) + "/" + \
+            str(date.day).zfill(2) + "-" + str(date.month).zfill(2) + \
+            "-" + str(date.year) + "#" + uid
+        self.fsm.copyPhotoset(photoset, fromDirectory, toDirectory)
+        self.fsm.dletePhotoset(photoset)
 

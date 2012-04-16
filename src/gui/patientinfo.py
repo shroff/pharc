@@ -50,8 +50,8 @@ class PatientInfo(QWidget):
     patient = self.data.patients[row]
     self.patientDetail.setName(patient.nameFirst + " " + patient.nameLast)
     ps = patient.getMostRecentPhotoset()
-    self.patientDetail.setTreatment(" ".join(map(str, ps.treatments)))
-    self.patientDetail.setDiagnosis(" ".join(map(str, ps.diagnoses)))
+    self.patientDetail.setTreatment(", ".join(map(str, patient.treatments)))
+    self.patientDetail.setDiagnosis(", ".join(map(str, patient.diagnoses)))
     self.patientDetail.setRandom()
     self.patientDetail.setVisible(True)
     self.index = row

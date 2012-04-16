@@ -162,7 +162,9 @@ class Photoset(object):
         return self._patient
     def setpatient(self, value):
         self.dm.loader.PhotosetStorage.movePhotoset(self, value)
+        self._patient.photosets -= set([self])
         self._patient = value
+        self._patient.photosets |= set([self])
     def delpatient(self):
         pass
     patient = property(getpatient, setpatient, delpatient, "")
