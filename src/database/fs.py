@@ -683,7 +683,8 @@ class FS:
                 Error
         """
         directory = self.generatePhotosetDir(photo.photoset)
+        fromPath = directory + "/" + photo.name
         if os.path.isdir(directory):
-            shutil.copy(directory + "/" + photo.name, directory + "/" + name)
-            #shutil.rm
+            shutil.copy(fromPath, directory + "/" + name)
+            shutil.rmtree(fromPath)
 
