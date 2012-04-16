@@ -49,10 +49,13 @@ class PatientTable(QTableView):
     self.horizontalHeader().setStretchLastSection(True)
 
   def linkModel(self):
-    self.setModel(PatientTableModel(self.data))
+    self.patientTableModel = PatientTableModel(self.data)
+    self.setModel(self.patientTableModel)
     self.updateGeometry()
 
 
   def click(self, index):
     self.parent.viewInfo(index.row(), index.column())
 
+  def update(self):
+    self.patientTableModel.update()

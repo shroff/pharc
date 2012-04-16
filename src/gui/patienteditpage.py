@@ -54,6 +54,7 @@ class PatientEditPage(QWidget):
     self.setLayout(vbox)
 
   def saveChanges(self):
+    self.nameRow.savePatient()
     print('Saving')
 
   def cancelChanges(self):
