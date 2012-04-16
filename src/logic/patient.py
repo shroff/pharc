@@ -122,26 +122,16 @@ class Patient(object):
         del self._notes
     notes = property(getnotes, setnotes, delnotes, "")
 
-
     def getdiagnoses(self):
         result = set()
         for ps in self.photosets:
             result |= ps.diagnoses
         return result
-    def setdiagnoses(self, value):
-        raise NotImplementedError("I haven't figured out a good way to handle changing patient diagnoses.")
-    def deldiagnoses(slef):
-        raise NotImplementedError("I haven't figured out a good way to handle deleting patient diagnoses.")
-    diagnoses = property(getdiagnoses, setdiagnoses, deldiagnoses, "")
-
+    diagnoses = property(getdiagnoses, "")
 
     def gettreatments(self):
         result = set()
         for ps in self.photosets:
             result |= ps.treatments
         return result
-    def settreatments(self, value):
-        raise NotImplementedError("I haven't figured out a good way to handle changing patient treatments.")
-    def deltreatments(slef):
-        raise NotImplementedError("I haven't figured out a good way to handle deleting patient treatments.")
-    treatments = property(gettreatments, settreatments, deltreatments, "")
+    treatments = property(gettreatments, "")

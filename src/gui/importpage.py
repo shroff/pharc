@@ -1,0 +1,54 @@
+# PHARC: a photo archiving application for physicians
+# Copyright (C) 2012 Abhishek Shroff
+# 
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+from PyQt4.QtGui import *
+from PyQt4.QtCore import *
+
+import database.fs
+from logic.datamanager import DataManager
+from .importpatientphotos import ImportPatientPhotos
+
+class ImportPage(QWidget):
+  def __init__(self, parent, dm):
+    self.data = dm
+    super(ImportPage, self).__init__(parent)
+    self.parent = parent
+    self.initUI()
+
+  def initUI(self):
+    vboxMain = QVBoxLayout()
+    hboxMain = QHBoxLayout()
+    hboxButtons = QHBoxLayout()
+    vboxInfo = QVBoxLayout()
+
+    addButton = QPushButton("Add")
+    skipButton = QPushButton("Do this later")
+    hboxButtons.addStretch(1)
+    hboxButtons.addWidget(addButton)
+    hboxButtons.addWidget(skipButton)
+
+    self.photoScrollArea = QScrollArea()
+    self.photos = ImportPatientPhotos(self)
+    self.photoScrollArea.setWidget(self.photos)
+    self.photoScrollArea.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+    self.photoScrollArea.setBackgroundRole(QPalette.Light)
+
+    hboxMain.addWidget(self.photoScrollArea)
+    vboxMain.addLayout(hboxMain);
+    vboxMain.addLayout(hboxButtons)
+
+    self.setLayout(vboxMain);

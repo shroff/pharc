@@ -141,7 +141,7 @@ class CommandLineInterface(cmd.Cmd):
         ps = ps[0]
         if args[1] == "date":
             d = dateutil.parser.parse(args[2])
-            ps.date = d
+            ps.date = d.date()
         if args[1] == "+treat":
             str(ps.addTreatment(args[2]))
         if args[1] == "-treat":

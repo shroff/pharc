@@ -18,61 +18,39 @@
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 
-import random
-
-imageBase = "images/"
-imgs = ['caesar.jpg', 'puppy.jpg', 'kitty.jpg', 'punch.jpg']
-
-class PatientDetail(QWidget):
-  def __init__(self, parent):
-    super(PatientDetail, self).__init__(parent)
+class ImportPhoto(QWidget):
+  def __init__(self, parent, path):
+    super(ImportPhoto, self).__init__()
     self.parent = parent
+    self.imagePath = path
 
     self.initUI()
 
   def initUI(self):
-    self.setFixedSize(QSize(200, 450))
     vbox = QVBoxLayout()
 
     self.picLabel = QLabel()
     self.picLabel.setFixedSize(QSize(150, 150))
-    self.nameLabel = QLabel('Name: ')
-    self.diagLabel = QLabel('Diagnosis: ')
-    self.tmtLabel = QLabel('Treatment: ')
-    self.tmtLabel.setWordWrap(True)
-    self.diagLabel.setWordWrap(True)
-    self.detailsButton = QPushButton('View Details')
 
-    vbox.addWidget(self.picLabel)
-    vbox.addWidget(self.nameLabel)
-    vbox.addWidget(self.diagLabel)
-    vbox.addWidget(self.tmtLabel)
-    vbox.addWidget(self.detailsButton)
-
-    self.setLayout(vbox)
-
-    QObject.connect(self.detailsButton, SIGNAL('clicked()'), self.viewDetails)
-
-  def setRandom(self):
-    self.setPicture(imageBase + random.choice(imgs))
-
-  def setPicture(self, imgpath):
-    print(imgpath)
-    image = QImage(imgpath)
+    image = QImage(self.imagePath)
     pixmap = QPixmap.fromImage(image)
     if(not pixmap.isNull()):
       pixmap = pixmap.scaledToHeight(150)
       self.picLabel.setPixmap(pixmap)
       self.picLabel.setFixedSize(pixmap.size())
 
-  def setName(self, name):
-    self.nameLabel.setText('Name: ' + name)
+    self.picLabel.setFrameStyle(QFrame.Panel | QFrame.Box)
 
-  def setTreatment(self, tmt):
-    self.tmtLabel.setText('Treatment: ' + tmt)
+    hbox = QHBoxLayout()
+    self.checkbox = QCheckBox(self.imagePath, self)
+    QObject.connect(self.checkbox, SIGNAL('stateChanged(int)'), self.toggle)
+    hbox.setAlignment(Qt.AlignCenter)
+    hbox.addWidget(self.checkbox)
 
-  def setDiagnosis(self, diag):
-    self.diagLabel.setText('Diagnosis: ' + diag)
+    vbox.addWidget(self.picLabel)
+    vbox.addLayout(hbox)
 
-  def viewDetails(self):
-    self.parent.viewDetails()
+    self.setLayout(vbox)
+
+  def toggle(arg):
+    print (arg)

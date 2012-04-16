@@ -144,4 +144,4 @@ def createPhotoset(dirname, UID, numPics, myDiagnosis, myTreatment, myNotes, myD
                 
 
 if __name__ == '__main__':
-	generateDatabase(25, "test/database")
+	generateDatabase(25, "../patients")
