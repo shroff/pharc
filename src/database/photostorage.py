@@ -21,12 +21,12 @@ class PhotoStorage:
         self.dbm = dbm
         self.fsm = fsm
 
-    def getPhotoData(self, phot):
+    def getPhotoData(self, photo):
+        return self.fsm.getPhoto(photo)
+
+    def renamePhoto(self, photo, toName):
         pass
 
-    def renamePhoto(self, phot, toName):
-        pass
-
-    def movePhoto(self, phot, toPhotoset):
+    def movePhoto(self, photo, toPhotoset):
         pass
 
