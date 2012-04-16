@@ -21,12 +21,15 @@ from PyQt4.QtCore import *
 import database.fs
 from logic.datamanager import DataManager
 from .importpatientphotos import ImportPatientPhotos
+from .patientsearch import PatientSearch
+from .photosetadd import PhotosetAdd
 
 class ImportPage(QWidget):
   def __init__(self, parent, dm):
-    self.data = dm
     super(ImportPage, self).__init__(parent)
     self.parent = parent
+    self.data = dm
+
     self.initUI()
 
   def initUI(self):
@@ -37,6 +40,7 @@ class ImportPage(QWidget):
 
     addButton = QPushButton("Add")
     skipButton = QPushButton("Do this later")
+    self.connect(skipButton, SIGNAL("clicked()"), self.parent.viewMain)
     hboxButtons.addStretch(1)
     hboxButtons.addWidget(addButton)
     hboxButtons.addWidget(skipButton)
@@ -47,8 +51,14 @@ class ImportPage(QWidget):
     self.photoScrollArea.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
     self.photoScrollArea.setBackgroundRole(QPalette.Light)
 
+    self.patientSearch = PatientSearch(self, self.data)
+    self.photosetAdd = PhotosetAdd(self, self.data)
+    vboxInfo.addWidget(self.patientSearch)
+    vboxInfo.addWidget(self.photosetAdd)
+
     hboxMain.addWidget(self.photoScrollArea)
-    vboxMain.addLayout(hboxMain);
+    hboxMain.addLayout(vboxInfo)
+    vboxMain.addLayout(hboxMain)
     vboxMain.addLayout(hboxButtons)
 
-    self.setLayout(vboxMain);
+    self.setLayout(vboxMain)

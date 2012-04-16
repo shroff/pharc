@@ -18,40 +18,29 @@
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 
-class ImportPhoto(QWidget):
-  def __init__(self, parent, path):
-    super(ImportPhoto, self).__init__()
+import database.fs
+from logic.datamanager import DataManager
+
+#from .patientsearchtable import PatientSearchTable
+
+class PatientSearch(QWidget):
+  def __init__(self, parent, dm):
+    super(PatientSearch, self).__init__(parent)
     self.parent = parent
-    self.imagePath = path
+    self.data = dm
 
     self.initUI()
 
   def initUI(self):
     vbox = QVBoxLayout()
 
-    self.picLabel = QLabel()
-    self.picLabel.setFixedSize(QSize(150, 150))
+    self.search = QLineEdit()
+    QObject.connect(self.search, SIGNAL('textChanged(QString)'), self.research)
 
-    image = QImage(self.imagePath)
-    pixmap = QPixmap.fromImage(image)
-    if(not pixmap.isNull()):
-      pixmap = pixmap.scaledToHeight(150)
-      self.picLabel.setPixmap(pixmap)
-      self.picLabel.setFixedSize(pixmap.size())
-
-    self.picLabel.setFrameStyle(QFrame.Panel | QFrame.Box)
-
-    hbox = QHBoxLayout()
-    self.checkbox = QCheckBox(self.imagePath, self)
-    QObject.connect(self.checkbox, SIGNAL('stateChanged(int)'), self.toggle)
-    hbox.setAlignment(Qt.AlignCenter)
-    hbox.addWidget(self.checkbox)
-
-    vbox.addWidget(self.picLabel)
-    vbox.addLayout(hbox)
+    vbox.addWidget(self.search)
 
     self.setLayout(vbox)
 
-  #TODO: pass argument to parent to change selection state
-  def toggle(self, arg):
-    print (arg)
+
+  def research(self, flt):
+    print ("Search for " + flt);

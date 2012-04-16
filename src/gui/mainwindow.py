@@ -31,11 +31,17 @@ class MainWindow(QMainWindow):
     self.resize(800, 600)
     self.setWindowTitle("Photo Archiving System")
 
-    self.setCentralWidget(PageManager(self))
+    self.pageManager = PageManager(self)
+    self.setCentralWidget(self.pageManager)
 
 
   def createMenus(self):
     #exitAction = QAction(QIcon('exit.png') 'E&xit', self)
+    importAction = QAction('Check for I&mports', self)
+    importAction.setShortcut('Ctrl+I')
+    importAction.setStatusTip('Check for photos to import')
+    importAction.triggered.connect(self.pageManager.viewImport)
+
     exitAction = QAction('E&xit', self)
     exitAction.setShortcut('Ctrl+Q')
     exitAction.setStatusTip('Exit Application')
@@ -45,6 +51,7 @@ class MainWindow(QMainWindow):
 
     menuBar = self.menuBar()
     fileMenu = menuBar.addMenu('&File')
+    fileMenu.addAction(importAction)
     fileMenu.addAction(exitAction)
 
 
