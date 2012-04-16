@@ -16,5 +16,17 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 class PhotoStorage:
-    def __init__(self, FS, DB):
+    def __init__(self, dbm, fsm):
+        # there may be a better way of handling this, but it should do
+        self.dbm = dmb
+        self.fsm = fsm
+
+    def getPhotoData(self, phot):
         pass
+
+    def renamePhoto(self, phot, toName):
+        pass
+
+    def movePhoto(self, phot, toPhotoset):
+        pass
+
