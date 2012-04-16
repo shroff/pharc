@@ -22,31 +22,27 @@ from PyQt4.QtCore import *
 # import logic.patient import patient
 
 
-class PatientTableModel(QStandardItemModel):
-  def __init__(self, dm, pList):
-    super(PatientTableModel, self).__init__(0, 3)
+class PatientSearchTableModel(QStandardItemModel):
+  def __init__(self, dm):
+    super(PatientSearchTableModel, self).__init__(0, 3)
     self.data = dm
-    self.currPatientList = pList
-    self.rowcount = 0
 
     self.setHeaders()
+
     self.populate()
 
 
   def setHeaders(self):
     self.setHeaderData(0, Qt.Horizontal, 'Name', role=Qt.DisplayRole)
-    self.setHeaderData(1, Qt.Horizontal, 'Treatment', role=Qt.DisplayRole)
+    self.setHeaderData(1, Qt.Horizontal, 'Last Name', role=Qt.DisplayRole)
     self.setHeaderData(2, Qt.Horizontal, 'Diagnosis', role=Qt.DisplayRole)
 
   def populate(self):
-    self.removeRows(0, self.rowcount)
-
     self.rowcount = 0
-#    for p in self.data.patients:
-    for p in self.currPatientList:
-      c1 = QStandardItem(p.nameFirst + " " + p.nameLast)
+    for p in self.data.patients:
+      c1 = QStandardItem(p.nameFirst)
       c1.setEditable(False)
-      c2 = QStandardItem(", ".join(map(str, p.treatments)))
+      c2 = QStandardItem(p.nameLast)
       c2.setEditable(False)
       c3 = QStandardItem(", ".join(map(str, p.diagnoses)))
       c3.setEditable(False)
@@ -55,10 +51,6 @@ class PatientTableModel(QStandardItemModel):
       self.setItem(self.rowcount, 1, c2)
       self.setItem(self.rowcount, 2, c3)
       self.rowcount = self.rowcount+1
-
-  def updateSearch(self, pats):
-    self.currPatientList = pats
-    self.populate()
 
   def update(self):
     self.populate()

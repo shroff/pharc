@@ -32,6 +32,10 @@ class PageManager(QWidget):
     self.data = DataManager("patients")
     super(PageManager, self).__init__(parent)
     self.parent = parent
+    
+    q1 = DataManager.Query('first_name', 'sub', '')
+    sresults = self.data.searchPatients([q1], None)
+    self.currPatientList = [x[0] for x in sresults]
 
     self.initUI()
     self.viewMain()
@@ -39,7 +43,7 @@ class PageManager(QWidget):
   def initUI(self):
     vbox = QVBoxLayout()
 
-    self.mainpage = MainPage(self, "Doctor", self.data)
+    self.mainpage = MainPage(self, "Doctor", self.data, self.currPatientList)
     self.editpage = PatientEditPage(self, self.data)
     self.importpage = ImportPage(self, self.data)
 
@@ -49,8 +53,8 @@ class PageManager(QWidget):
 
     self.setLayout(vbox)
 
-  def viewDetails(self, index):
-    self.editpage.setPatient(self.data.patients[index])
+  def viewDetails(self, patient):
+    self.editpage.setPatient(patient)
     self.editpage.setVisible(True)
     self.mainpage.setVisible(False)
     self.importpage.setVisible(False)
