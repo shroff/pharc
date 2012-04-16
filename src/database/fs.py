@@ -19,6 +19,7 @@ import os, sys, datetime
 
 import logic.patient as patient
 import logic.photoset as photoset
+import logic.photo as photo
 
 class FS:
     """A filesystem manager"""
