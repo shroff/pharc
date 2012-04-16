@@ -38,13 +38,13 @@ class Patient(object):
     """
     dm = None
 
-    def __init__(self):
+    def __init__(self, fname=None, lname=None, num=None):
         # the first three are loaded eagerly on database startup and
         # we don't need to trigger any lazy loading for them, so they
         # don't need to be properties
-        self._nameFirst = None
-        self._nameLast = None
-        self.uid = None
+        self._nameFirst = fname
+        self._nameLast = lname
+        self.uid = num
         # these are all properties because they require some lazy
         # loading.
         self._physicians = None
@@ -78,7 +78,7 @@ class Patient(object):
     def getnameFirst(self):
         return self._nameFirst
     def setnameFirst(self, value):
-        self.editName(self, value, self._nameLast)
+        self.dm.loader.PatientStorage.editName(self, value, self._nameLast)
         # call out to FS to move
         self._nameFirst = value
     def delnameFirst(self):
@@ -87,7 +87,7 @@ class Patient(object):
     def getnameLast(self):
         return self._nameLast
     def setnameLast(self, value):
-        self.editName(self, self._nameFirst, value)
+        self.dm.loader.PatientStorage.editName(self, self._nameFirst, value)
         self._nameLast = value
     def delnameLast(self):
         pass
