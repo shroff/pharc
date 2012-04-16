@@ -151,4 +151,5 @@ class PhotosetStorage:
             str(date.day).zfill(2) + "-" + str(date.month).zfill(2) + \
             "-" + str(date.year) + "#" + uid
         self.fsm.copyPhotoset(photoset, fromDirectory, toDirectory)
+        self.fsm.dletePhotoset(photoset)
 
