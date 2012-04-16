@@ -23,12 +23,13 @@ from PyQt4.QtCore import *
 
 
 class PatientTableModel(QStandardItemModel):
-  def __init__(self, dm):
+  def __init__(self, dm, pList):
     super(PatientTableModel, self).__init__(0, 3)
     self.data = dm
+    self.currPatientList = pList
+    self.rowcount = 0
 
     self.setHeaders()
-
     self.populate()
 
 
@@ -38,8 +39,11 @@ class PatientTableModel(QStandardItemModel):
     self.setHeaderData(2, Qt.Horizontal, 'Diagnosis', role=Qt.DisplayRole)
 
   def populate(self):
+    self.removeRows(0, self.rowcount)
+
     self.rowcount = 0
-    for p in self.data.patients:
+#    for p in self.data.patients:
+    for p in self.currPatientList:
       c1 = QStandardItem(p.nameFirst + " " + p.nameLast)
       c1.setEditable(False)
       c2 = QStandardItem(", ".join(map(str, p.treatments)))
@@ -51,6 +55,10 @@ class PatientTableModel(QStandardItemModel):
       self.setItem(self.rowcount, 1, c2)
       self.setItem(self.rowcount, 2, c3)
       self.rowcount = self.rowcount+1
+
+  def updateSearch(self, pats):
+    self.currPatientList = pats
+    self.populate()
 
   def update(self):
     self.populate()

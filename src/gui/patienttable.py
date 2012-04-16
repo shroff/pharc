@@ -27,10 +27,11 @@ from logic.patient import Patient
 #data = None
 
 class PatientTable(QTableView):
-  def __init__(self, parent, dm):
+  def __init__(self, parent, dm, pList):
     self.data = dm
     super(PatientTable, self).__init__(parent)
     self.parent = parent
+    self.currPatientList = pList
     self.initUI()
     self.linkModel()
 
@@ -49,13 +50,16 @@ class PatientTable(QTableView):
     self.horizontalHeader().setStretchLastSection(True)
 
   def linkModel(self):
-    self.patientTableModel = PatientTableModel(self.data)
+    self.patientTableModel = PatientTableModel(self.data, self.currPatientList)
     self.setModel(self.patientTableModel)
     self.updateGeometry()
 
 
   def click(self, index):
     self.parent.viewInfo(index.row(), index.column())
+
+  def updateSearch(self, pats):
+    self.patientTableModel.updateSearch(pats)
 
   def update(self):
     self.patientTableModel.update()
