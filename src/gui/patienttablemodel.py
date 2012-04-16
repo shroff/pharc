@@ -51,3 +51,6 @@ class PatientTableModel(QStandardItemModel):
       self.setItem(self.rowcount, 1, c2)
       self.setItem(self.rowcount, 2, c3)
       self.rowcount = self.rowcount+1
+
+  def update(self):
+    self.populate()

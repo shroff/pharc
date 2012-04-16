@@ -69,6 +69,8 @@ class PatientNameRow(QWidget):
     if (self.changeFirstName.text() != ''):
       print("Changing name to: " + self.changeFirstName.text() + " " +
           self.changeLastName.text())
+    self.tempNameFirst = str(self.changeFirstName.text())
+    self.tempNameLast = str(self.changeLastName.text())
 
     self.cancel()
 
@@ -82,12 +84,17 @@ class PatientNameRow(QWidget):
     self.cancelButton.setVisible(False)
 
     self.changing = False
-    self.changeFirstName.setText(str(self.patient.nameFirst + " " + self.patient.nameLast))
+    self.changeFirstName.setText(str(self.tempNameFirst + " " + self.tempNameLast))
 
   def setPatient(self, p):
     self.patient = p
     self.changeFirstName.setText(str(self.patient.nameFirst + " " + self.patient.nameLast))
+    self.tempNameFirst = self.patient.nameFirst
+    self.tempNameLast = self.patient.nameLast
 
+  def savePatient(self):
+    self.patient.nameFirst = self.tempNameFirst
+    self.patient.nameLast = self.tempNameLast
 
 
 class ChangeNameField(QLineEdit):

@@ -15,7 +15,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-import os, sys, datetime
+import os, sys, datetime, shutil
 
 import logic.patient as patient
 import logic.photoset as photoset
@@ -120,10 +120,7 @@ class FS:
             uid = self.patientUID
 
 
-        p = patient.Patient()
-        p.firstName = firstName
-        p.lastName = lastName
-        p.uid = uid
+        p = patient.Patient(fname=firstName, lname=lastName, num=uid)
 
         directory = self.generatePatientDir(p)
 
@@ -230,9 +227,9 @@ class FS:
         items = os.listdir(self.root)
         for i in items:
             if os.path.isdir(self.root + "/" + i):
-                p = patient.Patient()
+                nameFirst, nameLast, uid = self.parseName(i)
+                p = patient.Patient(fname=nameFirst, lname=nameLast, num=uid)
                 # Parse filename
-                p.nameFirst, p.nameLast, p.uid = self.parseName(i)
                 p.uid = int(p.uid)
                 if p.uid > self.patientUID:
                     self.patientUID = p.uid
@@ -633,3 +630,73 @@ class FS:
             # TODO: error codes
             print("could not access: " + directory) 
             return None
+
+    def loadPhoto(self, photo):
+        """
+            Loads the actual photo.
+
+            Arguments:
+                photo: The photo object who's data we want.
+
+            Returns:
+                The image data for the photo.
+
+            Throws:
+                IOError
+                ?
+        """
+        directory = self.generatePhotosetDir(photo.photoset)
+        if os.path.isdir(directory):
+            f = open(directory + photo.name)
+            data = f.read()
+
+            return data
+
+    def renamePatient(self, patient, firstName, lastName):
+        """
+            Moves a patient that we want to rename in the filesystem.
+
+            Arguments:
+                patient:   The patient whom we wish to move.
+                firstName: The new first name of the patient.
+                lastName:  The new last name of the patient.
+
+            Returns:
+                N/A
+
+            Throws:
+                Error
+                ?
+        """
+        uid = patient.uid
+        fromDirectory = self.generatePatientDir(patient)
+        toDirectory = self.root + "/" + lastName + ", " + firstName + "#" + str(uid)
+
+        if not os.path.isdir(fromDirectory):
+            raise Exception
+
+        shutil.copytree(fromDirectory, toDirectory)
+
+        shutil.rmtree(fromDirectory)
+
+
+    def renamePhoto(self, photo, name):
+        """
+            Renames a photo in the filesystem.
+
+            Arguments:
+                photo: The photo object we want to rename.
+                name:  The new name.
+
+            Returns:
+                N/A
+
+            Throws:
+                Error
+        """
+        directory = self.generatePhotosetDir(photo.photoset)
+        fromPath = directory + "/" + photo.name
+        if os.path.isdir(directory):
+            shutil.copy(fromPath, directory + "/" + name)
+            shutil.rmtree(fromPath)
+

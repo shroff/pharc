@@ -38,13 +38,13 @@ class Patient(object):
     """
     dm = None
 
-    def __init__(self):
+    def __init__(self, fname=None, lname=None, num=None):
         # the first three are loaded eagerly on database startup and
         # we don't need to trigger any lazy loading for them, so they
         # don't need to be properties
-        self.nameFirst = None
-        self.nameLast = None
-        self.uid = None
+        self._nameFirst = fname
+        self._nameLast = lname
+        self.uid = num
         # these are all properties because they require some lazy
         # loading.
         self._physicians = None
@@ -72,13 +72,29 @@ class Patient(object):
         del self._physicians
     physicians = property(getphysicians, setphysicians, delphysicians, "")
 
-    def getname(self):
+    def name(self):
         return self.nameFirst + self.nameLast
-    def setname(self):
-        raise NotImplementedError("I haven't figured out a good way to handle changing the name. use nameFirst and nameLast instead")
-    def delname(self):
-        raise NotImplementedError("I haven't figured out a good way to handle deleting the name. use nameFirst and nameLast instead")
-    name = property(getname, setname, delname, "")
+
+    def getnameFirst(self):
+        return self._nameFirst
+    def setnameFirst(self, value):
+        print("{0} --> nameFirst".format(str(value)))
+        if (value != self._nameFirst):
+            self.dm.loader.PatientStorage.editName(self, value, self._nameLast)
+            self._nameFirst = value
+    def delnameFirst(self):
+        pass
+    nameFirst = property(getnameFirst, setnameFirst, delnameFirst, "")
+    def getnameLast(self):
+        return self._nameLast
+    def setnameLast(self, value):
+        print("{0} --> nameLast".format(str(value)))
+        if (value != self._nameLast):
+            self.dm.loader.PatientStorage.editName(self, self._nameFirst, value)
+            self._nameLast = value
+    def delnameLast(self):
+        pass
+    nameLast = property(getnameLast, setnameLast, delnameLast, "")
 
     def getphotosets(self):
         if self._photosets is None:
@@ -106,26 +122,16 @@ class Patient(object):
         del self._notes
     notes = property(getnotes, setnotes, delnotes, "")
 
-
     def getdiagnoses(self):
         result = set()
         for ps in self.photosets:
             result |= ps.diagnoses
         return result
-    def setdiagnoses(self, value):
-        raise NotImplementedError("I haven't figured out a good way to handle changing patient diagnoses.")
-    def deldiagnoses(slef):
-        raise NotImplementedError("I haven't figured out a good way to handle deleting patient diagnoses.")
-    diagnoses = property(getdiagnoses, setdiagnoses, deldiagnoses, "")
-
+    diagnoses = property(getdiagnoses, "")
 
     def gettreatments(self):
         result = set()
         for ps in self.photosets:
             result |= ps.treatments
         return result
-    def settreatments(self, value):
-        raise NotImplementedError("I haven't figured out a good way to handle changing patient treatments.")
-    def deltreatments(slef):
-        raise NotImplementedError("I haven't figured out a good way to handle deleting patient treatments.")
-    treatments = property(gettreatments, settreatments, deltreatments, "")
+    treatments = property(gettreatments, "")

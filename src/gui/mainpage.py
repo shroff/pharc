@@ -36,9 +36,13 @@ class MainPage(QWidget):
     vbox = QVBoxLayout()
     vbox.addWidget(QLabel('Welcome ' + name, self))
     vbox.addWidget(SearchBar())
-    vbox.addWidget(PatientInfo(self, self.data))
+    self.patientInfo = PatientInfo(self, self.data)
+    vbox.addWidget(self.patientInfo)
 
     self.setLayout(vbox)
 
   def viewDetails(self, index):
     self.parent.viewDetails(index)
+
+  def update(self):
+    self.patientInfo.update()

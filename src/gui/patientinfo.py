@@ -59,3 +59,7 @@ class PatientInfo(QWidget):
   def viewDetails(self):
     if(self.patientDetail.isVisible()):
       self.parent.viewDetails(self.index)
+
+  def update(self):
+    self.patientDetail.setVisible(False)
+    self.patientTable.update()
