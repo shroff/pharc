@@ -698,3 +698,12 @@ class FS:
             shutil.copy(fromPath, directory + "/" + name)
             shutil.rmtree(fromPath)
 
+
+    def movePhoto(self, photo, photoset):
+        name = photo.name
+        fromPath = self.generatePhotosetDir(photo.photoset) + "/" + name
+        toPath = self.generatePhotosetDir(photoset) + "/" + name
+
+        shutil.copy(fromPath, toPath)
+        shutil.rmtree(toPath)
+

@@ -28,5 +28,5 @@ class PhotoStorage:
         self.fsm.renamePhoto(photo, toName)
 
     def movePhoto(self, photo, toPhotoset):
-        pass
+        self.fsm.movePhoto(photo, toPhotoset)
 
