@@ -70,7 +70,7 @@ class PatientDetail(QWidget):
     self.tmtLabel.setText('Treatment: ' + tmt)
 
   def setDiagnosis(self, diag):
-    self.diagLabel.setText('Name: ' + diag)
+    self.diagLabel.setText('Diagnosis: ' + diag)
 
   def viewDetails(self):
     self.parent.viewDetails()
