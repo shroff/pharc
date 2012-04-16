@@ -69,8 +69,8 @@ class PatientNameRow(QWidget):
     if (self.changeFirstName.text() != ''):
       print("Changing name to: " + self.changeFirstName.text() + " " +
           self.changeLastName.text())
-    self.tempNameFirst = self.changeFirstName.text()
-    self.tempNameLast = self.changeLastName.text()
+    self.tempNameFirst = str(self.changeFirstName.text())
+    self.tempNameLast = str(self.changeLastName.text())
 
     self.cancel()
 
