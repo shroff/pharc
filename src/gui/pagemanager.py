@@ -52,5 +52,6 @@ class PageManager(QWidget):
     self.mainpage.setVisible(False)
 
   def viewMain(self):
+    self.mainpage.update()
     self.editpage.setVisible(False)
     self.mainpage.setVisible(True)

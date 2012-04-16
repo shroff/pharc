@@ -633,3 +633,73 @@ class FS:
             # TODO: error codes
             print("could not access: " + directory) 
             return None
+
+    def loadPhoto(self, photo):
+        """
+            Loads the actual photo.
+
+            Arguments:
+                photo: The photo object who's data we want.
+
+            Returns:
+                The image data for the photo.
+
+            Throws:
+                IOError
+                ?
+        """
+        directory = self.generatePhotosetDir(photo.photoset)
+        if os.path.isdir(directory):
+            f = open(directory + photo.name)
+            data = f.read()
+
+            return data
+
+    def renamePatient(self, patient, firstName, lastName):
+        """
+            Moves a patient that we want to rename in the filesystem.
+
+            Arguments:
+                patient:   The patient whom we wish to move.
+                firstName: The new first name of the patient.
+                lastName:  The new last name of the patient.
+
+            Returns:
+                N/A
+
+            Throws:
+                Error
+                ?
+        """
+        uid = patient.uid
+        fromDirectory = self.generatePatientDir(patient)
+        toDirectory = self.root + "/" + lastName + ", " + firstName + "#" + str(uid)
+
+        if os.path.isdir(toDirectory):
+            raise Exception
+
+        shutil.copytree(fromDirectory, toDirectory)
+
+        shutil.rmtree(fromDirectory)
+
+
+    def renamePhoto(self, photo, name):
+        """
+            Renames a photo in the filesystem.
+
+            Arguments:
+                photo: The photo object we want to rename.
+                name:  The new name.
+
+            Returns:
+                N/A
+
+            Throws:
+                Error
+        """
+        directory = self.generatePhotosetDir(photo.photoset)
+        fromPath = directory + "/" + photo.name
+        if os.path.isdir(directory):
+            shutil.copy(fromPath, directory + "/" + name)
+            shutil.rmtree(fromPath)
+
