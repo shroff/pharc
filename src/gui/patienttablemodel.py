@@ -56,6 +56,8 @@ class PatientTableModel(QStandardItemModel):
       self.setItem(self.rowcount, 2, c3)
       self.rowcount = self.rowcount+1
 
+    self.sort(0,0)
+
   def updateSearch(self, pats):
     self.currPatientList = pats
     self.populate()
