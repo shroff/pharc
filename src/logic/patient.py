@@ -42,8 +42,8 @@ class Patient(object):
         # the first three are loaded eagerly on database startup and
         # we don't need to trigger any lazy loading for them, so they
         # don't need to be properties
-        self.nameFirst = None
-        self.nameLast = None
+        self._nameFirst = None
+        self._nameLast = None
         self.uid = None
         # these are all properties because they require some lazy
         # loading.
@@ -72,13 +72,26 @@ class Patient(object):
         del self._physicians
     physicians = property(getphysicians, setphysicians, delphysicians, "")
 
-    def getname(self):
+    def name(self):
         return self.nameFirst + self.nameLast
-    def setname(self):
-        raise NotImplementedError("I haven't figured out a good way to handle changing the name. use nameFirst and nameLast instead")
-    def delname(self):
-        raise NotImplementedError("I haven't figured out a good way to handle deleting the name. use nameFirst and nameLast instead")
-    name = property(getname, setname, delname, "")
+
+    def getnameFirst(self):
+        return self._nameFirst
+    def setnameFirst(self, value):
+        self.editName(self, value, self._nameLast)
+        # call out to FS to move
+        self._nameFirst = value
+    def delnameFirst(self):
+        pass
+    nameFirst = property(getnameFirst, setnameFirst, delnameFirst, "")
+    def getnameLast(self):
+        return self._nameLast
+    def setnameLast(self, value):
+        self.editName(self, self._nameFirst, value)
+        self._nameLast = value
+    def delnameLast(self):
+        pass
+    nameLast = property(getnameLast, setnameLast, delnameLast, "")
 
     def getphotosets(self):
         if self._photosets is None:
