@@ -1,3 +1,4 @@
 *.pyc
 src/test/
-/database
+patients
+import
