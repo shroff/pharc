@@ -162,13 +162,14 @@ class FS:
 
         self.photosetUID = uid
 
-    def copyPhotoset(self, photoset, toPatient):
+    def copyPhotoset(self, photoset, fromDirectory, toDirectory):
         """
             Move a new photoset to a different patient.
 
             Arguments:
-                photoset: The photoset object we want to save.
-                patient:  The patient who should own this photoset.
+                photoset:      The photoset object we want to save.
+                fromDirectory: The directory the photoset currently exists at.
+                toDirectory:   The directory to move the photoset to.
 
             Returns:
                 N/A
@@ -177,9 +178,6 @@ class FS:
                 Error
                 Exception
         """
-        fromDirectory = self.generatePhotosetDir(photoset)
-        toDirectory = self.generatePhotosetDir(photoset, photoset.toPatient)
-
         if not os.path.isdir(fromDirectory):
             return
         if os.path.isdir(toDirectory):
