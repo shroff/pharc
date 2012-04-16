@@ -25,7 +25,7 @@ import cli.commandlineinterface
 
 def doCLI():
     pcli = cli.commandlineinterface.CommandLineInterface()
-    pcli.load_database("test/database")
+    pcli.load_database("patients")
     pcli.cmdloop()
 
 if __name__ == "__main__":

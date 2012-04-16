@@ -29,7 +29,7 @@ from logic.datamanager import DataManager
 
 class PageManager(QWidget):
   def __init__(self, parent):
-    self.data = DataManager("../database")
+    self.data = DataManager("patients")
     super(PageManager, self).__init__(parent)
     self.parent = parent
 
