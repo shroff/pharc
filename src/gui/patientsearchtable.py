@@ -18,48 +18,42 @@
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 
+from .patientsearchtablemodel import PatientSearchTableModel
+
 import database.fs
 from logic.datamanager import DataManager
+from logic.patient import Patient
 
-from .patientsearchtable import PatientSearchTable
+#data = None
 
-class PatientSearch(QWidget):
+class PatientSearchTable(QTableView):
   def __init__(self, parent, dm):
-    super(PatientSearch, self).__init__(parent)
-    self.parent = parent
     self.data = dm
-
+    super(PatientSearchTable, self).__init__(parent)
+    self.parent = parent
     self.initUI()
+    self.linkModel()
+
+    self.connect(self, SIGNAL("clicked(QModelIndex)"), self.click)
+    self.connect(self, SIGNAL("activated(QModelIndex)"), self.click)
+    #self.connect(self, SIGNAL("doubleClicked(QModelIndex)"), self.detail)
+    self.showMaximized()
 
   def initUI(self):
-    vbox = QVBoxLayout()
-
-    self.search = QLineEdit()
-    self.results = PatientSearchTable(self, self.data)
-
-    hbox = QHBoxLayout()
-    addToPatient = QPushButton("Add to Patient")
-    createPatient = QPushButton("Create Patient")
-    hbox.addStretch(1)
-    hbox.addWidget(addToPatient)
-    hbox.addWidget(createPatient)
-
-    vbox.addWidget(self.search)
-    vbox.addWidget(self.results)
-    vbox.addLayout(hbox)
-    self.setLayout(vbox)
-
-    QObject.connect(self.search, SIGNAL('textChanged(QString)'), self.research)
-    QObject.connect(addToPatient, SIGNAL('clicked()'), self.addToPatient)
-    QObject.connect(createPatient, SIGNAL('clicked()'), self.createPatient)
+    self.setColumnWidth(0, 200)
+    self.setColumnWidth(1, 200)
 
 
+    self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+    self.horizontalHeader().ResizeMode(QHeaderView.Stretch)
+    self.horizontalHeader().setStretchLastSection(True)
 
-  def research(self, flt):
-    print ("Search for " + flt);
+  def linkModel(self):
+    self.patientSearchTableModel = PatientSearchTableModel(self.data)
+    self.setModel(self.patientSearchTableModel)
+    self.updateGeometry()
 
-  def addToPatient(self):
+
+  def click(self, index):
     pass
 
-  def createPatient(self):
-    pass
