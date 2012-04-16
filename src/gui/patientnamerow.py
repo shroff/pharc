@@ -18,6 +18,9 @@
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 
+import database.fs
+from logic.datamanager import DataManager
+
 class PatientNameRow(QWidget):
   def __init__(self):
     super(PatientNameRow, self).__init__()
@@ -66,8 +69,9 @@ class PatientNameRow(QWidget):
 
     self.changing = False
 
-  def setName(self, name):
-    self.changeNameField.setText(str(name))
+  def setPatient(self, p):
+    self.patient = p
+    self.changeNameField.setText(str(self.patient.nameFirst + " " + self.patient.nameLast))
 
 
 
