@@ -147,7 +147,7 @@ class PatientStorage(object):
             Changes the name of a patient and adjusts it's database entries.
 
             Arguments:
-            
+                patient:   The patient whom we wish to rename.
                 firstName: The first name of the patient.
                 lastName:  The last name of the patient.
 
