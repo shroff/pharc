@@ -700,6 +700,19 @@ class FS:
 
 
     def movePhoto(self, photo, photoset):
+        """
+            Moves a photo from one photoset to another.
+
+            Arguments:
+                photo:      The photo object we want to move.
+                toPhotoset: The photoset we want to move the photo to.
+
+            Returns:
+                N/A
+
+            Throws:
+                ?
+        """
         name = photo.name
         fromPath = self.generatePhotosetDir(photo.photoset) + "/" + name
         toPath = self.generatePhotosetDir(photoset) + "/" + name
