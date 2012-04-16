@@ -44,8 +44,8 @@ class SearchBar(QWidget):
 
 #TODO: Implement searching
     print("Searching for " + self.searchField.text())
-    q1 = DataManager.Query('first_name', 'sub', self.searchField.text())
-    q2 = DataManager.Query('last_name', 'sub', self.searchField.text())
+    q1 = DataManager.Query('first_name', 'sub', str(self.searchField.text()))
+    q2 = DataManager.Query('last_name', 'sub', str(self.searchField.text()))
     queries = [q1, q2]
     sresults = self.data.searchPatients(queries, None)
     pats = [x[0] for x in sresults]
