@@ -120,10 +120,7 @@ class FS:
             uid = self.patientUID
 
 
-        p = patient.Patient()
-        p.firstName = firstName
-        p.lastName = lastName
-        p.uid = uid
+        p = patient.Patient(fname=firstName, lname=lastName, num=uid)
 
         directory = self.generatePatientDir(p)
 
@@ -230,9 +227,9 @@ class FS:
         items = os.listdir(self.root)
         for i in items:
             if os.path.isdir(self.root + "/" + i):
-                p = patient.Patient()
+                nameFirst, nameLast, uid = self.parseName(i)
+                p = patient.Patient(fname=nameFirst, lname=nameLast, num=uid)
                 # Parse filename
-                p.nameFirst, p.nameLast, p.uid = self.parseName(i)
                 p.uid = int(p.uid)
                 if p.uid > self.patientUID:
                     self.patientUID = p.uid
