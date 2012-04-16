@@ -78,17 +78,20 @@ class Patient(object):
     def getnameFirst(self):
         return self._nameFirst
     def setnameFirst(self, value):
-        self.dm.loader.PatientStorage.editName(self, value, self._nameLast)
-        # call out to FS to move
-        self._nameFirst = value
+        print("{0} --> nameFirst".format(str(value)))
+        if (value != self._nameFirst):
+            self.dm.loader.PatientStorage.editName(self, value, self._nameLast)
+            self._nameFirst = value
     def delnameFirst(self):
         pass
     nameFirst = property(getnameFirst, setnameFirst, delnameFirst, "")
     def getnameLast(self):
         return self._nameLast
     def setnameLast(self, value):
-        self.dm.loader.PatientStorage.editName(self, self._nameFirst, value)
-        self._nameLast = value
+        print("{0} --> nameLast".format(str(value)))
+        if (value != self._nameLast):
+            self.dm.loader.PatientStorage.editName(self, self._nameFirst, value)
+            self._nameLast = value
     def delnameLast(self):
         pass
     nameLast = property(getnameLast, setnameLast, delnameLast, "")
