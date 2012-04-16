@@ -142,7 +142,7 @@ class PatientStorage(object):
         self.fsm.addPhysicians(patient, physicians)
         return patient
 
-    def editName(self, firstName, lastName):
+    def editName(self, pat, firstName, lastName):
         """
             Changes the name of a patient and adjusts it's database entries.
 
