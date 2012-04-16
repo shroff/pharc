@@ -26,23 +26,30 @@ from logic.datamanager import DataManager
 #data = None
 
 class MainPage(QWidget):
-  def __init__(self, parent, name, dm):
+  def __init__(self, parent, name, dm, pList):
     self.data = dm
     super(MainPage, self).__init__(parent)
     self.parent = parent
+    self.currPatientList = pList
     self.initUI(name)
+    
 
   def initUI(self, name):
     vbox = QVBoxLayout()
     vbox.addWidget(QLabel('Welcome ' + name, self))
-    vbox.addWidget(SearchBar())
-    self.patientInfo = PatientInfo(self, self.data)
+    self.searchBar = SearchBar(self, self.data)
+    vbox.addWidget(self.searchBar)
+    self.patientInfo = PatientInfo(self, self.data, self.currPatientList)
     vbox.addWidget(self.patientInfo)
 
     self.setLayout(vbox)
 
   def viewDetails(self, index):
-    self.parent.viewDetails(index)
+    self.parent.viewDetails(self.currPatientList[index])
+
+  def updateSearch(self, pats):
+    self.currPatientList = pats
+    self.patientInfo.updateSearch(pats)
 
   def update(self):
-    self.patientInfo.update()
+    self.patientInfo.update() 

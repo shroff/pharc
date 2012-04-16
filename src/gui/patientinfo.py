@@ -27,17 +27,18 @@ from logic.patient import Patient
 #data = None
 
 class PatientInfo(QWidget):
-  def __init__(self, parent, dm):
+  def __init__(self, parent, dm, pList):
     self.data = dm
     super(PatientInfo, self).__init__(parent)
     self.parent = parent
+    self.currPatientList = pList
     self.initUI()
     self.index = 0
 
 
   def initUI(self):
     hbox = QHBoxLayout()
-    self.patientTable = PatientTable(self, self.data)
+    self.patientTable = PatientTable(self, self.data, self.currPatientList)
     self.patientDetail = PatientDetail(self)
     self.patientDetail.setVisible(False)
     hbox.addWidget(self.patientTable)
@@ -47,7 +48,7 @@ class PatientInfo(QWidget):
 
 
   def viewInfo(self, row, col):
-    patient = self.data.patients[row]
+    patient = self.currPatientList[row]
     self.patientDetail.setName(patient.nameFirst + " " + patient.nameLast)
     ps = patient.getMostRecentPhotoset()
     self.patientDetail.setTreatment(", ".join(map(str, patient.treatments)))
@@ -59,6 +60,11 @@ class PatientInfo(QWidget):
   def viewDetails(self):
     if(self.patientDetail.isVisible()):
       self.parent.viewDetails(self.index)
+
+  def updateSearch(self, pats):
+    self.patientDetail.setVisible(False)
+    self.currPatientList = pats
+    self.patientTable.updateSearch(pats)
 
   def update(self):
     self.patientDetail.setVisible(False)
