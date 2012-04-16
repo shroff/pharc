@@ -672,7 +672,7 @@ class FS:
         fromDirectory = self.generatePatientDir(patient)
         toDirectory = self.root + "/" + lastName + ", " + firstName + "#" + str(uid)
 
-        if os.path.isdir(fromDirectory):
+        if not os.path.isdir(fromDirectory):
             raise Exception
 
         shutil.copytree(fromDirectory, toDirectory)
