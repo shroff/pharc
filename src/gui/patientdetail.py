@@ -39,6 +39,8 @@ class PatientDetail(QWidget):
     self.nameLabel = QLabel('Name: ')
     self.diagLabel = QLabel('Diagnosis: ')
     self.tmtLabel = QLabel('Treatment: ')
+    self.tmtLabel.setWordWrap(True)
+    self.diagLabel.setWordWrap(True)
     self.detailsButton = QPushButton('View Details')
 
     vbox.addWidget(self.picLabel)
