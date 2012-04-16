@@ -162,13 +162,14 @@ class FS:
 
         self.photosetUID = uid
 
-    def copyPhotoset(self, photoset, toPatient):
+    def copyPhotoset(self, photoset, fromDirectory, toDirectory):
         """
             Move a new photoset to a different patient.
 
             Arguments:
-                photoset: The photoset object we want to save.
-                patient:  The patient who should own this photoset.
+                photoset:      The photoset object we want to save.
+                fromDirectory: The directory the photoset currently exists at.
+                toDirectory:   The directory to move the photoset to.
 
             Returns:
                 N/A
@@ -177,9 +178,6 @@ class FS:
                 Error
                 Exception
         """
-        fromDirectory = self.generatePhotosetDir(photoset)
-        toDirectory = self.generatePhotosetDir(photoset, photoset.toPatient)
-
         if not os.path.isdir(fromDirectory):
             return
         if os.path.isdir(toDirectory):
@@ -699,4 +697,26 @@ class FS:
         if os.path.isdir(directory):
             shutil.copy(fromPath, directory + "/" + name)
             shutil.rmtree(fromPath)
+
+
+    def movePhoto(self, photo, photoset):
+        """
+            Moves a photo from one photoset to another.
+
+            Arguments:
+                photo:      The photo object we want to move.
+                toPhotoset: The photoset we want to move the photo to.
+
+            Returns:
+                N/A
+
+            Throws:
+                ?
+        """
+        name = photo.name
+        fromPath = self.generatePhotosetDir(photo.photoset) + "/" + name
+        toPath = self.generatePhotosetDir(photoset) + "/" + name
+
+        shutil.copy(fromPath, toPath)
+        shutil.rmtree(toPath)
 

@@ -22,11 +22,49 @@ class PhotoStorage:
         self.fsm = fsm
 
     def getPhotoData(self, photo):
+        """
+            Loads the photo image data.
+
+            Arguments:
+                photo: The photo object who's data we want.
+
+            Returns:
+                The image data of the photo.
+
+            Throws:
+                ?
+        """
         return self.fsm.getPhoto(photo)
 
     def renamePhoto(self, photo, toName):
-        pass
+        """
+            Renames a photo's file.
+
+            Arguments:
+                photo: The photo object we want to rename.
+                name:  The new name for the photo.
+
+            Return:
+                N/A
+
+            Throws:
+                ?
+        """
+        self.fsm.renamePhoto(photo, toName)
 
     def movePhoto(self, photo, toPhotoset):
-        pass
+        """
+            Moves a photo from one photoset to another.
+
+            Arguments:
+                photo:      The photo object we want to move.
+                toPhotoset: The photoset we want to move the photo to.
+
+            Returns:
+                N/A
+
+            Throws:
+                ?
+        """
+        self.fsm.movePhoto(photo, toPhotoset)
 
