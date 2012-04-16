@@ -18,7 +18,7 @@
 class PhotoStorage:
     def __init__(self, dbm, fsm):
         # there may be a better way of handling this, but it should do
-        self.dbm = dmb
+        self.dbm = dbm
         self.fsm = fsm
 
     def getPhotoData(self, phot):
