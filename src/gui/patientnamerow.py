@@ -29,14 +29,18 @@ class PatientNameRow(QWidget):
     self.changing = False
 
   def initUI(self):
-    self.changeNameField = ChangeNameField(self)
+    self.changeFirstName = ChangeNameField(self)
+    self.changeLastName = ChangeNameField(self)
+    self.changeLastName.setVisible(False)
+
     self.editButton = QPushButton('Edit')
     self.cancelButton = QPushButton('Cancel')
     self.cancelButton.setVisible(False)
 
     hbox = QHBoxLayout()
     hbox.addWidget(QLabel('Patient Name: ', self))
-    hbox.addWidget(self.changeNameField)
+    hbox.addWidget(self.changeFirstName)
+    hbox.addWidget(self.changeLastName)
     hbox.addWidget(self.editButton)
     hbox.addWidget(self.cancelButton)
 
@@ -49,29 +53,40 @@ class PatientNameRow(QWidget):
     if(self.changing):
       self.change()
     else:
-      self.changeNameField.setReadOnly(False)
-      self.changeNameField.setFocus()
+      self.changeFirstName.setReadOnly(False)
+      self.changeFirstName.setText(str(self.patient.nameFirst))
+      self.changeFirstName.setFocus()
+
+      self.changeLastName.setReadOnly(False)
+      self.changeLastName.setVisible(True)
+      self.changeLastName.setText(str(self.patient.nameLast))
+
       self.editButton.setText('Done')
       self.cancelButton.setVisible(True)
       self.changing = True
 
   def change(self):
-    if (self.changeNameField.text() != ''):
-      print("Changing name to: " + self.changeNameField.text())
+    if (self.changeFirstName.text() != ''):
+      print("Changing name to: " + self.changeFirstName.text() + " " +
+          self.changeLastName.text())
 
     self.cancel()
 
 
   def cancel(self):
-    self.changeNameField.setReadOnly(True)
+    self.changeFirstName.setReadOnly(True)
+    self.changeLastName.setReadOnly(True)
+    self.changeLastName.setVisible(False)
+
     self.editButton.setText('Edit')
     self.cancelButton.setVisible(False)
 
     self.changing = False
+    self.changeFirstName.setText(str(self.patient.nameFirst + " " + self.patient.nameLast))
 
   def setPatient(self, p):
     self.patient = p
-    self.changeNameField.setText(str(self.patient.nameFirst + " " + self.patient.nameLast))
+    self.changeFirstName.setText(str(self.patient.nameFirst + " " + self.patient.nameLast))
 
 
 
