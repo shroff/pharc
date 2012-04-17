@@ -9,7 +9,8 @@ Diags includes a list of possible diagnoses.
 firstNames and lastNames are possible names to choose from.
 All lists may be expanded upon, and code will continue to select any random option from the list.
 """
-diags = ["Breast Reduction", "Breast Enlargement", "Liposuction", "Face Lift"]
+diags = ["Facial Damage", "Birth Defect", "Cosmetic", "Burns", "Surgical Damage"]
+treats = ["Nose Reduction", "Nose Enlargement", "Liposuction", "Face Lift", "Facial Reconstruction", "Face Transplant"]
 firstNames = ["Isabella", "Sophia", "Emma", "Olivia", "Ava", "Emily", "Abigail", "Madison", "Chloe", "Mia", "Sarah", "Kelly", "Rebecca", "Sam", "Christina", "Angelica"]
 lastNames = ["Smith", "Johnson", "Williams", "Jones", "Brown", "Davis", "Miller", "Wilson", "Moore", "Taylor", "Anderson", "Jackson", "White", "Harris", "Martin", "Thompson"]
 
@@ -20,7 +21,7 @@ numDocs = 5
 # UID from which photoset UIDs begin
 photosetUID = 70000
 # Maximum number of Photosets per patient
-numPhotosets = 4
+numPhotosets = 5
 # Minimum number of Photos in a Photoset
 minPhotos = 3
 # Maximum number of Photos is a Photoset
@@ -43,10 +44,10 @@ def generateDatabase(numPatients, databaseDir):
         for x in range(1, numPatients+1):
                 patientDir = createPatient(databaseDir, x)
                 tempDiag = createDiagnosis(patientDir)
-                tempTreat = createTreatment(patientDir, tempDiag)
+                tempTreat = createTreatment(patientDir)
                 tempNote = createNotes(patientDir)
                 tempPhys = createPhysicians(patientDir, physicians[random.randint(0, len(physicians)-1)])
-                for x in range(0, random.randint(1, numPhotosets)):
+                for x in range(1, random.randint(1, numPhotosets)):
                         createPhotoset(patientDir, photosetUID, random.randint(minPhotos, maxPhotos), tempDiag, tempTreat, tempNote, tempPhys)
                         photosetUID += 1
                         os.chdir("..")
@@ -78,18 +79,23 @@ from the list of diagnoses
 def createDiagnosis(dirname):
         filename = "diagnoses.txt"
         File = open(filename,"w")
-        thisDiag = diags[random.randint(0, len(diags)-1)]
+        thisDiag = str(random.choice(diags)) + "\n"
+        if (random.randint(0, 5) == 3):
+                thisDiag += random.choice(diags) + "\n"
         File.writelines(thisDiag)
         return thisDiag
 
 """
 Generates a treatment.txt file in the patient's directory, selecting the same treatment as the diagnosis this patient has
 """
-def createTreatment(dirname, thisTreatment):
+def createTreatment(dirname):
         filename = "treatments.txt"
         File = open(filename,"w")
-        File.writelines(thisTreatment)
-        return thisTreatment
+        thisTreat = str(random.choice(treats)) + "\n"
+        if (random.randint(0, 5) == 3):
+                thisTreat += random.choice(treats) + "\n"
+        File.writelines(thisTreat)
+        return thisTreat
 
 """
 Generates a notes.txt file in the patient's directory, writing string into the file
@@ -149,4 +155,4 @@ def createPhotoset(dirname, UID, numPics, myDiagnosis, myTreatment, myNotes, myD
                 
 
 if __name__ == '__main__':
-    generateDatabase(25, "../patients")
+    generateDatabase(100, "../patients")
