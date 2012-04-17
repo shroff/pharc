@@ -51,5 +51,8 @@ class MainPage(QWidget):
     self.currPatientList = pats
     self.patientInfo.updateSearch(pats)
 
-  def update(self):
-    self.patientInfo.update() 
+  def triggerUpdate(self):
+    self.parent.triggerUpdate()
+
+  def modelUpdated(self):
+    self.patientInfo.modelUpdated()

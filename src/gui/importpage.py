@@ -66,3 +66,9 @@ class ImportPage(QWidget):
 
   def select(self, patient):
     self.photosetAdd.setPatient(patient)
+
+  def triggerUpdate(self):
+    self.parent.triggerUpdate()
+
+  def modelUpdated(self):
+    self.patientSearch.modelUpdated()

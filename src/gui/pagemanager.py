@@ -69,3 +69,7 @@ class PageManager(QWidget):
     self.editpage.setVisible(False)
     self.mainpage.setVisible(False)
     self.importpage.setVisible(True)
+
+  def triggerUpdate(self):
+    self.importpage.modelUpdated()
+    self.mainpage.modelUpdated()

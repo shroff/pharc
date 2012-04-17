@@ -65,6 +65,6 @@ class PatientInfo(QWidget):
     self.currPatientList = pats
     self.patientTable.updateSearch(pats)
 
-  def update(self):
+  def modelUpdated(self):
+    self.patientTable.modelUpdated()
     self.patientDetail.setVisible(False)
-    self.patientTable.update()

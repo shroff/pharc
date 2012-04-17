@@ -53,7 +53,7 @@ class PatientTableModel(QSortFilterProxyModel):
     self.resultMap = resultMap
     self.invalidate()
 
-  def update(self):
+  def modelUpdated(self):
     self.realModel.populate()
     self.invalidate()
 
