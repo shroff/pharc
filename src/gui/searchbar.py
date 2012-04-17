@@ -55,12 +55,11 @@ class SearchBar(QWidget):
 #    sresults.update(sresults2)
 #    sresults2 = self.data.searchPatients([q4], None)
 #    sresults.update(sresults2)
-    pats = [x for x in sresults.keys()]
     echo = ""
-    for p in pats:
+    for (p,_) in sresults.items():
         echo += str(p) + "\n"
     print(echo[:-1])
-    self.parent.updateSearch(pats)
+    self.parent.updateSearch(sresults)
 
 class SearchField(QLineEdit):
   def __init__(self, sb):
