@@ -404,7 +404,7 @@ class FS:
                 f.write(data)
                 f.close()
             except IOError as error:
-                print error
+                print(error)
                 raise error
 
     def editPatientNotes(self, patient, notes):

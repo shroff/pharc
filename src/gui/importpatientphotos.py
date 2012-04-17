@@ -35,7 +35,7 @@ class ImportPatientPhotos(QWidget):
   def initUI(self):
     vbox = QVBoxLayout()
 
-    for x in xrange(1, 4):
+    for x in range(1, 4):
       hbox = QHBoxLayout()
       hbox.setAlignment(Qt.AlignCenter)
       hbox.addWidget(ImportPhoto(self, imageBase + random.choice(imgs)))
