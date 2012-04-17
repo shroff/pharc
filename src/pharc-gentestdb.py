@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import os, sys, random
+import os, sys, random, Image, ImageDraw, ImageFont
 
 
 """
@@ -139,8 +139,13 @@ def createPhotoset(dirname, UID, numPics, myDiagnosis, myTreatment, myNotes, myD
         File = open(diagFile,"w")
         File.writelines(myDiagnosis)
         for x in range(0, numPics):
-                imgFile = "DSC%05d.jpg" %x
-                File = open(imgFile, "w")
+                imgFile = "DSC%05d.png" %x
+#                File = open(imgFile, "w")
+		i = Image.new("RGB", (250,250))
+		d = ImageDraw.Draw(i)
+		f = ImageFont.truetype("/usr/share/fonts/truetype/freefont/FreeSans.ttf", 18)
+		d.text((0,0), dirname + imgFile, font=f)
+		i.save(open(imgFile, "wb"), "PNG")
                 
 
 if __name__ == '__main__':
