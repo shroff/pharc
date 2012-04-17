@@ -32,7 +32,7 @@ class SearchBar(QWidget):
 
   def initUI(self):
     self.search = QLineEdit(self)
-    QObject.connect(self.search, SIGNAL('textChanged(QString)'), self.update)
+    QObject.connect(self.search, SIGNAL('textEdited(QString)'), self.update)
 
     hbox = QHBoxLayout()
     if (not self.small):
@@ -40,6 +40,10 @@ class SearchBar(QWidget):
     hbox.addWidget(self.search)
 
     self.setLayout(hbox)
+
+  def search(self, text):
+    self.search.setText(text)
+    self.update(text)
 
   def update(self, text):
     q1 = DataManager.Query('first_name', 'sub', str(text))
