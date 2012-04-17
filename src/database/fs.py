@@ -148,7 +148,7 @@ class FS:
 
         directory = self.generatePatientDir(p)
 
-        shutil.makedirs(directory)
+        os.makedirs(directory)
         self.makeFile(directory + "/name.txt", firstName + ", " + lastName + "#" + str(uid))
         self.makeFile(directory + "/physicians.txt")
         self.makeFile(directory + "/notes.txt")
