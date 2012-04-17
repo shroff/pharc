@@ -189,7 +189,7 @@ class FS:
 
         directory = self.generatePatientDir(patientinit)
         directory = directory + "/" + str(dateinit.day).zfill(2) + "-" + str(dateinit.month).zfill(2) + \
-            "-" + str(dateinit.year) + "#" + uid
+            "-" + str(dateinit.year) + "#" + str(uid)
 
         os.makedirs(directory)
         self.makeFile(directory + "/physicians.txt")

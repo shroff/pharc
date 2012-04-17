@@ -47,3 +47,6 @@ class PatientDetailTable(QTableView):
   def setPatient(self, patient):
     self.patient = patient
     self.linkModel()
+
+  def modelUpdated(self):
+    self.linkModel()

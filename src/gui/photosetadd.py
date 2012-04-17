@@ -67,6 +67,7 @@ class PhotosetAdd(QWidget):
 
   def create(self):
     self.data.makePhotoset(self.patient)
+    self.photosets.modelUpdated()
 
   def selected(self, row):
     self.sel = row
