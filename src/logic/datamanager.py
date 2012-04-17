@@ -234,26 +234,26 @@ class DataManager(object):
         ##########################################################
         # second big chunk: define methods for ranking results
 
-        result = list()
-        def rankId(xxx_todo_changeme7, pats):
+        result = dict()
+        def rankId(xxx_todo_changeme7, result):
             (f, m, a) = xxx_todo_changeme7
             pass
-        def rankFirstName(xxx_todo_changeme8, pats):
+        def rankFirstName(xxx_todo_changeme8, result):
             (f, m, a) = xxx_todo_changeme8
             pass
-        def rankLastName(xxx_todo_changeme9, pats):
+        def rankLastName(xxx_todo_changeme9, result):
             (f, m, a) = xxx_todo_changeme9
             pass
-        def rankDiagnoses(xxx_todo_changeme10, pats):
+        def rankDiagnoses(xxx_todo_changeme10, result):
             (f, m, a) = xxx_todo_changeme10
             pass
-        def rankTreatments(xxx_todo_changeme11, pats):
+        def rankTreatments(xxx_todo_changeme11, result):
             (f, m, a) = xxx_todo_changeme11
             pass
-        def rankPhysicians(xxx_todo_changeme12, pats):
+        def rankPhysicians(xxx_todo_changeme12, result):
             (f, m, a) = xxx_todo_changeme12
             pass
-        def rankNotes(xxx_todo_changeme13, pats):
+        def rankNotes(xxx_todo_changeme13, result):
             (f, m, a) = xxx_todo_changeme13
             pass
 
