@@ -53,14 +53,11 @@ class PatientInfo(QWidget):
     ps = patient.getMostRecentPhotoset()
     self.patientDetail.setTreatment(", ".join(map(str, patient.treatments)))
     self.patientDetail.setDiagnosis(", ".join(map(str, patient.diagnoses)))
-<<<<<<< HEAD
     if ps.photos != []:
       self.patientDetail.setPicture(ps.photos[0].getData())
     else:
       self.patientDetail.setPicture(None)
-=======
     self.patientDetail.setPicture(ps.photos[0].getData())
->>>>>>> c9ff0774ee51968f9d8088839d49701d98954e2b
     self.patientDetail.setVisible(True)
 
   def viewDetails(self):
