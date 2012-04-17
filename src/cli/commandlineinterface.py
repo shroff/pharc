@@ -114,10 +114,10 @@ class CommandLineInterface(cmd.Cmd):
             pats = self.dm.patients
         elif int(args) >= 70000: # list all photosets from a patient
             ps = [x for x in self.dm.searchPhotosets(None, None) if x.uid == int(args)]
-            print(str(ps[0].patient) + ": " + str(ps[0]))
+            print(str(ps[0]))
             echo = ""
             for phot in ps[0].photos:
-                echo += "  " + str(phot.getFullPath()) + "\n"
+                echo += "  " + str(phot.name) + "\n"
             print(echo[:-1])
         else:                   # list a particualr photoset
             pats = self.getEntitiesByUID(int(args), rtype="patient")
