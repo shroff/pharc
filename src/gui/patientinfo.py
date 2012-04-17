@@ -53,7 +53,7 @@ class PatientInfo(QWidget):
     ps = patient.getMostRecentPhotoset()
     self.patientDetail.setTreatment(", ".join(map(str, patient.treatments)))
     self.patientDetail.setDiagnosis(", ".join(map(str, patient.diagnoses)))
-    self.patientDetail.setRandom()
+    self.patientDetail.setPicture(ps.photos[1].getData())
     self.patientDetail.setVisible(True)
 
   def viewDetails(self):

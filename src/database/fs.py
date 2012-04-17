@@ -118,6 +118,8 @@ class FS:
             Throws:
                 ?
         """
+        f = open(path)
+        f.write(data)
         f.close()
 
     def createPatient(self, firstName, lastName):
@@ -148,7 +150,7 @@ class FS:
 
         directory = self.generatePatientDir(p)
 
-        shutil.makedirs(directory)
+        os.makedirs(directory)
         self.makeFile(directory + "/name.txt", firstName + ", " + lastName + "#" + str(uid))
         self.makeFile(directory + "/physicians.txt")
         self.makeFile(directory + "/notes.txt")
@@ -264,6 +266,7 @@ class FS:
                     self.patientUID = p.uid
                 patients.append(p)
 
+        self.knownPatientUIDs = True
         return patients
 
     def parseName(self, name):
@@ -676,9 +679,9 @@ class FS:
         """
         directory = self.generatePhotosetDir(photo.photoset)
         if os.path.isdir(directory):
-            f = open(directory + photo.name)
-            data = f.read()
-
+            #f = open(directory + photo.name)
+            #data = f.read()
+            data = directory
             return data
 
     def renamePatient(self, patient, firstName, lastName):
