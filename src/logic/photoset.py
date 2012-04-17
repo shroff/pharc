@@ -45,7 +45,8 @@ class Photoset(object):
             len(self.photos) if self.photos is not None else 0,
             )
 
-
+    def clearDiagnoses(self):
+        self.diagnoses = set()
     def addDiagnoses(self, diagnosesString):
         diags = diagnosesString.split(",")
         diags = [d.strip() for d in diags]
@@ -88,6 +89,13 @@ class Photoset(object):
             
         return t
 
+    def clearTreatments(self):
+        self.treatments = set()
+    def addTreatments(self, treatmentsString):
+        treats = treatmentsString.split(",")
+        treats = [t.strip() for t in treats]
+        for t in treats:
+            self.addTreatment(t)
     def addTreatment(self, treatment):
         """Refers to tag list and adds appropriate tag.
 
