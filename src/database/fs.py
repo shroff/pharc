@@ -178,7 +178,7 @@ class FS:
         if not self.knownPhotosetUIDs:
             self.discoverPhotosetUIDs()
 
-        photoset = Photoset(date, patient)
+        photoset = photoset.Photoset(date, patient)
 
         uid = self.photosetUID
         uid = uid + 1
