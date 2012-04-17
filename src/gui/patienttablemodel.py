@@ -82,7 +82,6 @@ class RealPatientTableModel(QStandardItemModel):
       self.setItem(self.rowcount, 2, c3)
       self.rowcount = self.rowcount+1
 
-
 class PatientNameItem(QStandardItem):
   def __init__(self, patient):
     super(PatientNameItem, self).__init__(patient.nameFirst + " " + patient.nameLast)
