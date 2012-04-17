@@ -170,3 +170,6 @@ class PhotosetStorage:
 
     def createPhotoset(self, patient, date=datetime.date.today()):
         return self.fsm.createPhotoset(patient, date)
+
+    def findPhotos(self, path):
+        return self.fsm.findPhotos(path)

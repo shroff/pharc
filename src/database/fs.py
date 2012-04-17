@@ -18,6 +18,7 @@
 validImageTypes = frozenset([ \
     "GIF", \
     "JPG", \
+    "JPEG", \
     "PNG", \
     "TIFF"
     ])
@@ -814,3 +815,13 @@ class FS:
         if os.path.isdir(directory):
             shutil.move(path, photoset)
 
+    def findPhotos(self, path)
+        images = list[]
+
+        if not os.path.isdir(path):
+            return images
+        for i in os.listdir(path):
+            if i in validImageTypes:
+                images.append(i)
+
+        return images
