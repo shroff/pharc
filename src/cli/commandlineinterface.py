@@ -147,6 +147,9 @@ class CommandLineInterface(cmd.Cmd):
             str(ps.addTreatment(args[2]))
         if args[1] == "-treat":
             pass
+        if args[1] == "+treats":
+            treats = " ".join(args[2:])
+            str(ps.addTreatments(treats))
         if args[1] == "+diag":
             str(ps.addDiagnosis(args[2]))
         if args[1] == "+diags":

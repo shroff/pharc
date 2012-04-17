@@ -89,6 +89,13 @@ class Photoset(object):
             
         return t
 
+    def clearTreatments(self):
+        self.treatments = set()
+    def addTreatments(self, treatmentsString):
+        treats = treatmentsString.split(",")
+        treats = [t.strip() for t in treats]
+        for t in treats:
+            self.addTreatment(t)
     def addTreatment(self, treatment):
         """Refers to tag list and adds appropriate tag.
 
