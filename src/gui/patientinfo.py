@@ -57,7 +57,6 @@ class PatientInfo(QWidget):
       self.patientDetail.setPicture(ps.photos[0].getData())
     else:
       self.patientDetail.setPicture(None)
-    self.patientDetail.setPicture(ps.photos[0].getData())
     self.patientDetail.setVisible(True)
 
   def viewDetails(self):
