@@ -85,3 +85,5 @@ class PhotoStorage:
         """
         self.fsm.movePhoto(photo, toPhotoset)
 
+    def findPhotos(self, path):
+        return self.fsm.findPhotos(path)
