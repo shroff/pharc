@@ -73,7 +73,9 @@ class DataManager(object):
         self.physicians = tags.TagList()
 
     def makePatient(self, fname, lname):
-        return self.loader.PatientStorage.createPatient(fname, lname, None)
+        p = self.loader.PatientStorage.createPatient(fname, lname, None)
+        self.patients.add(p)
+        return p
     def makePhotoset(self, date):
         # need a function in photosetstorage to do this
         # return self.loader.PhotosetStorage.
