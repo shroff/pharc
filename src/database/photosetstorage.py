@@ -23,7 +23,19 @@ class PhotosetStorage:
         self.fsm = fsm
 
     def loadPhotos(self, photoset):
-        pass
+        """
+            Loads the list of photos for a given photoset.
+
+            Arguments:
+                photoset: The photoset we want to load photos for.
+            
+            Returns:
+                The list of photos.
+
+            Throws:
+                ?
+        """
+
 
     def loadDiagnoses(self, photoset):
         """
