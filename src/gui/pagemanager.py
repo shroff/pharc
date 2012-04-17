@@ -45,7 +45,7 @@ class PageManager(QWidget):
 
     self.mainpage = MainPage(self, "Doctor", self.data, self.currPatientList)
     self.editpage = PatientEditPage(self, self.data)
-    self.importpage = ImportPage(self, self.data)
+    self.importpage = ImportPage(self, self.data, self.currPatientList)
 
     vbox.addWidget(self.mainpage)
     vbox.addWidget(self.editpage)

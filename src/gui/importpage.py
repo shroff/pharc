@@ -25,10 +25,11 @@ from .patientsearch import PatientSearch
 from .photosetadd import PhotosetAdd
 
 class ImportPage(QWidget):
-  def __init__(self, parent, dm):
+  def __init__(self, parent, dm, pList):
     super(ImportPage, self).__init__(parent)
     self.parent = parent
     self.data = dm
+    self.currPatientList = pList
 
     self.initUI()
 
@@ -51,7 +52,7 @@ class ImportPage(QWidget):
     self.photoScrollArea.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
     self.photoScrollArea.setBackgroundRole(QPalette.Light)
 
-    self.patientSearch = PatientSearch(self, self.data)
+    self.patientSearch = PatientSearch(self, self.data, self.currPatientList)
     self.photosetAdd = PhotosetAdd(self, self.data)
     vboxInfo.addWidget(self.patientSearch)
     vboxInfo.addWidget(self.photosetAdd)
