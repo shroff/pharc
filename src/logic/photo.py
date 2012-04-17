@@ -42,11 +42,9 @@ class Photo(object):
 
     def getname(self):
         return self._name
-        pass
     def setname(self, value):
         self.dm.loader.PhotoStorage.renamePhoto(self, value)
         self._name = value
-        pass
     def delname(self):
         pass
     name = property(getname, setname, delname, "")
