@@ -188,25 +188,12 @@ class DataManager(object):
         ##########################################################
         # first big chunk: define methods for constraining results
 
-        # The first person to touch valid_patients is going to
-        # constrain the list of patients hugely, potentially from the
-        # entire list of patients to the empty set. For that reason,
-        # the first constrain operation behaves completely
-        # differently. We pull this off by starting valid_patients as
-        # None and having the first person to touch it turn it into a
-        # set() with patients in it.
-        valid_patients = None
-
-        # the valid_patients thing is a hack to get around python 2's
-        # badwrong handling of scope in local functions.
-        def constrainId(xxx_todo_changeme, valid_patients=valid_patients):
+        def constrainId(xxx_todo_changeme, pats):
             (f, m, a) = xxx_todo_changeme
-            pats = self.patients if valid_patients is None else valid_patients
             valid_patients = set([p for p in pats if p.uid == a])
             return valid_patients
-        def constrainFirstName(xxx_todo_changeme1, valid_patients=valid_patients):
+        def constrainFirstName(xxx_todo_changeme1, pats):
             (f, m, a) = xxx_todo_changeme1
-            pats = self.patients if valid_patients is None else valid_patients
             if m == "exact":
                 valid_patients = set([p for p in pats if p.nameFirst.lower() == a.lower()])
             elif m == "pre":
@@ -216,9 +203,8 @@ class DataManager(object):
             elif m == "sub":
                 valid_patients = set([p for p in pats if p.nameFirst.lower().find(a.lower()) != -1])
             return valid_patients
-        def constrainLastName(xxx_todo_changeme2, valid_patients=valid_patients):
+        def constrainLastName(xxx_todo_changeme2, pats):
             (f, m, a) = xxx_todo_changeme2
-            pats = self.patients if valid_patients is None else valid_patients
             if m == "exact":
                 valid_patients = set([p for p in pats if p.nameLast.lower() == a.lower()])
             elif m == "pre":
@@ -228,42 +214,46 @@ class DataManager(object):
             elif m == "sub":
                 valid_patients = set([p for p in pats if p.nameLast.lower().find(a.lower()) != -1])
             return valid_patients
-        def constrainDiagnoses(xxx_todo_changeme3, valid_patients=valid_patients):
+        def constrainDiagnoses(xxx_todo_changeme3, pats):
             (f, m, a) = xxx_todo_changeme3
+            valid_patients = pats
             return valid_patients
-        def constrainTreatments(xxx_todo_changeme4, valid_patients=valid_patients):
+        def constrainTreatments(xxx_todo_changeme4, pats):
             (f, m, a) = xxx_todo_changeme4
+            valid_patients = pats
             return valid_patients
-        def constrainPhysicians(xxx_todo_changeme5, valid_patients=valid_patients):
+        def constrainPhysicians(xxx_todo_changeme5, pats):
             (f, m, a) = xxx_todo_changeme5
+            valid_patients = pats
             return valid_patients
-        def constrainNotes(xxx_todo_changeme6, valid_patients=valid_patients):
+        def constrainNotes(xxx_todo_changeme6, pats):
             (f, m, a) = xxx_todo_changeme6
+            valid_patients = pats
             return valid_patients
 
         ##########################################################
         # second big chunk: define methods for ranking results
 
         result = list()
-        def rankId(xxx_todo_changeme7, valid_patients=valid_patients):
+        def rankId(xxx_todo_changeme7, pats):
             (f, m, a) = xxx_todo_changeme7
             pass
-        def rankFirstName(xxx_todo_changeme8, valid_patients=valid_patients):
+        def rankFirstName(xxx_todo_changeme8, pats):
             (f, m, a) = xxx_todo_changeme8
             pass
-        def rankLastName(xxx_todo_changeme9, valid_patients=valid_patients):
+        def rankLastName(xxx_todo_changeme9, pats):
             (f, m, a) = xxx_todo_changeme9
             pass
-        def rankDiagnoses(xxx_todo_changeme10, valid_patients=valid_patients):
+        def rankDiagnoses(xxx_todo_changeme10, pats):
             (f, m, a) = xxx_todo_changeme10
             pass
-        def rankTreatments(xxx_todo_changeme11, valid_patients=valid_patients):
+        def rankTreatments(xxx_todo_changeme11, pats):
             (f, m, a) = xxx_todo_changeme11
             pass
-        def rankPhysicians(xxx_todo_changeme12, valid_patients=valid_patients):
+        def rankPhysicians(xxx_todo_changeme12, pats):
             (f, m, a) = xxx_todo_changeme12
             pass
-        def rankNotes(xxx_todo_changeme13, valid_patients=valid_patients):
+        def rankNotes(xxx_todo_changeme13, pats):
             (f, m, a) = xxx_todo_changeme13
             pass
 
@@ -315,9 +305,13 @@ class DataManager(object):
         ##########################################################
         # fifth big chunk: constrain, rank, and return
 
+        valid_patients = self.patients
         # apply all the constraints; valid_patients 
+        print(str(valid_patients))
         for q in constraints:
-            valid_patients = constraint_parse[(q.field, q.match)](q)
+            print(str(q))
+            valid_patients = constraint_parse[(q.field, q.match)](q, valid_patients)
+            print(str(valid_patients))
 
         # if we've got nothing, return nothing
         if valid_patients is None:
