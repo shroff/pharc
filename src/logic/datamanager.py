@@ -155,6 +155,7 @@ class DataManager(object):
                        all-q   c:  every tag in the query is present in the patient's list
                        all-p   cr: every tag in the patient's list is present in the query
                        exact   c:  the query and the patient's tag list match exactly
+                       sub-one c:  the query is a substring in at least one of the patient's tags
                 notes  arg: a string
                        one     cr: at least one of the words in the query occur in the notes
                        all     c:  all of the words in the query occur in the notes
@@ -226,11 +227,33 @@ class DataManager(object):
             return valid_patients
         def constrainDiagnoses(xxx_todo_changeme3, pats):
             (f, m, a) = xxx_todo_changeme3
-            valid_patients = pats
+            if m == "one":
+                valid_patients = set([p for p in pats if \
+                                          any(map(lambda d: d.match_fullstring(a), p.diagnoses))])
+            if m == "all-q":
+                pass
+            if m == "all-p":
+                pass
+            if m == "exact":
+                pass
+            if m == "sub-one":
+                valid_patients = set([p for p in pats if \
+                                          any(map(lambda d: d.match_substring(a), p.diagnoses))])
             return valid_patients
         def constrainTreatments(xxx_todo_changeme4, pats):
             (f, m, a) = xxx_todo_changeme4
-            valid_patients = pats
+            if m == "one":
+                valid_patients = set([p for p in pats if \
+                                          any(map(lambda d: d.match_fullstring(a), p.treatments))])
+            if m == "all-q":
+                pass
+            if m == "all-p":
+                pass
+            if m == "exact":
+                pass
+            if m == "sub-one":
+                valid_patients = set([p for p in pats if \
+                                          any(map(lambda d: d.match_substring(a), p.treatments))])
             return valid_patients
         def constrainPhysicians(xxx_todo_changeme5, pats):
             (f, m, a) = xxx_todo_changeme5
@@ -283,10 +306,12 @@ class DataManager(object):
                             ("diags", "all-q"):constrainDiagnoses,
                             ("diags", "all-p"):constrainDiagnoses,
                             ("diags", "exact"):constrainDiagnoses,
+                            ("diags", "sub-one"):constrainDiagnoses,
                             ("treats", "one"):constrainTreatments,
                             ("treats", "all-q"):constrainTreatments,
                             ("treats", "all-p"):constrainTreatments,
                             ("treats", "exact"):constrainTreatments,
+                            ("treats", "sub-one"):constrainDiagnoses,
                             ("phys", "ex_one"):constrainPhysicians,
                             ("phys", "ex_all"):constrainPhysicians,
                             ("notes", "one"):constrainNotes,
