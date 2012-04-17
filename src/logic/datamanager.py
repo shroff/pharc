@@ -73,11 +73,12 @@ class DataManager(object):
         self.physicians = tags.TagList()
 
     def makePatient(self, fname, lname):
-        pass
+        return self.loader.PatientStorage.createPatient(fname, lname, None)
     def makePhotoset(self, date):
-        pass
-    def importPhoto(self, photoset):
-        pass
+        # need a function in photosetstorage to do this
+        # return self.loader.PhotosetStorage.
+    def importPhoto(self, path, photoset):
+        return self.loader.PhotoStorage.importPhoto(path, photoset)
 
     Query = collections.namedtuple('Query', ['field', 'match', 'arg'])
     def searchPatients(self, queries, n):
