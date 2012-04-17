@@ -123,7 +123,7 @@ class PatientStorage(object):
         if not self.checkNewFS():
             self.fsm.loadPatientPhotosetList(patient)
 
-    def createPatient(self, firstName, lastName, physicians):
+    def createPatient(self, firstName, lastName, physicians=""):
         """
             Creates a new patient.
 

@@ -404,7 +404,7 @@ class FS:
                 f.write(data)
                 f.close()
             except IOError as error:
-                print error
+                print(error)
                 raise error
 
     def editPatientNotes(self, patient, notes):
@@ -785,3 +785,22 @@ class FS:
             return False
         return True
         
+    def importPhoto(self, path, photoset):
+        """
+            Moves a given file into a photoset's directory.
+
+            Arguments:
+                path:     The path to the file we want to move.
+                photoset: The photoset we want to own this file.
+
+            Returns:
+                N/A
+
+            Throws:
+                ?
+        """
+        directory = self.generatePhotosetDir(photoset)
+
+        if os.path.isdir(directory):
+            shutil.move(path, photoset)
+

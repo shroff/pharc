@@ -21,6 +21,23 @@ class PhotoStorage:
         self.dbm = dbm
         self.fsm = fsm
 
+    def importPhoto(self, path, photoset):
+        """
+            Imports a photo from outside the database and places it into
+            the database, specifically inside a given photoset.
+
+            Arguments:
+                path:     The path to the external photo.
+                photoset: The photoset we wish to store it in.
+
+            Returns:
+                N/A
+
+            Throws:
+                ?
+        """
+        self.fsm.importPhoto(path, photoset)
+
     def getPhotoData(self, photo):
         """
             Loads the photo image data.
