@@ -234,26 +234,26 @@ class DataManager(object):
         ##########################################################
         # second big chunk: define methods for ranking results
 
-        result = list()
-        def rankId(xxx_todo_changeme7, pats):
+        result = dict()
+        def rankId(xxx_todo_changeme7, result):
             (f, m, a) = xxx_todo_changeme7
             pass
-        def rankFirstName(xxx_todo_changeme8, pats):
+        def rankFirstName(xxx_todo_changeme8, result):
             (f, m, a) = xxx_todo_changeme8
             pass
-        def rankLastName(xxx_todo_changeme9, pats):
+        def rankLastName(xxx_todo_changeme9, result):
             (f, m, a) = xxx_todo_changeme9
             pass
-        def rankDiagnoses(xxx_todo_changeme10, pats):
+        def rankDiagnoses(xxx_todo_changeme10, result):
             (f, m, a) = xxx_todo_changeme10
             pass
-        def rankTreatments(xxx_todo_changeme11, pats):
+        def rankTreatments(xxx_todo_changeme11, result):
             (f, m, a) = xxx_todo_changeme11
             pass
-        def rankPhysicians(xxx_todo_changeme12, pats):
+        def rankPhysicians(xxx_todo_changeme12, result):
             (f, m, a) = xxx_todo_changeme12
             pass
-        def rankNotes(xxx_todo_changeme13, pats):
+        def rankNotes(xxx_todo_changeme13, result):
             (f, m, a) = xxx_todo_changeme13
             pass
 
@@ -307,11 +307,8 @@ class DataManager(object):
 
         valid_patients = self.patients
         # apply all the constraints; valid_patients 
-        print(str(valid_patients))
         for q in constraints:
-            print(str(q))
             valid_patients = constraint_parse[(q.field, q.match)](q, valid_patients)
-            print(str(valid_patients))
 
         # if we've got nothing, return nothing
         if valid_patients is None:
@@ -319,20 +316,20 @@ class DataManager(object):
 
         # set up the results: list of (patient, scoredict) tuples.
         for p in valid_patients:
-            result.append((p, {"fname_lcs":None,
-                               "lname_lcs":None,
-                               "diags":None,
-                               "treats":None,
-                               "phys_one":None,
-                               "phys_all":None,
-                               "notes_one":None,
-                               "notes_ex":None,
-                               }))
+            result[p] = {"fname_lcs":None,
+                         "lname_lcs":None,
+                         "diags":None,
+                         "treats":None,
+                         "phys_one":None,
+                         "phys_all":None,
+                         "notes_one":None,
+                         "notes_ex":None,
+                         }
 
         # now we go through the rankings and populate the score
         # dictionaries.
         for q in rankings:
-            constraint_parse[(q.field, q.match)](q)
+            constraint_parse[(q.field, q.match)](q, result)
 
         # then create the overall ranking and return.
         return result

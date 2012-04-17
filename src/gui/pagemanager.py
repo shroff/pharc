@@ -35,7 +35,7 @@ class PageManager(QWidget):
     
     q1 = DataManager.Query('first_name', 'sub', '')
     sresults = self.data.searchPatients([q1], None)
-    self.currPatientList = [x[0] for x in sresults]
+    self.currPatientList = [x for x in sresults.keys()]
 
     self.initUI()
     self.viewMain()

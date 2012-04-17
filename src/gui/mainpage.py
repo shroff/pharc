@@ -44,8 +44,8 @@ class MainPage(QWidget):
 
     self.setLayout(vbox)
 
-  def viewDetails(self, index):
-    self.parent.viewDetails(self.currPatientList[index])
+  def viewDetails(self, patient):
+    self.parent.viewDetails(patient)
 
   def updateSearch(self, pats):
     self.currPatientList = pats
