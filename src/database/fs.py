@@ -681,9 +681,9 @@ class FS:
         """
         directory = self.generatePhotosetDir(photo.photoset)
         if os.path.isdir(directory):
-            f = open(directory + photo.name)
-            data = f.read()
-
+            #f = open(directory + photo.name)
+            #data = f.read()
+            data = directory + "/" + photo.name
             return data
 
     def renamePatient(self, patient, firstName, lastName):
