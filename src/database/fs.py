@@ -160,13 +160,13 @@ class FS:
         
         return p
 
-    def createPhotoset(self, patient, date):
+    def createPhotoset(self, patientinit, dateinit):
         """
             Create a new photoset.
 
             Arguments:
                 photoset: The photoset object we want to save.
-                patient:  The patient who owns this photoset.
+                patientinit:  The patient who owns this photoset.
 
             Returns:
                 N/A
@@ -178,15 +178,18 @@ class FS:
         if not self.knownPhotosetUIDs:
             self.discoverPhotosetUIDs()
 
-        ps = photoset.Photoset(date, patient)
+        if dateinit is None:
+            dateinit = datetime.date.today()
+
+        ps = photoset.Photoset(dateinit, patientinit)
 
         uid = self.photosetUID
         uid = uid + 1
         ps.uid = uid
 
-        directory = self.generatePatientDir(patient)
-        directory = directory + "/" + str(date.day).zfill(2) + "-" + str(date.month).zfill(2) + \
-            "-" + str(date.year) + "#" + uid
+        directory = self.generatePatientDir(patientinit)
+        directory = directory + "/" + str(dateinit.day).zfill(2) + "-" + str(dateinit.month).zfill(2) + \
+            "-" + str(dateinit.year) + "#" + uid
 
         os.makedirs(directory)
         self.makeFile(directory + "/physicians.txt")
