@@ -178,11 +178,11 @@ class FS:
         if not self.knownPhotosetUIDs:
             self.discoverPhotosetUIDs()
 
-        photoset = photoset.Photoset(date, patient)
+        ps = photoset.Photoset(date, patient)
 
         uid = self.photosetUID
         uid = uid + 1
-        photoset.uid = uid
+        ps.uid = uid
 
         directory = self.generatePatientDir(patient)
         directory = directory + "/" + str(date.day).zfill(2) + "-" + str(date.month).zfill(2) + \
@@ -196,7 +196,7 @@ class FS:
 
         self.photosetUID = uid
 
-        return photoset
+        return ps
 
     def copyPhotoset(self, photoset, fromDirectory, toDirectory):
         """
