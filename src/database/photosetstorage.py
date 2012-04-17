@@ -171,3 +171,6 @@ class PhotosetStorage:
     def createPhotoset(self, patient, date=datetime.date.today()):
         return self.fsm.createPhotoset(patient, date)
 
+
+    def getPath(self, photoset):
+        return self.fsm.generatePhotosetDir(photoset)
