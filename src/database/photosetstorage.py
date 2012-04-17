@@ -15,6 +15,8 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
+import datetime
+
 class PhotosetStorage:
 
     def __init__(self, dbm, fsm):
@@ -166,5 +168,5 @@ class PhotosetStorage:
         self.fsm.deletePhotoset(photoset)
 
 
-    def createPhotoset(self, photoset, patient):
-        self.fsm.createPhotoset(photoset, patient)
+    def createPhotoset(self, patient, date=datetime.date.today()):
+        return self.fsm.createPhotoset(patient, date)

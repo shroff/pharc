@@ -136,7 +136,7 @@ class FS:
                 Error
         """
         if not self.isNew():
-            if not self.knownPatientUIDs():
+            if not self.knownPatientUIDs:
                 # if you see this, then you did not call loadAllPatients() on program startup
                 raise Exception
             uid = self.patientUID + 1
@@ -155,7 +155,7 @@ class FS:
 
         self.newFS = False
 
-    def createPhotoset(self, photoset, patient):
+    def createPhotoset(self, patient, date):
         """
             Create a new photoset.
 
@@ -173,11 +173,16 @@ class FS:
         if not self.knownPhotosetUIDs:
             self.discoverPhotosetUIDs()
 
+        photoset = Photoset(date, patient)
+
         uid = self.photosetUID
         uid = uid + 1
         photoset.uid = uid
 
-        directory = self.generatePhotosetDir(photoset, patient)
+        directory = self.generatePatientDir(patient)
+        directory = directory + "/" + str(date.day).zfill(2) + "-" + str(date.month).zfill(2) + \
+            "-" + str(date.year) + "#" + uid
+
         os.makedirs(directory)
         self.makeFile(directory + "/physicians.txt")
         self.makeFile(directory + "/notes.txt")
@@ -185,6 +190,8 @@ class FS:
         self.makeFile(directory + "/diagnoses.txt")
 
         self.photosetUID = uid
+
+        return photoset
 
     def copyPhotoset(self, photoset, fromDirectory, toDirectory):
         """
