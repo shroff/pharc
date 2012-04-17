@@ -167,5 +167,5 @@ class PhotosetStorage:
         self.fsm.dletePhotoset(photoset)
 
 
-    def createPhotoset(self, photoset, patient):
-        self.fsm.createPhotoset(photoset, patient)
+    def createPhotoset(self, patient, date=date.today()):
+        return self.fsm.createPhotoset(patient, date)
