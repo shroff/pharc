@@ -307,11 +307,8 @@ class DataManager(object):
 
         valid_patients = self.patients
         # apply all the constraints; valid_patients 
-        print(str(valid_patients))
         for q in constraints:
-            print(str(q))
             valid_patients = constraint_parse[(q.field, q.match)](q, valid_patients)
-            print(str(valid_patients))
 
         # if we've got nothing, return nothing
         if valid_patients is None:
