@@ -40,6 +40,9 @@ class Photo(object):
     def getData(self):
         return self.dm.loader.PhotoStorage.getPhotoData(self)
 
+    def getFullPath(self):
+        pass
+
     def getname(self):
         return self._name
     def setname(self, value):
