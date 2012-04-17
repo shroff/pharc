@@ -73,8 +73,8 @@ class DataManager(object):
         self.physicians = tags.TagList()
 
     def makePatient(self, fname, lname):
-        p = self.loader.PatientStorage.createPatient(fname, lname, None)
-        self.patients.add(p)
+        p = self.loader.PatientStorage.createPatient(fname, lname)
+        self.patients.append(p)
         return p
     def makePhotoset(self, patient, date=None):
         return self.loader.PhotosetStorage.createPhotoset(patient, date)

@@ -41,7 +41,7 @@ class SearchBar(QWidget):
 
     self.setLayout(hbox)
 
-  def search(self, text):
+  def setSearch(self, text):
     self.search.setText(text)
     self.update(text)
 

@@ -118,7 +118,7 @@ class FS:
             Throws:
                 ?
         """
-        f = open(path)
+        f = open(path, 'w')
         f.write(data)
         f.close()
 
@@ -156,6 +156,8 @@ class FS:
         self.makeFile(directory + "/notes.txt")
 
         self.newFS = False
+        
+        return p
 
     def createPhotoset(self, patient, date):
         """
