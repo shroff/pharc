@@ -22,13 +22,14 @@ from PyQt4.QtCore import *
 # import logic.patient import patient
 
 class PatientTableModel(QSortFilterProxyModel):
-  def __init__(self, dm, resultMap):
+  def __init__(self, dm, resultMap, small):
     super(PatientTableModel, self).__init__()
 
     self.dataManager = dm
     self.resultMap = resultMap
+    self.small = small
 
-    self.realModel = RealPatientTableModel(self.dataManager)
+    self.realModel = RealPatientTableModel(self.dataManager, self.small)
     self.setSourceModel(self.realModel)
     self.setDynamicSortFilter(True)
 
@@ -36,8 +37,9 @@ class PatientTableModel(QSortFilterProxyModel):
 
   def setHeaders(self):
     self.setHeaderData(0, Qt.Horizontal, 'Name', role=Qt.DisplayRole)
-    self.setHeaderData(1, Qt.Horizontal, 'Treatment', role=Qt.DisplayRole)
-    self.setHeaderData(2, Qt.Horizontal, 'Diagnosis', role=Qt.DisplayRole)
+    self.setHeaderData(1, Qt.Horizontal, 'Diagnosis', role=Qt.DisplayRole)
+    if(not self.small):
+      self.setHeaderData(2, Qt.Horizontal, 'Treatment', role=Qt.DisplayRole)
 
   def getPatient(self, index):
     realIndex = self.mapToSource(index)
@@ -56,10 +58,11 @@ class PatientTableModel(QSortFilterProxyModel):
 
 
 class RealPatientTableModel(QStandardItemModel):
-  def __init__(self, dm):
+  def __init__(self, dm, small):
     super(RealPatientTableModel, self).__init__(0, 0)
     self.dataManager = dm
     self.rowcount = 0
+    self.small = small
 
     self.populate()
 
@@ -72,14 +75,15 @@ class RealPatientTableModel(QStandardItemModel):
     for p in self.dataManager.patients:
       c1 = PatientNameItem(p)
       c1.setEditable(False)
-      c2 = QStandardItem(", ".join(map(str, p.treatments)))
+      c2 = QStandardItem(", ".join(map(str, p.diagnoses)))
       c2.setEditable(False)
-      c3 = QStandardItem(", ".join(map(str, p.diagnoses)))
+      c3 = QStandardItem(", ".join(map(str, p.treatments)))
       c3.setEditable(False)
       
       self.setItem(self.rowcount, 0, c1)
       self.setItem(self.rowcount, 1, c2)
-      self.setItem(self.rowcount, 2, c3)
+      if(not self.small):
+        self.setItem(self.rowcount, 2, c3)
       self.rowcount = self.rowcount+1
 
 class PatientNameItem(QStandardItem):

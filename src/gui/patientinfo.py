@@ -47,7 +47,7 @@ class PatientInfo(QWidget):
     self.setLayout(hbox)
 
 
-  def viewInfo(self, patient):
+  def select(self, patient):
     self.patient = patient
     self.patientDetail.setName(patient.nameFirst + " " + patient.nameLast)
     ps = patient.getMostRecentPhotoset()
