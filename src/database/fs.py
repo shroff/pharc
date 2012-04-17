@@ -821,7 +821,7 @@ class FS:
         if not os.path.isdir(path):
             return images
         for i in os.listdir(path):
-            if i in validImageTypes:
-                images.append(i)
+            if i.split('.')[1] in validImageTypes:
+                images.append(path + "/" + i)
 
         return images
