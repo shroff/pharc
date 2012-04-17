@@ -16,6 +16,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 from . import tags
+from . import photo
 import database.datastorageinterface
 import collections
 
@@ -83,7 +84,8 @@ class DataManager(object):
         ps.dm = self
         return ps
     def importPhoto(self, path, photoset):
-        phot = self.loader.PhotoStorage.importPhoto(path, photoset)
+        self.loader.PhotoStorage.importPhoto(path, photoset)
+        phot = photo.Photo(path, photoset)
         phot.dm = self
         return phot
 
