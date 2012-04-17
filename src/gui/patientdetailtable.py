@@ -23,7 +23,7 @@ from .patientdetailtablemodel import PatientDetailTableModel
 class PatientDetailTable(QTableView):
   def __init__(self, parent, dm):
     super(PatientDetailTable, self).__init__()
-    self.data = dm
+    self.dataManager = dm
     self.parent = parent
     self.initUI()
 
@@ -37,12 +37,13 @@ class PatientDetailTable(QTableView):
     self.horizontalHeader().setStretchLastSection(True)
 
   def linkModel(self):
-    self.setModel(PatientDetailTableModel(self.data, self.patient))
+    self.setModel(PatientDetailTableModel(self.dataManager, self.patient))
     self.updateGeometry()
 
 
   def click(self, index):
-    self.parent.selected(index.row())
+    ps = self.model().data(index, role=Qt.UserRole)
+    self.parent.selected(ps)
 
   def setPatient(self, patient):
     self.patient = patient

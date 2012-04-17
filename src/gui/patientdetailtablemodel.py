@@ -26,7 +26,7 @@ from logic.patient import Patient
 class PatientDetailTableModel(QStandardItemModel):
   def __init__(self, dm, patient):
     super(PatientDetailTableModel, self).__init__(0, 3)
-    self.data = dm
+    self.dataManager = dm
     self.patient = patient
 
     self.setHeaders()
@@ -39,11 +39,6 @@ class PatientDetailTableModel(QStandardItemModel):
     self.setHeaderData(1, Qt.Horizontal, 'Treatments', role=Qt.DisplayRole)
     self.setHeaderData(2, Qt.Horizontal, 'Diagnoses', role=Qt.DisplayRole)
 
-  def fakeData(self):
-    self.setItem(0, 0, QStandardItem('a'))
-    self.setItem(0, 1, QStandardItem('a'))
-    self.setItem(1, 0, QStandardItem('a'))
-    self.setItem(1, 1, QStandardItem('a'))
 
   def populate(self):
     self.rowcount = 0
@@ -53,5 +48,8 @@ class PatientDetailTableModel(QStandardItemModel):
         ps.treatments))))
       self.setItem(self.rowcount, 2, QStandardItem(" ".join(map(str,
         ps.diagnoses))))
+      self.setData(self.index(self.rowcount, 0), ps, role=Qt.UserRole)
+      self.setData(self.index(self.rowcount, 1), ps, role=Qt.UserRole)
+      self.setData(self.index(self.rowcount, 2), ps, role=Qt.UserRole)
       self.rowcount=self.rowcount+1
 

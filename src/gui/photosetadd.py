@@ -29,6 +29,7 @@ class PhotosetAdd(QWidget):
     self.parent = parent
     self.data = dm
     self.canAdd = False
+    self.selectedSet = None
 
     self.initUI()
 
@@ -59,19 +60,19 @@ class PhotosetAdd(QWidget):
     self.photosets.setPatient(patient)
     self.createPhotoset.setEnabled(True)
     self.patient = patient
-    self.sel = -1
+    self.selectedSet = None
     self.showAdd()
 
   def add(self):
-    pass
+    self.parent.add(self.selectedSet)
 
   def create(self):
     self.data.makePhotoset(self.patient)
     self.photosets.modelUpdated()
 
-  def selected(self, row):
-    self.sel = row
+  def selected(self, ps):
+    self.selectedSet = ps
     self.showAdd()
 
   def showAdd(self):
-    self.addToPhotoset.setEnabled(self.canAdd and (self.sel != -1))
+    self.addToPhotoset.setEnabled(self.canAdd and (self.selectedSet != None))

@@ -28,7 +28,7 @@ class ImportPage(QWidget):
   def __init__(self, parent, dm, pList):
     super(ImportPage, self).__init__(parent)
     self.parent = parent
-    self.data = dm
+    self.dataManager = dm
     self.currPatientList = pList
     self.selected = set()
 
@@ -48,13 +48,13 @@ class ImportPage(QWidget):
     hboxButtons.addWidget(skipButton)
 
     self.photoScrollArea = QScrollArea()
-    self.photos = ImportPatientPhotos(self, self.data)
+    self.photos = ImportPatientPhotos(self, self.dataManager)
     self.photoScrollArea.setWidget(self.photos)
     self.photoScrollArea.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
     self.photoScrollArea.setBackgroundRole(QPalette.Light)
 
-    self.patientSearch = PatientSearch(self, self.data, self.currPatientList)
-    self.photosetAdd = PhotosetAdd(self, self.data)
+    self.patientSearch = PatientSearch(self, self.dataManager, self.currPatientList)
+    self.photosetAdd = PhotosetAdd(self, self.dataManager)
     vboxInfo.addWidget(self.patientSearch)
     vboxInfo.addWidget(self.photosetAdd)
 
@@ -73,6 +73,14 @@ class ImportPage(QWidget):
 
   def modelUpdated(self):
     self.patientSearch.modelUpdated()
+
+  def add(self, photoset):
+    for img in self.selected:
+      self.dataManager.importPhoto("import/" + img, photoset)
+
+    self.photos = ImportPatientPhotos(self, self.dataManager)
+    self.photoScrollArea.setWidget(self.photos)
+
 
   def toggle(self, path):
     if (path in self.selected):
