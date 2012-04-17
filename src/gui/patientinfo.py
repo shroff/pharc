@@ -33,7 +33,7 @@ class PatientInfo(QWidget):
     self.parent = parent
     self.currPatientList = pList
     self.initUI()
-    self.index = 0
+    self.patient = None
 
 
   def initUI(self):
@@ -47,19 +47,18 @@ class PatientInfo(QWidget):
     self.setLayout(hbox)
 
 
-  def viewInfo(self, row, col):
-    patient = self.currPatientList[row]
+  def viewInfo(self, patient):
+    self.patient = patient
     self.patientDetail.setName(patient.nameFirst + " " + patient.nameLast)
     ps = patient.getMostRecentPhotoset()
     self.patientDetail.setTreatment(", ".join(map(str, patient.treatments)))
     self.patientDetail.setDiagnosis(", ".join(map(str, patient.diagnoses)))
     self.patientDetail.setRandom()
     self.patientDetail.setVisible(True)
-    self.index = row
 
   def viewDetails(self):
     if(self.patientDetail.isVisible()):
-      self.parent.viewDetails(self.index)
+      self.parent.viewDetails(self.patient)
 
   def updateSearch(self, pats):
     self.patientDetail.setVisible(False)

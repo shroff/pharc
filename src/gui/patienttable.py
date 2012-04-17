@@ -18,7 +18,7 @@
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 
-from .patienttablemodel import PatientTableModel
+from .patienttablemodel import *
 
 import database.fs
 from logic.datamanager import DataManager
@@ -27,11 +27,11 @@ from logic.patient import Patient
 #data = None
 
 class PatientTable(QTableView):
-  def __init__(self, parent, dm, pList):
-    self.data = dm
+  def __init__(self, parent, dm, resultMap):
     super(PatientTable, self).__init__(parent)
+    self.dataManager = dm
     self.parent = parent
-    self.currPatientList = pList
+    self.resultMap = resultMap
     self.initUI()
     self.linkModel()
 
@@ -50,13 +50,13 @@ class PatientTable(QTableView):
     self.horizontalHeader().setStretchLastSection(True)
 
   def linkModel(self):
-    self.patientTableModel = PatientTableModel(self.data, self.currPatientList)
+    self.patientTableModel = PatientTableModel(self.dataManager, self.resultMap)
     self.setModel(self.patientTableModel)
     self.updateGeometry()
 
 
   def click(self, index):
-    self.parent.viewInfo(index.row(), index.column())
+    self.parent.viewInfo(self.patientTableModel.getPatient(index))
 
   def updateSearch(self, pats):
     self.patientTableModel.updateSearch(pats)
