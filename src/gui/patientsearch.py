@@ -28,7 +28,7 @@ class PatientSearch(QWidget):
   def __init__(self, parent, dm, pList):
     super(PatientSearch, self).__init__(parent)
     self.parent = parent
-    self.data = dm
+    self.dataManager = dm
     self.searchResults = pList
 
     self.initUI()
@@ -36,8 +36,58 @@ class PatientSearch(QWidget):
   def initUI(self):
     vbox = QVBoxLayout()
 
-    self.searchBar = SearchBar(self, self.data, True)
-    self.patientTable = PatientTable(self, self.data, self.searchResults, True)
+    
+    self.search = QWidget(self)
+    self.search.setLayout(self.createSearch())
+    self.create = QWidget(self)
+    self.create.setLayout(self.createCreate())
+
+    vbox.addWidget(self.search)
+    vbox.addWidget(self.create)
+
+    self.create.setVisible(False)
+
+    self.setLayout(vbox)
+
+  def createCreate(self):
+    vbox = QVBoxLayout()
+
+    vbox.addWidget(QLabel('Create a new patient'))
+
+    hboxForm = QHBoxLayout()
+    vboxLabels = QVBoxLayout()
+    vboxLabels.addWidget(QLabel('First Name:'))
+    vboxLabels.addWidget(QLabel('Last Name:'))
+    vboxInputs = QVBoxLayout()
+    self.fnameInput = QLineEdit()
+    self.lnameInput = QLineEdit()
+    vboxInputs.addWidget(self.fnameInput)
+    vboxInputs.addWidget(self.lnameInput)
+    hboxForm.addLayout(vboxLabels)
+    hboxForm.addLayout(vboxInputs)
+
+    hboxButtons = QHBoxLayout()
+    hboxButtons.addStretch(1)
+    cancelButton = QPushButton('Cancel')
+    createButton = QPushButton('Create Patient')
+    hboxButtons.addWidget(cancelButton)
+    hboxButtons.addWidget(createButton)
+
+
+    vbox.addLayout(hboxForm)
+    vbox.addLayout(hboxButtons)
+
+    QObject.connect(cancelButton, SIGNAL('clicked()'), self.switchSearch)
+    QObject.connect(createButton, SIGNAL('clicked()'), self.createPatient)
+
+    return vbox
+
+  def createSearch(self):
+    vbox = QVBoxLayout()
+
+    self.searchBar = SearchBar(self, self.dataManager, True)
+    self.patientTable = PatientTable(self, self.dataManager,
+        self.searchResults, True)
 
     hbox = QHBoxLayout()
     addToPatient = QPushButton("Add to Patient")
@@ -49,10 +99,11 @@ class PatientSearch(QWidget):
     vbox.addWidget(self.searchBar)
     vbox.addWidget(self.patientTable)
     vbox.addLayout(hbox)
-    self.setLayout(vbox)
 
     QObject.connect(addToPatient, SIGNAL('clicked()'), self.addToPatient)
-    QObject.connect(createPatient, SIGNAL('clicked()'), self.createPatient)
+    QObject.connect(createPatient, SIGNAL('clicked()'), self.switchCreate)
+
+    return vbox
 
 
   def select(self, patient):
@@ -62,8 +113,23 @@ class PatientSearch(QWidget):
     self.searchResults = pats
     self.patientTable.updateSearch(pats)
 
+  def createPatient(self):
+    self.dataManager.makePatient(self.fnameInput.text(), self.lnameInput.text())
+    self.parent.triggerUpdate()
+    self.searchBar.setSearch(self.fnameInput.text() + " " + self.lnameInput.text())
+    self.switchSearch()
+
+  def modelUpdated(self):
+    self.patientTable.modelUpdated()
+
   def addToPatient(self):
     pass
 
-  def createPatient(self):
-    pass
+  def switchCreate(self):
+    self.search.setVisible(False)
+    self.create.setVisible(True)
+
+  def switchSearch(self):
+    self.search.setVisible(True)
+    self.create.setVisible(False)
+

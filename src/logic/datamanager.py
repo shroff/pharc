@@ -73,13 +73,18 @@ class DataManager(object):
         self.physicians = tags.TagList()
 
     def makePatient(self, fname, lname):
-        p = self.loader.PatientStorage.createPatient(fname, lname, None)
-        self.patients.add(p)
+        p = self.loader.PatientStorage.createPatient(fname, lname)
+        self.patients.append(p)
+        p.dm = self
         return p
     def makePhotoset(self, patient, date=None):
-        return self.loader.PhotosetStorage.createPhotoset(patient, date)
+        ps = self.loader.PhotosetStorage.createPhotoset(patient, date)
+        ps.dm = self
+        return ps
     def importPhoto(self, path, photoset):
-        return self.loader.PhotoStorage.importPhoto(path, photoset)
+        phot = self.loader.PhotoStorage.importPhoto(path, photoset)
+        phot.dm = self
+        return phot
 
     Query = collections.namedtuple('Query', ['field', 'match', 'arg'])
     def searchPatients(self, queries, n):

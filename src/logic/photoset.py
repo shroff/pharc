@@ -175,5 +175,7 @@ class Photoset(object):
     def getphotos(self):
         if self._photos is None:
             self._photos = self.dm.loader.PhotosetStorage.loadPhotos(self)
+            for phot in self._photos:
+                phot.dm = self.dm
         return self._photos
     photos = property(getphotos, "")

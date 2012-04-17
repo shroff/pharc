@@ -139,7 +139,7 @@ class PatientStorage(object):
                 ?
         """
         patient = self.fsm.createPatient(firstName, lastName)
-        self.fsm.addPhysicians(patient, physicians)
+        self.fsm.editPatientPhysicians(patient, physicians)
         return patient
 
     def editName(self, patient, firstName, lastName):

@@ -55,6 +55,7 @@ class PatientEditPage(QWidget):
 
   def saveChanges(self):
     self.nameRow.savePatient()
+    self.parent.triggerUpdate()
     print('Saving')
 
   def cancelChanges(self):

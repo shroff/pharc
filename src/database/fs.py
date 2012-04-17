@@ -119,7 +119,7 @@ class FS:
             Throws:
                 ?
         """
-        f = open(path)
+        f = open(path, 'w')
         f.write(data)
         f.close()
 
@@ -157,6 +157,8 @@ class FS:
         self.makeFile(directory + "/notes.txt")
 
         self.newFS = False
+        
+        return p
 
     def createPhotoset(self, patient, date):
         """
@@ -680,9 +682,7 @@ class FS:
         """
         directory = self.generatePhotosetDir(photo.photoset)
         if os.path.isdir(directory):
-            f = open(directory + photo.name)
-            data = f.read()
-
+            data = directory + "/" + photo.name
             return data
 
     def renamePatient(self, patient, firstName, lastName):

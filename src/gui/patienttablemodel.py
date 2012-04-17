@@ -51,10 +51,11 @@ class PatientTableModel(QSortFilterProxyModel):
 
   def updateSearch(self, resultMap):
     self.resultMap = resultMap
-    self.invalidateFilter()
+    self.invalidate()
 
-  def update(self):
-    pass
+  def modelUpdated(self):
+    self.realModel.populate()
+    self.invalidate()
 
 
 class RealPatientTableModel(QStandardItemModel):

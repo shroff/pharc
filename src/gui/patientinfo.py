@@ -51,9 +51,17 @@ class PatientInfo(QWidget):
     self.patient = patient
     self.patientDetail.setName(patient.nameFirst + " " + patient.nameLast)
     ps = patient.getMostRecentPhotoset()
-    self.patientDetail.setTreatment(", ".join(map(str, patient.treatments)))
-    self.patientDetail.setDiagnosis(", ".join(map(str, patient.diagnoses)))
-    self.patientDetail.setRandom()
+    if(ps != None):
+      self.patientDetail.setTreatment(", ".join(map(str, patient.treatments)))
+      self.patientDetail.setDiagnosis(", ".join(map(str, patient.diagnoses)))
+    else:
+      self.patientDetail.setTreatment("None")
+      self.patientDetail.setDiagnosis("None")
+
+    if (ps != None and ps.photos != []):
+      self.patientDetail.setPicture(ps.photos[0].getData())
+    else:
+      self.patientDetail.setPicture(None)
     self.patientDetail.setVisible(True)
 
   def viewDetails(self):
@@ -65,6 +73,6 @@ class PatientInfo(QWidget):
     self.currPatientList = pats
     self.patientTable.updateSearch(pats)
 
-  def update(self):
+  def modelUpdated(self):
+    self.patientTable.modelUpdated()
     self.patientDetail.setVisible(False)
-    self.patientTable.update()
