@@ -816,7 +816,7 @@ class FS:
         directory = self.generatePhotosetDir(photoset)
 
         if os.path.isdir(directory):
-            shutil.move(path, photoset)
+            shutil.move(path, directory)
 
     def findPhotos(self, path):
         images = []
