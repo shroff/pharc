@@ -15,6 +15,13 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
+validImageTypes = frozenset([ \
+    "GIF", \
+    "JPG", \
+    "PNG", \
+    "TIFF"
+    ])
+
 import os, sys, datetime, shutil
 
 import logic.patient as patient
@@ -111,8 +118,6 @@ class FS:
             Throws:
                 ?
         """
-        f = open(path, 'w')
-        f.write(data)
         f.close()
 
     def createPatient(self, firstName, lastName):
@@ -739,3 +744,44 @@ class FS:
         shutil.copy(fromPath, toPath)
         shutil.rmtree(toPath)
 
+    def loadPhotosetPhotos(self, photoset):
+        """
+            Load's a given photoset's photos
+
+            Arguments:
+                photoset: The photoset who's photos we want to load.
+
+            Returns:
+                The list of photos.
+
+            Throws:
+                ?
+        """
+        photos = []
+
+        directory = generatePhotosetDir(photoset)
+        items = os.listdir(directory)
+        for i in items:
+            if self.isImage(i):
+                photos.append( photo.Photo(i, photoset))
+        return photos
+
+    def isImage(self, name):
+        """
+            Verifies that a given filename has a valid extension.
+
+            Arguments:
+                name: The filename in question.
+
+            Returns:
+                True if the extension is valid, False otherwise.
+
+            Throws:
+                N/A
+        """
+        ext = name.split('.')[1].upper()
+
+        if ext not in validImageTypes:
+            return False
+        return True
+        

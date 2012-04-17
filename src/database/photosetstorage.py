@@ -35,6 +35,7 @@ class PhotosetStorage:
             Throws:
                 ?
         """
+        return self.fsm.loadPhotosetPhotos(photoset)
 
 
     def loadDiagnoses(self, photoset):
