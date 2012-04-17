@@ -68,7 +68,7 @@ class Patient(object):
     def setphysicians(self, value):
         #print "physicians <- " + str(value)
         self._physicians = value
-    def delphysicians(slef):
+    def delphysicians(self):
         del self._physicians
     physicians = property(getphysicians, setphysicians, delphysicians, "")
 
@@ -105,7 +105,7 @@ class Patient(object):
     def setphotosets(self, value):
         #print "photosets <- " + str(value)
         self._photosets = value
-    def delphotosets(slef):
+    def delphotosets(self):
         del self._photosets
     photosets = property(getphotosets, setphotosets, delphotosets, "")
 
@@ -118,7 +118,7 @@ class Patient(object):
     def setnotes(self, value):
         #print "notes <- " + str(value)
         self._notes = value
-    def delnotes(slef):
+    def delnotes(self):
         del self._notes
     notes = property(getnotes, setnotes, delnotes, "")
 
