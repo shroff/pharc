@@ -112,26 +112,27 @@ class CommandLineInterface(cmd.Cmd):
         pats = None
         if args == "":          # list all photosets
             pats = self.dm.patients
-        elif int(args) <= 70000: # list all photosets from a patient
-            pats = self.getEntitiesByUID(int(args), rtype="patient")
-        else:                   # list a particualr photoset
+        elif int(args) >= 70000: # list all photosets from a patient
             ps = [x for x in self.dm.searchPhotosets(None, None) if x.uid == int(args)]
             print(str(ps[0].patient) + ": " + str(ps[0]))
-            return
-
-        if len(pats) == 0:
-            print("No patients found")
-            return
-
-        echo = ""
-        for p in pats:
-            echo += str(p) + "\n"
-            psl = list(p.photosets)
-            for i in range(0, len(psl) - 1):
-                echo += "  ├─" + str(psl[i]) + "\n"
-            if len(psl) > 0:
-                echo += "  └─" + str(psl[-1]) + "\n"
-        print(echo[:-1])
+            echo = ""
+            for phot in ps[0].photos:
+                echo += "  " + str(phot.getFullPath()) + "\n"
+            print(echo[:-1])
+        else:                   # list a particualr photoset
+            pats = self.getEntitiesByUID(int(args), rtype="patient")
+            if len(pats) == 0:
+                print("No patients found")
+                return
+            echo = ""
+            for p in pats:
+                echo += str(p) + "\n"
+                psl = list(p.photosets)
+                for i in range(0, len(psl) - 1):
+                    echo += "  ├─" + str(psl[i]) + "\n"
+                if len(psl) > 0:
+                    echo += "  └─" + str(psl[-1]) + "\n"
+            print(echo[:-1])
         
     def do_editPhotoset(self, args):
         args = args.split(" ")
