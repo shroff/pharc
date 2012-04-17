@@ -18,9 +18,14 @@
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 
+import database.fs
+from logic.datamanager import DataManager
+
 class SearchBar(QWidget):
-  def __init__(self):
+  def __init__(self, parent, dm):
+    self.data = dm
     super(SearchBar, self).__init__()
+    self.parent = parent
 
     self.initUI()
 
@@ -34,12 +39,21 @@ class SearchBar(QWidget):
     self.setLayout(hbox)
 
   def search(self):
-    if (self.searchField.text() == ''):
-      return
+#    if (self.searchField.text() == ''):
+#      return
 
 #TODO: Implement searching
     print("Searching for " + self.searchField.text())
-
+    q1 = DataManager.Query('first_name', 'sub', str(self.searchField.text()))
+    q2 = DataManager.Query('last_name', 'sub', str(self.searchField.text()))
+    queries = [q1, q2]
+    sresults = self.data.searchPatients(queries, None)
+    pats = [x[0] for x in sresults]
+    echo = ""
+    for p in pats:
+        echo += str(p) + "\n"
+    print(echo[:-1])
+    self.parent.updateSearch(pats)
 
 class SearchField(QLineEdit):
   def __init__(self, sb):

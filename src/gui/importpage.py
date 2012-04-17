@@ -62,3 +62,6 @@ class ImportPage(QWidget):
     vboxMain.addLayout(hboxButtons)
 
     self.setLayout(vboxMain)
+
+  def select(self, patient):
+    self.photosetAdd.setPatient(patient)
