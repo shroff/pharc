@@ -60,7 +60,7 @@ class Patient(object):
                                                     str(len(self.photosets)))
 
     def getMostRecentPhotoset(self):
-        if self.photosets is not None:
+        if self.photosets is not None and len(self.photosets) > 0:
             return max(self.photosets, key=lambda x: x.date)
         else:
             return None
