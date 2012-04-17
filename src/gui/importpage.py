@@ -30,6 +30,7 @@ class ImportPage(QWidget):
     self.parent = parent
     self.data = dm
     self.currPatientList = pList
+    self.selected = set()
 
     self.initUI()
 
@@ -47,7 +48,7 @@ class ImportPage(QWidget):
     hboxButtons.addWidget(skipButton)
 
     self.photoScrollArea = QScrollArea()
-    self.photos = ImportPatientPhotos(self)
+    self.photos = ImportPatientPhotos(self, self.data)
     self.photoScrollArea.setWidget(self.photos)
     self.photoScrollArea.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
     self.photoScrollArea.setBackgroundRole(QPalette.Light)
@@ -72,3 +73,16 @@ class ImportPage(QWidget):
 
   def modelUpdated(self):
     self.patientSearch.modelUpdated()
+
+  def toggle(self, path):
+    if (path in self.selected):
+      self.selected -= set([path])
+    else:
+      self.selected.update(set([path]))
+
+    if (len(self.selected) == 0):
+      self.photosetAdd.canAdd = False
+    else:
+      self.photosetAdd.canAdd = True
+
+    self.photosetAdd.showAdd()

@@ -19,10 +19,11 @@ from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 
 class ImportPhoto(QWidget):
-  def __init__(self, parent, path):
+  def __init__(self, parent, name, path):
     super(ImportPhoto, self).__init__()
     self.parent = parent
-    self.imagePath = path
+    self.name = name
+    self.path = path
 
     self.initUI()
 
@@ -32,7 +33,7 @@ class ImportPhoto(QWidget):
     self.picLabel = QLabel()
     self.picLabel.setFixedSize(QSize(150, 150))
 
-    image = QImage(self.imagePath)
+    image = QImage(self.path + self.name)
     pixmap = QPixmap.fromImage(image)
     if(not pixmap.isNull()):
       pixmap = pixmap.scaledToHeight(150)
@@ -42,7 +43,7 @@ class ImportPhoto(QWidget):
     self.picLabel.setFrameStyle(QFrame.Panel | QFrame.Box)
 
     hbox = QHBoxLayout()
-    self.checkbox = QCheckBox(self.imagePath, self)
+    self.checkbox = QCheckBox(self.name, self)
     QObject.connect(self.checkbox, SIGNAL('stateChanged(int)'), self.toggle)
     hbox.setAlignment(Qt.AlignCenter)
     hbox.addWidget(self.checkbox)
@@ -52,6 +53,5 @@ class ImportPhoto(QWidget):
 
     self.setLayout(vbox)
 
-  #TODO: pass argument to parent to change selection state
   def toggle(self, arg):
-    print (arg)
+    self.parent.toggle(self.name)

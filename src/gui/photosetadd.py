@@ -28,34 +28,49 @@ class PhotosetAdd(QWidget):
     super(PhotosetAdd, self).__init__(parent)
     self.parent = parent
     self.data = dm
+    self.canAdd = False
 
     self.initUI()
 
   def initUI(self):
     vbox = QVBoxLayout()
 
-    self.photosets = PatientDetailTable(self.data)
+    self.photosets = PatientDetailTable(self, self.data)
 
     hbox = QHBoxLayout()
-    addToPhotoset = QPushButton("Add to Photoset")
-    createPhotoset = QPushButton("Create Photoset")
+    self.addToPhotoset = QPushButton("Add to Photoset")
+    self.createPhotoset = QPushButton("Create Photoset")
     hbox.addStretch(1)
-    hbox.addWidget(addToPhotoset)
-    hbox.addWidget(createPhotoset)
+    hbox.addWidget(self.addToPhotoset)
+    hbox.addWidget(self.createPhotoset)
+
+    self.createPhotoset.setEnabled(False)
+    self.addToPhotoset.setEnabled(False)
 
     vbox.addWidget(self.photosets)
     vbox.addLayout(hbox)
     self.setLayout(vbox)
 
-    QObject.connect(addToPhotoset, SIGNAL('clicked()'), self.addToPhotoset)
-    QObject.connect(createPhotoset, SIGNAL('clicked()'), self.createPhotoset)
+    QObject.connect(self.addToPhotoset, SIGNAL('clicked()'), self.add)
+    QObject.connect(self.createPhotoset, SIGNAL('clicked()'), self.create)
 
 
   def setPatient(self, patient):
     self.photosets.setPatient(patient)
+    self.createPhotoset.setEnabled(True)
+    self.patient = patient
+    self.sel = -1
+    self.showAdd()
 
-  def addToPhotoset(self):
+  def add(self):
     pass
 
-  def createPhotoset(self):
-    pass
+  def create(self):
+    self.data.makePhotoset(self.patient)
+
+  def selected(self, row):
+    self.sel = row
+    self.showAdd()
+
+  def showAdd(self):
+    self.addToPhotoset.setEnabled(self.canAdd and (self.sel != -1))

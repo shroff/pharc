@@ -815,13 +815,15 @@ class FS:
         if os.path.isdir(directory):
             shutil.move(path, photoset)
 
-    def findPhotos(self, path)
-        images = list[]
+    def findPhotos(self, path):
+        images = []
 
         if not os.path.isdir(path):
             return images
         for i in os.listdir(path):
-            if i.split('.')[1] in validImageTypes:
+            print (i)
+            if i.split('.')[1].upper() in validImageTypes:
                 images.append(i)
 
         return images
+

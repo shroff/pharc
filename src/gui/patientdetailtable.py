@@ -21,9 +21,10 @@ from PyQt4.QtCore import *
 from .patientdetailtablemodel import PatientDetailTableModel
 
 class PatientDetailTable(QTableView):
-  def __init__(self, dm):
+  def __init__(self, parent, dm):
     super(PatientDetailTable, self).__init__()
     self.data = dm
+    self.parent = parent
     self.initUI()
 
     self.connect(self, SIGNAL("clicked(QModelIndex)"), self.click)
@@ -41,8 +42,7 @@ class PatientDetailTable(QTableView):
 
 
   def click(self, index):
-    print(index.row());
-    print(index.column());
+    self.parent.selected(index.row())
 
   def setPatient(self, patient):
     self.patient = patient

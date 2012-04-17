@@ -19,31 +19,35 @@ from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 
 from .importphoto import *
+from database.photostorage import *
 
 import random
 
-imageBase = "images/"
+imageBase = "import/"
 imgs = ['caesar.jpg', 'puppy.jpg', 'kitty.jpg', 'punch.jpg']
 
 class ImportPatientPhotos(QWidget):
-  def __init__(self, parent):
+  def __init__(self, parent, data):
     super(ImportPatientPhotos, self).__init__()
     self.parent = parent
+    self.dataManager = data
 
     self.initUI()
 
   def initUI(self):
     vbox = QVBoxLayout()
 
-    for x in range(1, 4):
+    for x in self.dataManager.loader.PhotoStorage.findPhotos(imageBase):
       hbox = QHBoxLayout()
       hbox.setAlignment(Qt.AlignCenter)
-      hbox.addWidget(ImportPhoto(self, imageBase + random.choice(imgs)))
+      hbox.addWidget(ImportPhoto(self, x, imageBase))
       vbox.addLayout(hbox)
-
 
     sizeLabel = QLabel("")
     sizeLabel.setFixedSize(QSize(300, 1))
     vbox.addWidget(sizeLabel)
 
     self.setLayout(vbox)
+
+  def toggle(self, path):
+    self.parent.toggle(path)

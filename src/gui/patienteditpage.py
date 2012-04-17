@@ -34,7 +34,7 @@ class PatientEditPage(QWidget):
   def initUI(self):
     vbox = QVBoxLayout()
     self.nameRow = PatientNameRow()
-    self.detailTable = PatientDetailTable(self.data)
+    self.detailTable = PatientDetailTable(self, self.data)
     vbox.addWidget(self.nameRow)
     vbox.addWidget(self.detailTable)
 
@@ -60,6 +60,9 @@ class PatientEditPage(QWidget):
 
   def cancelChanges(self):
     self.parent.viewMain()
+
+  def selected(self):
+    pass
 
   def setPatient(self, patient):
     self.patient = patient
