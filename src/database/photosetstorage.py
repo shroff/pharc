@@ -107,11 +107,10 @@ class PhotosetStorage:
             self.fsm.createPhotoset(photoset, toPatient)
         else:
             fromDirectory = self.fsm.generatePhotosetDir(photoset)
-            toDirectory = self.fsm.generatePhotosetDir(photoset, photoset.toPatient)
-            self.fsm.copyPatient(photoset, fromDirectory, toDirectory)
+            toDirectory = self.fsm.generatePhotosetDir(photoset, toPatient)
+            self.fsm.copyPhotoset(photoset, fromDirectory, toDirectory)
             self.fsm.deletePhotoset(photoset)
 
-        photoset.patient = toPatient
 
     def editTreatments(self, photoset, treatments):
         """
@@ -166,7 +165,7 @@ class PhotosetStorage:
             str(date.day).zfill(2) + "-" + str(date.month).zfill(2) + \
             "-" + str(date.year) + "#" + uid
         self.fsm.copyPhotoset(photoset, fromDirectory, toDirectory)
-        self.fsm.dletePhotoset(photoset)
+        self.fsm.deletePhotoset(photoset)
 
 
     def createPhotoset(self, patient, date=datetime.date.today()):
