@@ -45,6 +45,12 @@ class Photoset(object):
             len(self.photos) if self.photos is not None else 0,
             )
 
+
+    def addDiagnoses(self, diagnosesString):
+        diags = diagnosesString.split(",")
+        diags = [d.strip() for d in diags]
+        for d in diags:
+            self.addDiagnosis(d)
     def addDiagnosis(self, diagnosis):
         """Refers to tag list and adds appropriate tag.
 

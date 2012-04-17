@@ -149,6 +149,9 @@ class CommandLineInterface(cmd.Cmd):
             pass
         if args[1] == "+diag":
             str(ps.addDiagnosis(args[2]))
+        if args[1] == "+diags":
+            diags = " ".join(args[2:])
+            str(ps.addDiagnoses(diags))
         if args[1] == "-diag":
             pass
         if args[1] == "patient":
