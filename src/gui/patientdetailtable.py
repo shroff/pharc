@@ -42,7 +42,7 @@ class PatientDetailTable(QTableView):
 
 
   def click(self, index):
-    ps = self.model().data(index, role=Qt.UserRole)
+    ps = self.model().data(index, role=Qt.UserRole).toPyObject()
     self.parent.selected(ps)
 
   def setPatient(self, patient):
