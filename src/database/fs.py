@@ -177,7 +177,7 @@ class FS:
         uid = uid + 1
         photoset.uid = uid
 
-        directory = generatePhotosetDir(photoset, patient)
+        directory = self.generatePhotosetDir(photoset, patient)
         os.makedirs(directory)
         self.makeFile(directory + "/physicians.txt")
         self.makeFile(directory + "/notes.txt")
