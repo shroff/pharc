@@ -66,5 +66,5 @@ class PatientTable(QTableView):
   def updateSearch(self, pats):
     self.patientTableModel.updateSearch(pats)
 
-  def update(self):
-    self.patientTableModel.update()
+  def modelUpdated(self):
+    self.patientTableModel.modelUpdated()
