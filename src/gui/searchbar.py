@@ -46,13 +46,20 @@ class SearchBar(QWidget):
     print("Searching for " + self.searchField.text())
     q1 = DataManager.Query('first_name', 'sub', str(self.searchField.text()))
     q2 = DataManager.Query('last_name', 'sub', str(self.searchField.text()))
-    queries = [q1, q2]
-    sresults = self.data.searchPatients(queries, None)
+#    q3 = DataManager.Query('diags', 'one', str(self.searchField.txt()))
+#    q4 = DataManager.Query('treats', 'one', str(self.searchField.txt()))
+    sresults = self.data.searchPatients([q1], None)
+    sresults2 = self.data.searchPatients([q2], None)
+    sresults.update(sresults2)
+#    sresults2 = self.data.searchPatients([q3], None)
+#    sresults.update(sresults2)
+#    sresults2 = self.data.searchPatients([q4], None)
+#    sresults.update(sresults2)
     pats = [x for x in sresults.keys()]
-    # echo = ""
-    # for p in pats:
-    #     echo += str(p) + "\n"
-    # print(echo[:-1])
+    echo = ""
+    for p in pats:
+        echo += str(p) + "\n"
+    print(echo[:-1])
     self.parent.updateSearch(pats)
 
 class SearchField(QLineEdit):
