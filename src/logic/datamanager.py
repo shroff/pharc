@@ -76,9 +76,8 @@ class DataManager(object):
         p = self.loader.PatientStorage.createPatient(fname, lname, None)
         self.patients.add(p)
         return p
-    def makePhotoset(self, date):
-        # need a function in photosetstorage to do this
-        # return self.loader.PhotosetStorage.
+    def makePhotoset(self, patient, date=None):
+        return self.loader.PhotosetStorage.createPhotoset(patient, date)
     def importPhoto(self, path, photoset):
         return self.loader.PhotoStorage.importPhoto(path, photoset)
 
