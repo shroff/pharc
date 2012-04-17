@@ -114,12 +114,12 @@ class Tag(object):
     def match_substring(self, query):
         """Returns true if the tag's name contains the query as a
         contiguous substring."""
-        return self.value.find(query) != -1
+        return self.value.lower().find(query.lower()) != -1
 
     def match_fullstring(self, query):
         """Returns true if the tag's name completely matches the
         query."""
-        return query == self.value
+        return query.lower() == self.value.lower()
 
     def match_common_subseq(self, query):
         """Returns the longest common subsequence for use in matching.
@@ -156,7 +156,7 @@ class Tag(object):
         Raises:
         """
 
-        return logic.util.lcs(self.value, query)
+        return logic.util.lcs(self.value.lower(), query.lower())
 
     def __repr__(self):
         return str(self.value)
