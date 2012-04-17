@@ -759,7 +759,7 @@ class FS:
         """
         photos = []
 
-        directory = generatePhotosetDir(photoset)
+        directory = self.generatePhotosetDir(photoset)
         items = os.listdir(directory)
         for i in items:
             if self.isImage(i):
