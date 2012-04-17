@@ -48,11 +48,11 @@ class SearchBar(QWidget):
     q2 = DataManager.Query('last_name', 'sub', str(self.searchField.text()))
     queries = [q1, q2]
     sresults = self.data.searchPatients(queries, None)
-    pats = [x[0] for x in sresults]
-    echo = ""
-    for p in pats:
-        echo += str(p) + "\n"
-    print(echo[:-1])
+    pats = [x for x in sresults.keys()]
+    # echo = ""
+    # for p in pats:
+    #     echo += str(p) + "\n"
+    # print(echo[:-1])
     self.parent.updateSearch(pats)
 
 class SearchField(QLineEdit):

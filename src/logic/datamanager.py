@@ -316,20 +316,20 @@ class DataManager(object):
 
         # set up the results: list of (patient, scoredict) tuples.
         for p in valid_patients:
-            result.append((p, {"fname_lcs":None,
-                               "lname_lcs":None,
-                               "diags":None,
-                               "treats":None,
-                               "phys_one":None,
-                               "phys_all":None,
-                               "notes_one":None,
-                               "notes_ex":None,
-                               }))
+            result[p] = {"fname_lcs":None,
+                         "lname_lcs":None,
+                         "diags":None,
+                         "treats":None,
+                         "phys_one":None,
+                         "phys_all":None,
+                         "notes_one":None,
+                         "notes_ex":None,
+                         }
 
         # now we go through the rankings and populate the score
         # dictionaries.
         for q in rankings:
-            constraint_parse[(q.field, q.match)](q)
+            constraint_parse[(q.field, q.match)](q, result)
 
         # then create the overall ranking and return.
         return result
