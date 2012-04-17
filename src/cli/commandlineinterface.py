@@ -56,7 +56,7 @@ class CommandLineInterface(cmd.Cmd):
             # figure out which patient the user is talking about
             q = DataManager.Query("id", "", int(target))
             sresults = self.dm.searchPatients([q], None)
-            pats = [x[0] for x in sresults]
+            pats = sresults.keys()
             if rtype == "patient":
                 return pats
             elif rtype == "physician":
@@ -101,7 +101,7 @@ class CommandLineInterface(cmd.Cmd):
         args = args.strip().split()
         q = DataManager.Query(args[0], args[1], args[2])
         sresults = self.dm.searchPatients([q], None)
-        pats = [x[0] for x in sresults]
+        pats = sresults.keys()
         
         echo = ""
         for p in pats:
@@ -178,7 +178,7 @@ class CommandLineInterface(cmd.Cmd):
             # figure out which patient the user is talking about
             q = DataManager.Query("id", "", int(args))
             sresults = self.dm.searchPatients([q], None)
-            pats = [x[0] for x in sresults]
+            pats = sresults.keys()
         
         if len(pats) == 0:
             print("No patients found")

@@ -33,14 +33,17 @@ class Photoset(object):
         self._diagnoses = None
         self._date = dateinit
         self._patient = patientinit
+        self._photos = None
 
     def __repr__(self):
         return \
-            "photoset({0}#{1}, t:{2}, d:{3})".format( \
+            "photoset({0}#{1}, t:{2}, d:{3}, #phots:{4})".format( \
             str(self.date),
             str(self.uid),
             self.treatments,
-            self.diagnoses)
+            self.diagnoses,
+            len(self.photos) if self.photos is not None else 0,
+            )
 
     def addDiagnosis(self, diagnosis):
         """Refers to tag list and adds appropriate tag.
@@ -168,3 +171,9 @@ class Photoset(object):
     def delpatient(self):
         pass
     patient = property(getpatient, setpatient, delpatient, "")
+
+    def getphotos(self):
+        if self._photos is None:
+            self._photos = self.dm.loader.PhotosetStorage.loadPhotos(self)
+        return self._photos
+    photos = property(getphotos, "")
