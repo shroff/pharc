@@ -264,6 +264,7 @@ class FS:
                     self.patientUID = p.uid
                 patients.append(p)
 
+        self.knownPatientUIDs = True
         return patients
 
     def parseName(self, name):
