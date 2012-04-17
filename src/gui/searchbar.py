@@ -48,14 +48,15 @@ class SearchBar(QWidget):
   def update(self, text):
     q1 = DataManager.Query('first_name', 'sub', str(text))
     q2 = DataManager.Query('last_name', 'sub', str(text))
-#    q3 = DataManager.Query('diags', 'one', str(text))
-#    q4 = DataManager.Query('treats', 'one', str(text))
-    sresults = self.data.searchPatients([q1], None)
-    sresults2 = self.data.searchPatients([q2], None)
-    sresults.update(sresults2)
-    echo = ""
-    for (p,_) in sresults.items():
-        echo += str(p) + "\n"
-    print(echo[:-1])
+    q3 = DataManager.Query('diags', 'sub-one', str(text))
+    q4 = DataManager.Query('treats', 'sub-one', str(text))
+    sresults =      self.data.searchPatients([q1], None)
+    sresults.update(self.data.searchPatients([q2], None))
+    sresults.update(self.data.searchPatients([q3], None))
+    sresults.update(self.data.searchPatients([q4], None))
+    # echo = ""
+    # for (p,_) in sresults.items():
+    #     echo += str(p) + "\n"
+    # print(echo[:-1])
     self.parent.updateSearch(sresults)
 
