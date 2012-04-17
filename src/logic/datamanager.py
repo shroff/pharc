@@ -79,6 +79,7 @@ class DataManager(object):
         return p
     def makePhotoset(self, patient, date=None):
         ps = self.loader.PhotosetStorage.createPhotoset(patient, date)
+        patient.photosets |= set([ps])
         ps.dm = self
         return ps
     def importPhoto(self, path, photoset):
