@@ -20,34 +20,51 @@ from PyQt4.QtCore import *
 
 from .importphoto import *
 from database.photostorage import *
+from logic.photo import Photo
 
 import random
 
-imageBase = "import/"
-imgs = ['caesar.jpg', 'puppy.jpg', 'kitty.jpg', 'punch.jpg']
-
-class ImportPatientPhotos(QWidget):
-  def __init__(self, parent, data):
-    super(ImportPatientPhotos, self).__init__()
+class PatientPhotos(QScrollArea):
+  def __init__(self, parent, data, checkable=True, horiz=False):
+    super(PatientPhotos, self).__init__()
     self.parent = parent
     self.dataManager = data
+    self.checkable=checkable
+    self.horiz=horiz
 
-    self.initUI()
+  def refresh(self, images, imageDir):
+    self.initUI(images, imageDir)
 
-  def initUI(self):
-    vbox = QVBoxLayout()
+  def initUI(self, images, imageDir):
+    imageDir = imageDir + '/'
+    self.setWidget(self.createWidget(images, imageDir))
+    self.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+    self.setBackgroundRole(QPalette.Light)
 
-    for x in self.dataManager.loader.PhotoStorage.findPhotos(imageBase):
-      hbox = QHBoxLayout()
-      hbox.setAlignment(Qt.AlignCenter)
-      hbox.addWidget(ImportPhoto(self, x, imageBase))
-      vbox.addLayout(hbox)
+  def createWidget(self, images, imageDir):
+    if(self.horiz):
+      box = QHBoxLayout()
+    else:
+      box = QVBoxLayout()
+
+    for x in images:
+      pbox = QHBoxLayout()
+      pbox.setAlignment(Qt.AlignCenter)
+      if isinstance(x, Photo):
+        pbox.addWidget(ImportPhoto(self, x.name, imageDir, self.checkable))
+      else:
+        pbox.addWidget(ImportPhoto(self, x, imageDir, self.checkable))
+      box.addLayout(pbox)
 
     sizeLabel = QLabel("")
     sizeLabel.setFixedSize(QSize(300, 1))
-    vbox.addWidget(sizeLabel)
+    box.addWidget(sizeLabel)
 
-    self.setLayout(vbox)
+    photos = QWidget()
+    photos.setLayout(box)
+    
+    return photos
 
   def toggle(self, path):
     self.parent.toggle(path)
+

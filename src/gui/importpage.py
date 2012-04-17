@@ -20,9 +20,11 @@ from PyQt4.QtCore import *
 
 import database.fs
 from logic.datamanager import DataManager
-from .importpatientphotos import ImportPatientPhotos
+from .patientphotos import PatientPhotos
 from .patientsearch import PatientSearch
 from .photosetadd import PhotosetAdd
+
+imageBase = "import/"
 
 class ImportPage(QWidget):
   def __init__(self, parent, dm, pList):
@@ -47,18 +49,16 @@ class ImportPage(QWidget):
     hboxButtons.addWidget(addButton)
     hboxButtons.addWidget(skipButton)
 
-    self.photoScrollArea = QScrollArea()
-    self.photos = ImportPatientPhotos(self, self.dataManager)
-    self.photoScrollArea.setWidget(self.photos)
-    self.photoScrollArea.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
-    self.photoScrollArea.setBackgroundRole(QPalette.Light)
+    self.photo = PatientPhotos(self, self.dataManager)
+    self.photo.refresh(self.dataManager.loader.PhotoStorage.findPhotos(imageBase),
+        imageBase)
 
     self.patientSearch = PatientSearch(self, self.dataManager, self.currPatientList)
     self.photosetAdd = PhotosetAdd(self, self.dataManager)
     vboxInfo.addWidget(self.patientSearch)
     vboxInfo.addWidget(self.photosetAdd)
 
-    hboxMain.addWidget(self.photoScrollArea)
+    hboxMain.addWidget(self.photo)
     hboxMain.addLayout(vboxInfo)
     vboxMain.addLayout(hboxMain)
     vboxMain.addLayout(hboxButtons)
@@ -76,10 +76,10 @@ class ImportPage(QWidget):
 
   def add(self, photoset):
     for img in self.selected:
-      self.dataManager.importPhoto("import/" + img, photoset)
+      self.dataManager.importPhoto(imageBase + img, photoset)
 
-    self.photos = ImportPatientPhotos(self, self.dataManager)
-    self.photoScrollArea.setWidget(self.photos)
+    self.photo.refresh(self.dataManager.loader.PhotoStorage.findPhotos(imageBase),
+        imageBase)
 
 
   def toggle(self, path):

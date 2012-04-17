@@ -18,6 +18,7 @@
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 
+from .patientphotos import PatientPhotos
 from .patientnamerow import PatientNameRow
 from .patientdetailtable import PatientDetailTable
 
@@ -27,16 +28,20 @@ from logic.datamanager import DataManager
 class PatientEditPage(QWidget):
   def __init__(self, parent, dm):
     super(PatientEditPage, self).__init__(parent)
-    self.data = dm
+    self.dataManager = dm
     self.parent = parent
     self.initUI()
 
   def initUI(self):
     vbox = QVBoxLayout()
     self.nameRow = PatientNameRow()
-    self.detailTable = PatientDetailTable(self, self.data)
+    self.detailTable = PatientDetailTable(self, self.dataManager)
     vbox.addWidget(self.nameRow)
     vbox.addWidget(self.detailTable)
+
+    self.photo = PatientPhotos(self, self.dataManager, horiz=True)
+    self.photo.setVisible(False)
+    vbox.addWidget(self.photo)
 
     self.save = QPushButton('Save Changes')
     self.cancel = QPushButton('Return')
@@ -61,8 +66,10 @@ class PatientEditPage(QWidget):
   def cancelChanges(self):
     self.parent.viewMain()
 
-  def selected(self):
-    pass
+  def selected(self, ps):
+    self.photo.refresh(ps.photos,
+        self.dataManager.loader.PhotosetStorage.getPath(ps))
+    self.photo.setVisible(True)
 
   def setPatient(self, patient):
     self.patient = patient

@@ -19,11 +19,12 @@ from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 
 class ImportPhoto(QWidget):
-  def __init__(self, parent, name, path):
+  def __init__(self, parent, name, path, checkable):
     super(ImportPhoto, self).__init__()
     self.parent = parent
     self.name = name
     self.path = path
+    self.checkable = checkable
 
     self.initUI()
 
@@ -43,10 +44,14 @@ class ImportPhoto(QWidget):
     self.picLabel.setFrameStyle(QFrame.Panel | QFrame.Box)
 
     hbox = QHBoxLayout()
-    self.checkbox = QCheckBox(self.name, self)
-    QObject.connect(self.checkbox, SIGNAL('stateChanged(int)'), self.toggle)
+
+    if self.checkable:
+      nameLabel = QCheckBox(self.name, self)
+      QObject.connect(nameLabel, SIGNAL('stateChanged(int)'), self.toggle)
+    else:
+      nameLabel = QLabel(self.name)
     hbox.setAlignment(Qt.AlignCenter)
-    hbox.addWidget(self.checkbox)
+    hbox.addWidget(nameLabel)
 
     vbox.addWidget(self.picLabel)
     vbox.addLayout(hbox)
