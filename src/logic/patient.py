@@ -60,7 +60,10 @@ class Patient(object):
                                                     str(len(self.photosets)))
 
     def getMostRecentPhotoset(self):
-        return max(self.photosets, key=lambda x: x.date)
+        if self.photosets is not None:
+            return max(self.photosets, key=lambda x: x.date)
+        else:
+            return None
 
     def getphysicians(self):
         #print "physicians -> " + str(self._physicians)
@@ -124,6 +127,8 @@ class Patient(object):
 
     def getdiagnoses(self):
         result = set()
+        if self.photosets is None:
+            return result
         for ps in self.photosets:
             result |= ps.diagnoses
         return result
@@ -131,6 +136,8 @@ class Patient(object):
 
     def gettreatments(self):
         result = set()
+        if self.photosets is None:
+            return result
         for ps in self.photosets:
             result |= ps.treatments
         return result
