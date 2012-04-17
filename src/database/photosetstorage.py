@@ -166,3 +166,6 @@ class PhotosetStorage:
         self.fsm.copyPhotoset(photoset, fromDirectory, toDirectory)
         self.fsm.dletePhotoset(photoset)
 
+
+    def createPhotoset(self, photoset, patient):
+        self.fsm.createPhotoset(photoset, patient)
