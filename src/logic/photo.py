@@ -50,19 +50,14 @@ class Photo(object):
     name = property(getname, setname, delname, "")
 
     def getphotoset(self):
-        return self._name
+        return self._photoset
         pass
     def setphotoset(self, value):
         # move self on filesystem
-        # self.dm.loader.PhotoStorage.movePhoto(self, value)
-        
-        # update old parent photoset
-        
-        # update new parent photoset
-        
-        # update _photoset
-        # self._photoset = value
-        pass
+        self.dm.loader.PhotoStorage.movePhoto(self, value)
+        self._photoset.updateDifference(set(self))
+        value.update(set(self))
+        self._photoset = value
     def delphotoset(self):
         pass
     photoset = property(getphotoset, setphotoset, delphotoset, "")
