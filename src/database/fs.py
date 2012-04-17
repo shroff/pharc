@@ -681,7 +681,7 @@ class FS:
         if os.path.isdir(directory):
             #f = open(directory + photo.name)
             #data = f.read()
-            data = directory
+            data = directory + "/" + photo.name
             return data
 
     def renamePatient(self, patient, firstName, lastName):

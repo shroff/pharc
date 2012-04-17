@@ -57,7 +57,7 @@ class PatientDetail(QWidget):
     self.setPicture(imageBase + random.choice(imgs))
 
   def setPicture(self, imgpath):
-#    print(imgpath)
+    print(imgpath)
     image = QImage(imgpath)
     pixmap = QPixmap.fromImage(image)
     if(not pixmap.isNull()):

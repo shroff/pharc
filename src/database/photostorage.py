@@ -51,7 +51,7 @@ class PhotoStorage:
             Throws:
                 ?
         """
-        return self.fsm.getPhoto(photo)
+        return self.fsm.loadPhoto(photo)
 
     def renamePhoto(self, photo, toName):
         """
