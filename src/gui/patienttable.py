@@ -27,36 +27,41 @@ from logic.patient import Patient
 #data = None
 
 class PatientTable(QTableView):
-  def __init__(self, parent, dm, resultMap):
+  def __init__(self, parent, dm, resultMap, small = False):
     super(PatientTable, self).__init__(parent)
     self.dataManager = dm
     self.parent = parent
     self.resultMap = resultMap
+    self.small = small
+
     self.initUI()
     self.linkModel()
 
-    self.connect(self, SIGNAL("clicked(QModelIndex)"), self.click)
-    self.connect(self, SIGNAL("activated(QModelIndex)"), self.click)
-    #self.connect(self, SIGNAL("doubleClicked(QModelIndex)"), self.detail)
-    self.showMaximized()
 
   def initUI(self):
     self.setColumnWidth(0, 200)
     self.setColumnWidth(1, 200)
 
-
     self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
     self.horizontalHeader().ResizeMode(QHeaderView.Stretch)
     self.horizontalHeader().setStretchLastSection(True)
 
+    self.connect(self, SIGNAL("clicked(QModelIndex)"), self.click)
+    self.connect(self, SIGNAL("activated(QModelIndex)"), self.click)
+
   def linkModel(self):
-    self.patientTableModel = PatientTableModel(self.dataManager, self.resultMap)
+    self.patientTableModel = PatientTableModel(self.dataManager,
+        self.resultMap, self.small)
     self.setModel(self.patientTableModel)
     self.updateGeometry()
 
+    self.setColumnWidth(0, 200)
+    if(not self.small):
+      self.setColumnWidth(1, 200)
+
 
   def click(self, index):
-    self.parent.viewInfo(self.patientTableModel.getPatient(index))
+    self.parent.select(self.patientTableModel.getPatient(index))
 
   def updateSearch(self, pats):
     self.patientTableModel.updateSearch(pats)

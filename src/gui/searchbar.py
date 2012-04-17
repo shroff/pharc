@@ -22,55 +22,36 @@ import database.fs
 from logic.datamanager import DataManager
 
 class SearchBar(QWidget):
-  def __init__(self, parent, dm):
+  def __init__(self, parent, dm, small = False):
     self.data = dm
     super(SearchBar, self).__init__()
     self.parent = parent
+    self.small = small
 
     self.initUI()
 
   def initUI(self):
-    self.searchField = SearchField(self)
+    self.search = QLineEdit(self)
+    QObject.connect(self.search, SIGNAL('textChanged(QString)'), self.update)
 
     hbox = QHBoxLayout()
-    hbox.addWidget(QLabel('Search: ', self))
-    hbox.addWidget(self.searchField)
+    if (not self.small):
+      hbox.addWidget(QLabel('Search: ', self))
+    hbox.addWidget(self.search)
 
     self.setLayout(hbox)
 
-  def search(self):
-#    if (self.searchField.text() == ''):
-#      return
-
-#TODO: Implement searching
-    print("Searching for " + self.searchField.text())
-    q1 = DataManager.Query('first_name', 'sub', str(self.searchField.text()))
-    q2 = DataManager.Query('last_name', 'sub', str(self.searchField.text()))
-#    q3 = DataManager.Query('diags', 'one', str(self.searchField.txt()))
-#    q4 = DataManager.Query('treats', 'one', str(self.searchField.txt()))
+  def update(self, text):
+    q1 = DataManager.Query('first_name', 'sub', str(text))
+    q2 = DataManager.Query('last_name', 'sub', str(text))
+#    q3 = DataManager.Query('diags', 'one', str(text))
+#    q4 = DataManager.Query('treats', 'one', str(text))
     sresults = self.data.searchPatients([q1], None)
     sresults2 = self.data.searchPatients([q2], None)
     sresults.update(sresults2)
-#    sresults2 = self.data.searchPatients([q3], None)
-#    sresults.update(sresults2)
-#    sresults2 = self.data.searchPatients([q4], None)
-#    sresults.update(sresults2)
     echo = ""
     for (p,_) in sresults.items():
         echo += str(p) + "\n"
     print(echo[:-1])
     self.parent.updateSearch(sresults)
 
-class SearchField(QLineEdit):
-  def __init__(self, sb):
-    super(SearchField, self).__init__(sb)
-
-    self.sb = sb
-
-  def event(self, evt):
-    if (evt.type() == QEvent.KeyPress) and ((evt.key() == Qt.Key_Enter) or
-        (evt.key() == Qt.Key_Return)):
-      self.sb.search()
-      return True
-
-    return QLineEdit.event(self, evt)

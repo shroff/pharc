@@ -21,21 +21,23 @@ from PyQt4.QtCore import *
 import database.fs
 from logic.datamanager import DataManager
 
-from .patientsearchtable import PatientSearchTable
+from .searchbar import SearchBar
+from .patienttable import PatientTable
 
 class PatientSearch(QWidget):
-  def __init__(self, parent, dm):
+  def __init__(self, parent, dm, pList):
     super(PatientSearch, self).__init__(parent)
     self.parent = parent
     self.data = dm
+    self.searchResults = pList
 
     self.initUI()
 
   def initUI(self):
     vbox = QVBoxLayout()
 
-    self.search = QLineEdit()
-    self.results = PatientSearchTable(self, self.data)
+    self.searchBar = SearchBar(self, self.data, True)
+    self.patientTable = PatientTable(self, self.data, self.searchResults, True)
 
     hbox = QHBoxLayout()
     addToPatient = QPushButton("Add to Patient")
@@ -44,12 +46,11 @@ class PatientSearch(QWidget):
     hbox.addWidget(addToPatient)
     hbox.addWidget(createPatient)
 
-    vbox.addWidget(self.search)
-    vbox.addWidget(self.results)
+    vbox.addWidget(self.searchBar)
+    vbox.addWidget(self.patientTable)
     vbox.addLayout(hbox)
     self.setLayout(vbox)
 
-    QObject.connect(self.search, SIGNAL('textChanged(QString)'), self.research)
     QObject.connect(addToPatient, SIGNAL('clicked()'), self.addToPatient)
     QObject.connect(createPatient, SIGNAL('clicked()'), self.createPatient)
 
@@ -57,8 +58,9 @@ class PatientSearch(QWidget):
   def select(self, patient):
     self.parent.select(patient)
 
-  def research(self, flt):
-    print ("Search for " + flt);
+  def updateSearch(self, pats):
+    self.searchResults = pats
+    self.patientTable.updateSearch(pats)
 
   def addToPatient(self):
     pass
