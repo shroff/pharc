@@ -85,12 +85,31 @@ class FS:
 
             Used for short-circuting certain operations that don't make
             sense on an empty database, as well as creating new parts of it.
+
+            Arguments:
+                N/A
+
+            Returns:
+                True if the database did not exist, False otherwise.
+
+            Throws:
+                N/A
         """
         return self.newFS
 
     def makeFile(self, path, data=''):
         """
             Handles writing data to a file in one location.
+
+            Arguments:
+                path: The location to write to.
+                data: The data to write to path.
+
+            Returns:
+                N/A
+
+            Throws:
+                ?
         """
         f = open(path, 'w')
         f.write(data)
