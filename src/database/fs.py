@@ -118,6 +118,8 @@ class FS:
             Throws:
                 ?
         """
+        f = open(path)
+        f.write(data)
         f.close()
 
     def createPatient(self, firstName, lastName):
