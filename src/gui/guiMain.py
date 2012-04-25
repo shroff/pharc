@@ -22,9 +22,9 @@ from PyQt4.QtGui import *
 
 from .mainwindow import *
 
-    """This program acts as the GUI overall parent structure, starting up basic necessities
-    and calling to start the initial main window.
-    """
+"""This program acts as the GUI overall parent structure, starting up basic necessities
+and calling to start the initial main window.
+"""
 
 def main():
   app = QApplication(sys.argv)
