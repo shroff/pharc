@@ -19,6 +19,13 @@ from PyQt4.QtGui import *
 from .pagemanager import *
 
 class MainWindow(QMainWindow):
+  """The MainWindow is just that: the initial window of the application's GUI.
+
+    The MainWindow itself initiates the menus, and various widgets and parents.
+
+    Attributes:
+        pageManager: A pointer to the GUI's control object
+    """
   def __init__(self):
     super(MainWindow, self).__init__()
 

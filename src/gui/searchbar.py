@@ -22,17 +22,17 @@ import database.fs
 from logic.datamanager import DataManager
 
 class SearchBar(QWidget):
-    """The SearchBar is a GUI widget allowing for user search input.
+  """The SearchBar is a GUI widget allowing for user search input.
 
-    The SearchBar itself takes in the user supplied search terms and calls upon 
-    DataManager's Quering capabilities.  The results of this query are then passed
-    up to the parent via the update function to be used as needed
+  The SearchBar itself takes in the user supplied search terms and calls upon 
+  DataManager's Quering capabilities.  The results of this query are then passed
+  up to the parent via the update function to be used as needed
 
-    Attributes:
-        datamanager: A pointer to the application's root datamanager object
-        parent: The parent object which calls this instance
-        small: Boolean used to determine if the search bar has an associated label
-    """
+  Attributes:
+      datamanager: A pointer to the application's root datamanager object
+      parent: The parent object which calls this instance
+      small: Boolean used to determine if the search bar has an associated label
+  """
 
   
   def __init__(self, parent, dm, small = False):

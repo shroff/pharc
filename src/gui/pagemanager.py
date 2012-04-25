@@ -28,6 +28,17 @@ from logic.datamanager import DataManager
 #data = None
 
 class PageManager(QWidget):
+  """The PageManager is the GUI control object, managing all pages and associated GUI widgets.
+
+    The PageManager itself initiates the Logic unit (DataManager) and passes this through to each
+    GUI page or widget which needs it.  It also populates the initial patient list by running an
+    empty query to the DataManager in order to pass to any necessary objects.
+
+    Attributes:
+        data: A pointer to the application's root datamanager object
+        parent: The parent object which calls this instance
+        currPatientList: the initial list of all patients currently stored
+    """
   def __init__(self, parent):
     self.data = DataManager("patients")
     super(PageManager, self).__init__(parent)
