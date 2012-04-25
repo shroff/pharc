@@ -42,12 +42,14 @@ def generateDatabase(numPatients, databaseDir):
                 physicians.append("%s, %s#%d" %(firstNames[random.randint(0, len(firstNames)-1)],lastNames[random.randint(0, len(lastNames)-1)], docUID+x))
         # Generate patient folders and all associated files, as well as a random number of photosets
         for x in range(1, numPatients+1):
+                # print("creating patient " + str(x))
                 patientDir = createPatient(databaseDir, x)
                 tempDiag = createDiagnosis(patientDir)
                 tempTreat = createTreatment(patientDir)
                 tempNote = createNotes(patientDir)
                 tempPhys = createPhysicians(patientDir, physicians[random.randint(0, len(physicians)-1)])
                 for x in range(1, random.randint(1, numPhotosets)):
+                        # print("  creating photoset " + str(x))
                         createPhotoset(patientDir, photosetUID, random.randint(minPhotos, maxPhotos), tempDiag, tempTreat, tempNote, tempPhys)
                         photosetUID += 1
                         os.chdir("..")
@@ -145,14 +147,15 @@ def createPhotoset(dirname, UID, numPics, myDiagnosis, myTreatment, myNotes, myD
         File = open(diagFile,"w")
         File.writelines(myDiagnosis)
         for x in range(0, numPics):
+                # print("    creating photo " + str(x))
                 imgFile = "DSC%05d.png" %x
 #                File = open(imgFile, "w")
-        i = Image.new("RGB", (250,250))
-        d = ImageDraw.Draw(i)
-        f = ImageFont.truetype("/usr/share/fonts/truetype/freefont/FreeSans.ttf", 18)
-        d.text((0,0), dirname + imgFile, font=f)
-        i.save(open(imgFile, "wb"), "PNG")
+                i = Image.new("RGB", (250,250))
+                d = ImageDraw.Draw(i)
+                f = ImageFont.truetype("/usr/share/fonts/truetype/freefont/FreeSans.ttf", 18)
+                d.text((0,0), dirname + imgFile, font=f)
+                i.save(open(imgFile, "wb"), "PNG")
                 
 
 if __name__ == '__main__':
-    generateDatabase(100, "../patients")
+    generateDatabase(10000, "../patients")
