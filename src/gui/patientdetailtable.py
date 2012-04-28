@@ -33,16 +33,19 @@ class PatientDetailTable(QTableView):
 
   def initUI(self):
     self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-    self.horizontalHeader().ResizeMode(QHeaderView.Stretch)
-    self.horizontalHeader().setStretchLastSection(True)
+    self.header = QHeaderView(Qt.Horizontal, self)
+    self.header.ResizeMode(QHeaderView.ResizeToContents)
+    self.header.setStretchLastSection(True)
+    self.header.setSortIndicatorShown(True)
+    self.header.setClickable(True)
+    self.setHorizontalHeader(self.header)
 
   def linkModel(self):
     self.setModel(PatientDetailTableModel(self.dataManager, self.patient))
     self.updateGeometry()
 
-
   def click(self, index):
-    ps = self.model().data(index, role=Qt.UserRole).toPyObject()
+    ps = self.model().data(index, role=Qt.UserRole)
     self.parent.selected(ps)
 
   def setPatient(self, patient):

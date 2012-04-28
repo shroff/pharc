@@ -43,11 +43,18 @@ class PatientTable(QTableView):
     self.setColumnWidth(1, 200)
 
     self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-    self.horizontalHeader().ResizeMode(QHeaderView.Stretch)
-    self.horizontalHeader().setStretchLastSection(True)
+
+    self.header = QHeaderView(Qt.Horizontal, self)
+    self.header.ResizeMode(QHeaderView.ResizeToContents)
+    self.header.setStretchLastSection(True)
+    self.header.setSortIndicator(-1, Qt. AscendingOrder)
+    self.header.setClickable(True)
+    self.setHorizontalHeader(self.header)
 
     self.connect(self, SIGNAL("clicked(QModelIndex)"), self.click)
     self.connect(self, SIGNAL("activated(QModelIndex)"), self.click)
+
+    self.setSortingEnabled(True)
 
   def linkModel(self):
     self.patientTableModel = PatientTableModel(self.dataManager,
