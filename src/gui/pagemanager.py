@@ -66,15 +66,14 @@ class PageManager(QWidget):
 
   def viewDetails(self, patient):
     self.editpage.setPatient(patient)
-    self.editpage.setVisible(True)
     self.mainpage.setVisible(False)
     self.importpage.setVisible(False)
+    self.editpage.setVisible(True)
 
   def viewMain(self):
-    self.mainpage.update()
     self.editpage.setVisible(False)
-    self.mainpage.setVisible(True)
     self.importpage.setVisible(False)
+    self.mainpage.setVisible(True)
 
   def viewImport(self):
     self.editpage.setVisible(False)

@@ -29,19 +29,19 @@ class PatientDetailTable(QTableView):
 
     self.connect(self, SIGNAL("clicked(QModelIndex)"), self.click)
     self.connect(self, SIGNAL("activated(QModelIndex)"), self.click)
-    self.showMaximized()
 
   def initUI(self):
-    self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-    self.header = QHeaderView(Qt.Horizontal, self)
-    self.header.ResizeMode(QHeaderView.ResizeToContents)
-    self.header.setStretchLastSection(True)
-    self.header.setSortIndicatorShown(True)
-    self.header.setClickable(True)
-    self.setHorizontalHeader(self.header)
+    self.horizontalHeader().ResizeMode(QHeaderView.ResizeToContents)
+    self.horizontalHeader().setStretchLastSection(True)
+    self.verticalHeader().setVisible(False)
+    self.setSelectionBehavior(QAbstractItemView.SelectRows)
+    self.setAlternatingRowColors(True)
+    self.setSelectionMode(self.SingleSelection)
+    self.setMinimumSize(QSize(100, 100))
 
   def linkModel(self):
     self.setModel(PatientDetailTableModel(self.dataManager, self.patient))
+    self.connect(self.selectionModel(), SIGNAL("currentRowChanged(QModelIndex,QModelIndex)"), self.click)
     self.updateGeometry()
 
   def click(self, index):

@@ -31,6 +31,7 @@ class PatientPhotos(QScrollArea):
     self.dataManager = data
     self.checkable=checkable
     self.horiz=horiz
+    self.refresh([], '')
 
   def refresh(self, images, imageDir):
     self.initUI(images, imageDir)
@@ -38,14 +39,19 @@ class PatientPhotos(QScrollArea):
   def initUI(self, images, imageDir):
     imageDir = imageDir + '/'
     self.setWidget(self.createWidget(images, imageDir))
-    self.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+    if(self.horiz):
+      self.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+    else:
+      self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
     self.setBackgroundRole(QPalette.Light)
 
   def createWidget(self, images, imageDir):
     if(self.horiz):
       box = QHBoxLayout()
+      self.setFixedHeight(230)
     else:
       box = QVBoxLayout()
+      self.setFixedWidth(300)
 
     for x in images:
       pbox = QHBoxLayout()
@@ -55,10 +61,6 @@ class PatientPhotos(QScrollArea):
       else:
         pbox.addWidget(ImportPhoto(self, x, imageDir, self.checkable))
       box.addLayout(pbox)
-
-    sizeLabel = QLabel("")
-    sizeLabel.setFixedSize(QSize(300, 1))
-    box.addWidget(sizeLabel)
 
     photos = QWidget()
     photos.setLayout(box)

@@ -40,7 +40,6 @@ class PatientEditPage(QWidget):
     vbox.addWidget(self.detailTable)
 
     self.photo = PatientPhotos(self, self.dataManager, horiz=True)
-    self.photo.setVisible(False)
     vbox.addWidget(self.photo)
 
     self.save = QPushButton('Save Changes')

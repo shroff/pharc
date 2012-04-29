@@ -39,7 +39,6 @@ class PatientTable(QTableView):
 
 
   def initUI(self):
-
     self.header = QHeaderView(Qt.Horizontal, self)
     self.header.ResizeMode(QHeaderView.ResizeToContents)
     self.header.setStretchLastSection(True)
@@ -48,9 +47,10 @@ class PatientTable(QTableView):
     self.setHorizontalHeader(self.header)
     self.verticalHeader().setVisible(False)
 
-    self.connect(self, SIGNAL("activated(QModelIndex)"), self.view)
+    self.connect(self, SIGNAL("clicked(QModelIndex)"), self.view)
     if(not self.small):
       self.connect(self, SIGNAL("doubleClicked(QModelIndex)"), self.parent.viewDetails)
+      self.connect(self, SIGNAL("activated(QModelIndex)"), self.parent.viewDetails)
 
     self.setSelectionBehavior(QAbstractItemView.SelectRows)
     self.setAlternatingRowColors(True)
