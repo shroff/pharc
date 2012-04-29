@@ -89,7 +89,7 @@ class RealPatientTableModel(QStandardItemModel):
 
     self.rowcount = 0
     for p in self.dataManager.patients:
-      c1 = PatientNameItem(p)
+      c1 = QStandardItem(p.nameFirst + " " + p.nameLast)
       c1.setEditable(False)
       c2 = QStandardItem(", ".join(map(str, p.diagnoses)))
       c2.setEditable(False)
@@ -110,11 +110,4 @@ class RealPatientTableModel(QStandardItemModel):
       if (ps != None and ps.photos != []):
         self.photos[index] = QPixmap.fromImage(QImage(ps.photos[0].getData())).scaledToHeight(90)
     return self.photos[index]
-
-
-
-class PatientNameItem(QStandardItem):
-  def __init__(self, patient):
-    super(PatientNameItem, self).__init__(patient.nameFirst + " " + patient.nameLast)
-    self.patient = patient
 
