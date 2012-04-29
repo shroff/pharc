@@ -40,9 +40,10 @@ class PatientPhotos(QScrollArea):
     imageDir = imageDir + '/'
     self.setWidget(self.createWidget(images, imageDir))
     if(self.horiz):
-      self.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+      self.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Fixed)
     else:
-      self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+      self.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.MinimumExpanding)
+
     self.setBackgroundRole(QPalette.Light)
 
   def createWidget(self, images, imageDir):

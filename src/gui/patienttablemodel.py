@@ -36,12 +36,9 @@ class PatientTableModel(QSortFilterProxyModel):
     self.setHeaders()
 
   def setHeaders(self):
-    if(not self.small):
-      self.setHeaderData(0, Qt.Horizontal, 'Photo', role=Qt.DisplayRole)
-    self.setHeaderData(1, Qt.Horizontal, 'Name', role=Qt.DisplayRole)
-    self.setHeaderData(2, Qt.Horizontal, 'Diagnosis', role=Qt.DisplayRole)
-    if(not self.small):
-      self.setHeaderData(3, Qt.Horizontal, 'Treatment', role=Qt.DisplayRole)
+    self.setHeaderData(0, Qt.Horizontal, 'Name', role=Qt.DisplayRole)
+    self.setHeaderData(1, Qt.Horizontal, 'Diagnosis', role=Qt.DisplayRole)
+    self.setHeaderData(2, Qt.Horizontal, 'Treatment', role=Qt.DisplayRole)
 
   def getPatient(self, index):
     realIndex = self.mapToSource(index)
@@ -52,7 +49,7 @@ class PatientTableModel(QSortFilterProxyModel):
     if(role == Qt.DisplayRole):
       return self.realModel.data(self.mapToSource(index))
     elif(role == Qt.DecorationRole):
-      if(index.column() == 0):
+      if(index.column() == 0 and (not self.small)):
         return self.realModel.getPhoto(self.mapToSource(index).row())
     elif(role == Qt.SizeHintRole):
         return self.realModel.getPhoto(self.mapToSource(index).row()).size()
@@ -96,10 +93,10 @@ class RealPatientTableModel(QStandardItemModel):
       c3 = QStandardItem(", ".join(map(str, p.treatments)))
       c3.setEditable(False)
       
-      self.setItem(self.rowcount, 1, c1)
-      self.setItem(self.rowcount, 2, c2)
+      self.setItem(self.rowcount, 0, c1)
+      self.setItem(self.rowcount, 1, c2)
       if(not self.small):
-        self.setItem(self.rowcount, 3, c3)
+        self.setItem(self.rowcount, 2, c3)
 
       self.photos.append(None)
       self.rowcount = self.rowcount+1

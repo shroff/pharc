@@ -64,14 +64,12 @@ class PatientTable(QTableView):
     self.setModel(self.patientTableModel)
     self.updateGeometry()
 
-    self.setColumnWidth(1, 200)
     self.connect(self.selectionModel(), SIGNAL("currentRowChanged(QModelIndex,QModelIndex)"), self.view)
     if(self.small):
-      self.hideColumn(0)
-      self.hideColumn(3)
+      self.setColumnWidth(0, 200)
     else:
       self.verticalHeader().setDefaultSectionSize(100);
-      self.setColumnWidth(2, 200)
+      self.setColumnWidth(0, 300)
 
 
   def view(self, index):
@@ -81,8 +79,7 @@ class PatientTable(QTableView):
   def updateSearch(self, pats):
     self.patientTableModel.updateSearch(pats)
     if(self.small):
-      self.hideColumn(0)
-      self.hideColumn(3)
+      self.hideColumn(2)
 
   def modelUpdated(self):
     self.patientTableModel.modelUpdated()
