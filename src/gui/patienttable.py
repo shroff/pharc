@@ -39,20 +39,22 @@ class PatientTable(QTableView):
 
 
   def initUI(self):
-    self.setColumnWidth(0, 200)
-    self.setColumnWidth(1, 200)
-
-    self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 
     self.header = QHeaderView(Qt.Horizontal, self)
     self.header.ResizeMode(QHeaderView.ResizeToContents)
     self.header.setStretchLastSection(True)
-    self.header.setSortIndicator(-1, Qt. AscendingOrder)
+    self.header.setSortIndicator(-1, Qt.AscendingOrder)
     self.header.setClickable(True)
     self.setHorizontalHeader(self.header)
+    self.verticalHeader().setVisible(False)
 
-    self.connect(self, SIGNAL("clicked(QModelIndex)"), self.click)
-    self.connect(self, SIGNAL("activated(QModelIndex)"), self.click)
+    self.connect(self, SIGNAL("activated(QModelIndex)"), self.view)
+    if(not self.small):
+      self.connect(self, SIGNAL("doubleClicked(QModelIndex)"), self.parent.viewDetails)
+
+    self.setSelectionBehavior(QAbstractItemView.SelectRows)
+    self.setAlternatingRowColors(True)
+    self.setSelectionMode(self.SingleSelection)
 
     self.setSortingEnabled(True)
 
@@ -62,16 +64,25 @@ class PatientTable(QTableView):
     self.setModel(self.patientTableModel)
     self.updateGeometry()
 
-    self.setColumnWidth(0, 200)
-    if(not self.small):
-      self.setColumnWidth(1, 200)
+    self.setColumnWidth(1, 200)
+    self.connect(self.selectionModel(), SIGNAL("currentRowChanged(QModelIndex,QModelIndex)"), self.view)
+    if(self.small):
+      self.hideColumn(0)
+      self.hideColumn(3)
+    else:
+      self.verticalHeader().setDefaultSectionSize(100);
+      self.setColumnWidth(2, 200)
 
 
-  def click(self, index):
+  def view(self, index):
     self.parent.select(self.patientTableModel.getPatient(index))
+
 
   def updateSearch(self, pats):
     self.patientTableModel.updateSearch(pats)
+    if(self.small):
+      self.hideColumn(0)
+      self.hideColumn(3)
 
   def modelUpdated(self):
     self.patientTableModel.modelUpdated()
