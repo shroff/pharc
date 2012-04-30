@@ -51,6 +51,8 @@ class PageManager(QWidget):
     self.initUI()
     self.viewMain()
 
+    self.selected = set()
+
   def initUI(self):
     vbox = QVBoxLayout()
 
@@ -66,15 +68,14 @@ class PageManager(QWidget):
 
   def viewDetails(self, patient):
     self.editpage.setPatient(patient)
-    self.editpage.setVisible(True)
     self.mainpage.setVisible(False)
     self.importpage.setVisible(False)
+    self.editpage.setVisible(True)
 
   def viewMain(self):
-    self.mainpage.update()
     self.editpage.setVisible(False)
-    self.mainpage.setVisible(True)
     self.importpage.setVisible(False)
+    self.mainpage.setVisible(True)
 
   def viewImport(self):
     self.editpage.setVisible(False)
@@ -84,3 +85,17 @@ class PageManager(QWidget):
   def triggerUpdate(self):
     self.importpage.modelUpdated()
     self.mainpage.modelUpdated()
+
+  def toggle(self, path):
+    if (path in self.selected):
+      self.selected -= set([path])
+    else:
+      self.selected.update(set([path]))
+
+  def clearSelection(self):
+    self.selected = set();
+    self.editpage.clearSelection()
+
+  def viewSelection(self):
+    #TODO
+    pass

@@ -20,7 +20,6 @@ from PyQt4.QtCore import *
 
 from .importphoto import *
 from database.photostorage import *
-from logic.photo import Photo
 
 import random
 
@@ -31,6 +30,8 @@ class PatientPhotos(QScrollArea):
     self.dataManager = data
     self.checkable=checkable
     self.horiz=horiz
+    self.selected = set()
+    self.refresh([], '')
 
   def refresh(self, images, imageDir):
     self.initUI(images, imageDir)
@@ -38,33 +39,36 @@ class PatientPhotos(QScrollArea):
   def initUI(self, images, imageDir):
     imageDir = imageDir + '/'
     self.setWidget(self.createWidget(images, imageDir))
-    self.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+    if(self.horiz):
+      self.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Fixed)
+    else:
+      self.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.MinimumExpanding)
+
     self.setBackgroundRole(QPalette.Light)
 
   def createWidget(self, images, imageDir):
     if(self.horiz):
       box = QHBoxLayout()
+      self.setFixedHeight(230)
     else:
       box = QVBoxLayout()
+      self.setFixedWidth(300)
 
     for x in images:
       pbox = QHBoxLayout()
       pbox.setAlignment(Qt.AlignCenter)
-      if isinstance(x, Photo):
-        pbox.addWidget(ImportPhoto(self, x.name, imageDir, self.checkable))
-      else:
-        pbox.addWidget(ImportPhoto(self, x, imageDir, self.checkable))
+      pbox.addWidget(ImportPhoto(self, x, imageDir, self.checkable, x in self.selected))
       box.addLayout(pbox)
-
-    sizeLabel = QLabel("")
-    sizeLabel.setFixedSize(QSize(300, 1))
-    box.addWidget(sizeLabel)
 
     photos = QWidget()
     photos.setLayout(box)
     
     return photos
 
-  def toggle(self, path):
-    self.parent.toggle(path)
+  def setSelected(self, selected):
+    self.selected = selected;
+
+
+  def toggle(self, photo):
+    self.parent.toggle(photo)
 

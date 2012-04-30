@@ -67,11 +67,19 @@ class PatientEditPage(QWidget):
     self.parent.viewMain()
 
   def selected(self, ps):
-    self.photo.refresh(ps.photos,
-        self.dataManager.loader.PhotosetStorage.getPath(ps))
+    self.photo.setSelected(self.parent.selected)
+    self.photo.refresh(ps.photos, self.dataManager.loader.PhotosetStorage.getPath(ps))
     self.photo.setVisible(True)
 
   def setPatient(self, patient):
     self.patient = patient
     self.nameRow.setPatient(self.patient)
     self.detailTable.setPatient(self.patient)
+    self.photo.setVisible(False)
+
+  def toggle(self, path):
+    self.parent.toggle(path)
+
+  def clearSelection(self):
+    self.setPatient(self.patient)
+

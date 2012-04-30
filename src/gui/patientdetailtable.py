@@ -15,6 +15,8 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
+import sys
+
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 
@@ -26,23 +28,30 @@ class PatientDetailTable(QTableView):
     self.dataManager = dm
     self.parent = parent
     self.initUI()
+    self.queuededits = {}
 
     self.connect(self, SIGNAL("clicked(QModelIndex)"), self.click)
     self.connect(self, SIGNAL("activated(QModelIndex)"), self.click)
-    self.showMaximized()
 
   def initUI(self):
-    self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-    self.horizontalHeader().ResizeMode(QHeaderView.Stretch)
+    self.horizontalHeader().ResizeMode(QHeaderView.ResizeToContents)
     self.horizontalHeader().setStretchLastSection(True)
+    self.verticalHeader().setVisible(False)
+    self.setSelectionBehavior(QAbstractItemView.SelectRows)
+    self.setAlternatingRowColors(True)
+    self.setSelectionMode(self.SingleSelection)
+    self.setMinimumSize(QSize(100, 100))
 
   def linkModel(self):
     self.setModel(PatientDetailTableModel(self.dataManager, self.patient))
+    self.connect(self.selectionModel(), SIGNAL("currentRowChanged(QModelIndex,QModelIndex)"), self.click)
     self.updateGeometry()
 
-
   def click(self, index):
-    ps = self.model().data(index, role=Qt.UserRole).toPyObject()
+    if sys.version_info[0] == 2:
+      ps = self.model().data(index, role=Qt.UserRole).toPyObject()
+    elif sys.version_info[0] == 3:
+      ps = self.model().data(index, role=Qt.UserRole)
     self.parent.selected(ps)
 
   def setPatient(self, patient):
@@ -51,3 +60,29 @@ class PatientDetailTable(QTableView):
 
   def modelUpdated(self):
     self.linkModel()
+
+  def currentChanged(self, index1, index2):
+    self.editIndex = index1
+
+  def commitData(self, editor):
+    # 'self.editIndex' defines what was edited
+    # 'self.editIndex.row()', and 'self.editIndex.column()'
+    # 'editor.text()' tells says what it was changed to
+    
+    if sys.version_info[0] == 2:
+      ps = self.model().data(self.editIndex, role=Qt.UserRole).toPyObject()
+    elif sys.version_info[0] == 3:
+      ps = self.model().data(self.editIndex, role=Qt.UserRole)
+    print(ps)
+    # self.model().setItem(self.editIndex.row(), self.editIndex.column(), QStandardItem(editor.text()))
+    
+    if self.editIndex.column() == 0: # date
+      self.queuededits[(ps, 'date')] = editor.text()
+    elif self.editIndex.column() == 1: # diagnoses
+      self.queuededits[(ps, 'diagnosis')] = editor.text()
+    elif self.editIndex.column() == 2: # treatments
+      self.queuededits[(ps, 'treatment')] = editor.text()
+
+    print(self.queuededits)
+      
+    pass

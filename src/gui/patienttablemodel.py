@@ -38,12 +38,22 @@ class PatientTableModel(QSortFilterProxyModel):
   def setHeaders(self):
     self.setHeaderData(0, Qt.Horizontal, 'Name', role=Qt.DisplayRole)
     self.setHeaderData(1, Qt.Horizontal, 'Diagnosis', role=Qt.DisplayRole)
-    if(not self.small):
-      self.setHeaderData(2, Qt.Horizontal, 'Treatment', role=Qt.DisplayRole)
+    self.setHeaderData(2, Qt.Horizontal, 'Treatment', role=Qt.DisplayRole)
 
   def getPatient(self, index):
     realIndex = self.mapToSource(index)
     return self.dataManager.patients[realIndex.row()]
+
+
+  def data(self, index, role=Qt.DisplayRole):
+    if(role == Qt.DisplayRole):
+      return self.realModel.data(self.mapToSource(index))
+    elif(role == Qt.DecorationRole):
+      if(index.column() == 0 and (not self.small)):
+        return self.realModel.getPhoto(self.mapToSource(index).row())
+    elif(role == Qt.SizeHintRole):
+        return self.realModel.getPhoto(self.mapToSource(index).row()).size()
+      
 
   def filterAcceptsRow(self, row, parent):
     patient = self.dataManager.patients[row]
@@ -72,9 +82,11 @@ class RealPatientTableModel(QStandardItemModel):
   def populate(self):
     self.removeRows(0, self.rowcount)
 
+    self.photos = []
+
     self.rowcount = 0
     for p in self.dataManager.patients:
-      c1 = PatientNameItem(p)
+      c1 = QStandardItem(p.nameFirst + " " + p.nameLast)
       c1.setEditable(False)
       c2 = QStandardItem(", ".join(map(str, p.diagnoses)))
       c2.setEditable(False)
@@ -85,9 +97,14 @@ class RealPatientTableModel(QStandardItemModel):
       self.setItem(self.rowcount, 1, c2)
       if(not self.small):
         self.setItem(self.rowcount, 2, c3)
+
+      self.photos.append(None)
       self.rowcount = self.rowcount+1
 
-class PatientNameItem(QStandardItem):
-  def __init__(self, patient):
-    super(PatientNameItem, self).__init__(patient.nameFirst + " " + patient.nameLast)
-    self.patient = patient
+  def getPhoto(self, index):
+    if(self.photos[index] == None):
+      ps = self.dataManager.patients[index].getMostRecentPhotoset()
+      if (ps != None and ps.photos != []):
+        self.photos[index] = QPixmap.fromImage(QImage(ps.photos[0].getData())).scaledToHeight(90)
+    return self.photos[index]
+
