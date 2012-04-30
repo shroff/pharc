@@ -80,5 +80,11 @@ class MainWindow(QMainWindow):
     exportPresentationAction.triggered.connect(self.pageManager.exportSelectionToPresentation)
     selectionMenu.addAction(exportPresentationAction)
 
+    exportEmailAction = QAction('Export to Email', self)
+    exportEmailAction.setShortcut('Ctrl+e')
+    exportEmailAction.setStatusTip('Send selected photos to your email account')
+    exportEmailAction.triggered.connect(self.pageManager.exportSelectionToEmail)
+    selectionMenu.addAction(exportEmailAction)
+
     self.statusBar()
 

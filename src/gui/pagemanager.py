@@ -25,6 +25,7 @@ from .importpage import *
 import database.fs
 from logic.datamanager import DataManager
 import export.sendtoppt
+import export.sendtoemail
 
 #data = None
 
@@ -104,3 +105,7 @@ class PageManager(QWidget):
   def exportSelectionToPresentation(self):
     #TODO
     export.sendtoppt.export_presentation(self.selected, "presentation.odp", True)
+
+  def exportSelectionToEmail(self):
+    #TODO
+    export.sendtoemail.export_email(self.selected, "sreynoldshaertle@gmail.com")
