@@ -1,4 +1,6 @@
 *.pyc
+*.swp
+*.odp
 src/test/
 patients
 import

@@ -17,7 +17,9 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
+
 import os,sys,getopt,struct, subprocess
+from PyQt4.QtGui import *
 if sys.version_info[0] == 2:
     from odf.opendocument import OpenDocumentPresentation
     from odf.style import Style, MasterPage, PageLayout, PageLayoutProperties, TextProperties, GraphicProperties, ParagraphProperties, DrawingPageProperties
@@ -28,8 +30,6 @@ if sys.version_info[0] == 3:
     from odf3.style import Style, MasterPage, PageLayout, PageLayoutProperties, TextProperties, GraphicProperties, ParagraphProperties, DrawingPageProperties
     from odf3.text import P
     from odf3.draw  import Page, Frame, TextBox, Image
-
-import PIL.Image
 
 
 def export_presentation(photos, destination, openafter=False):
@@ -65,8 +65,13 @@ def export_presentation(photos, destination, openafter=False):
     
     for p in photos:
         path = p.getData()
-        i = PIL.Image.open(path)
-        (w, h) = i.size
+        image = QImage(path)
+        if(image.isNull()):
+          continue
+
+        w = image.width()
+        h = image.height()
+
         if w > 720:
            h = float(h) * 720.0 / float(w)
            w = 720.0
