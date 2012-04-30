@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+
+
 # PHARC: a photo archiving application for physicians
 # Copyright (C) 2012 Saul Reynolds-Haertle
 # 
@@ -17,35 +20,41 @@
 
 import smtplib
 import os
+import sys
+
+if sys.version_info[0] == 2:
+    import dns.resolver as dnsr
+if sys.version_info[0] == 3:
+    import dns3.resolver as dnsr
 
 from email.mime.image import MIMEImage
+from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
+from email.MIMEText import MIMEText
+from email.Utils import COMMASPACE, formatdate
+from email import Encoders
 
-COMMASPACE = ", "
-
-def send_mail(send_from, send_to, subject, text, files=[], server="localhost"):
-    assert type(send_to) == list
-    assert type(files) == list
-
+def export_email(photos, destination):
     msg = MIMEMultipart()
-    msg['From'] = send_from
-    msg['To'] = COMMASPACE.join(send_to)
-    msg['Date'] = formatdate(localtime=True)
-    msg['Subject'] = subject
-    msg.preamble = text
+    msg['From'] = destination
+    msg['To'] = destination
+    msg['Subject'] = "PHARC export"
 
-    # for f in files:
-    #     part = MIMEBase('application', "octet-stream")
-    #     part.set_payload(open(file, "rb").read())
-    #     Encoders.encode_base64(part)
-    #     part.add_header('Content-Disposition', 'attachment; filename=%s"' % os.path.basename(f))
-    #     mst.attach(part)
-        
-    smtp.smtplib.SMTP(server)
-    smtp.sendmail(send_from, send_to, msg.as_string())
-    smtp.close()
+    i = 0
+    for p in photos:
+        part = MIMEBase('application', "octet-stream")
+        part.set_payload(open(p.getData(),"rb").read())
+        Encoders.encode_base64(part)
+        part.add_header('Content-Disposition', 'attachment; filename="image %d: %s - %s"' % (i, p.photoset.patient.name(), p.name))
+        i = i+1
+        msg.attach(part)
 
-
-if __name__ == "__main__":
-    # send some email to test things
-    pass
+    (user, server) = destination.split("@")
+    
+    host = ""
+    ans = dnsr.query(server, "MX")
+    for d in ans:
+        host = str(d.exchange)
+    s = smtplib.SMTP(host + ":25")
+    s.sendmail(destination, [destination], msg.as_string())
+    s.quit()
