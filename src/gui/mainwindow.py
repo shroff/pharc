@@ -74,5 +74,11 @@ class MainWindow(QMainWindow):
     viewSelectionAction.triggered.connect(self.pageManager.viewSelection)
     selectionMenu.addAction(viewSelectionAction)
 
+    exportPresentationAction = QAction('Export to Presentation', self)
+    exportPresentationAction.setShortcut('Ctrl+p')
+    exportPresentationAction.setStatusTip('Export selected photos to presentation software')
+    exportPresentationAction.triggered.connect(self.pageManager.exportSelectionToPresentation)
+    selectionMenu.addAction(exportPresentationAction)
+
     self.statusBar()
 

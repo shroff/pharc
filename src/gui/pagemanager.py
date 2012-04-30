@@ -24,6 +24,7 @@ from .importpage import *
 
 import database.fs
 from logic.datamanager import DataManager
+import export.sendtoppt
 
 #data = None
 
@@ -99,3 +100,7 @@ class PageManager(QWidget):
   def viewSelection(self):
     #TODO
     pass
+
+  def exportSelectionToPresentation(self):
+    #TODO
+    export.sendtoppt.export_presentation(self.selected, "presentation.odp", True)
