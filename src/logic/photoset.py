@@ -145,7 +145,7 @@ class Photoset(object):
     def settreatments(self, value):
         #print "treatments <- " + str(value)
         self._treatments = value
-        self.dm.loader.editTreatments(self)
+        self.dm.loader.PhotosetStorage.editTreatments(self, "\n".join(map(str, self.treatments)))
     def deltreatments(self):
         del self._treatments
     treatments = property(gettreatments, settreatments, deltreatments, "")
