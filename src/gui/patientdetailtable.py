@@ -40,11 +40,12 @@ class PatientDetailTable(QTableView):
     self.setSelectionBehavior(QAbstractItemView.SelectRows)
     self.setAlternatingRowColors(True)
     self.setSelectionMode(self.SingleSelection)
-    self.setMinimumSize(QSize(100, 100))
+    self.setMinimumSize(QSize(400, 100))
 
   def linkModel(self):
     self.setModel(PatientDetailTableModel(self.dataManager, self.patient))
     self.connect(self.selectionModel(), SIGNAL("currentRowChanged(QModelIndex,QModelIndex)"), self.click)
+    self.setColumnWidth(1, 200)
     self.updateGeometry()
 
   def click(self, index):
@@ -79,12 +80,11 @@ class PatientDetailTable(QTableView):
     
     if self.editIndex.column() == 0: # date
       self.queuededits[(ps, 'date')] = val
-    elif self.editIndex.column() == 1: # treatments
-      self.queuededits[(ps, 'treatment')] = val
-    elif self.editIndex.column() == 2: # diagnoses
+    elif self.editIndex.column() == 1: # diagnoses
       self.queuededits[(ps, 'diagnosis')] = val
+    elif self.editIndex.column() == 2: # treatments
+      self.queuededits[(ps, 'treatment')] = val
 
-    print(self.queuededits)
     super(PatientDetailTable, self).commitData(editor)
     
 

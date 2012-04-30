@@ -31,6 +31,7 @@ class PatientEditPage(QWidget):
     self.dataManager = dm
     self.parent = parent
     self.initUI()
+    self.patient = None
 
   def initUI(self):
     vbox = QVBoxLayout()
@@ -94,5 +95,6 @@ class PatientEditPage(QWidget):
     self.parent.toggle(path)
 
   def clearSelection(self):
-    self.setPatient(self.patient)
+    if(self.patient != None):
+      self.setPatient(self.patient)
 

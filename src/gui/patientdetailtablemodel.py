@@ -35,17 +35,17 @@ class PatientDetailTableModel(QStandardItemModel):
 
   def setHeaders(self):
     self.setHeaderData(0, Qt.Horizontal, 'Date', role=Qt.DisplayRole)
-    self.setHeaderData(1, Qt.Horizontal, 'Treatments', role=Qt.DisplayRole)
-    self.setHeaderData(2, Qt.Horizontal, 'Diagnoses', role=Qt.DisplayRole)
+    self.setHeaderData(1, Qt.Horizontal, 'Diagnoses', role=Qt.DisplayRole)
+    self.setHeaderData(2, Qt.Horizontal, 'Treatments', role=Qt.DisplayRole)
 
   def populate(self):
     self.rowcount = 0
     for ps in self.patient.photosets:
       self.setItem(self.rowcount, 0, QStandardItem(str(ps.date)))
       self.setItem(self.rowcount, 1, QStandardItem(", ".join(map(str,
-        ps.treatments))))
-      self.setItem(self.rowcount, 2, QStandardItem(", ".join(map(str,
         ps.diagnoses))))
+      self.setItem(self.rowcount, 2, QStandardItem(", ".join(map(str,
+        ps.treatments))))
       self.setData(self.index(self.rowcount, 0), ps, role=Qt.UserRole)
       self.setData(self.index(self.rowcount, 1), ps, role=Qt.UserRole)
       self.setData(self.index(self.rowcount, 2), ps, role=Qt.UserRole)
