@@ -23,17 +23,12 @@ import os
 import sys
 import multiprocessing
 
-if sys.version_info[0] == 2:
-    import dns.resolver as dnsr
-if sys.version_info[0] == 3:
-    import dns3.resolver as dnsr
+import dns.resolver as dnsr
 
 from email.mime.image import MIMEImage
 from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
-from email.MIMEText import MIMEText
-from email.Utils import COMMASPACE, formatdate
-from email import Encoders
+import email.encoders
 
 from PyQt4.QtCore import *
 
@@ -62,7 +57,7 @@ class ExportThread(QThread):
         for p in self.photos:
             part = MIMEBase('application', "octet-stream")
             part.set_payload(open(p.getData(),"rb").read())
-            Encoders.encode_base64(part)
+            email.encoders.encode_base64(part)
             part.add_header('Content-Disposition', 'attachment; filename="image %d: %s - %s"' % (i, p.photoset.patient.name(), p.name))
             i = i+1
             msg.attach(part)
