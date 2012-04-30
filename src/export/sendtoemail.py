@@ -74,7 +74,7 @@ class ExportThread(QThread):
 
         if result is None:
             try:
-                s = smtplib.SMTP(host + ":25", timeout=5)
+                s = smtplib.SMTP(host + ":25", timeout=30)
                 s.sendmail(self.destination, [self.destination], msg.as_string())
                 print("sent email")
                 result = 0
