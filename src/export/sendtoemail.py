@@ -69,15 +69,20 @@ class ExportThread(QThread):
             ans = dnsr.query(server, "MX")
             for d in ans:
                 host = str(d.exchange)
-            s = smtplib.SMTP(host + ":25", timeout=5)
-            s.sendmail(self.destination, [self.destination], msg.as_string())
-            print("sent email")
-            result = 0
         except Exception:
-            print("An exception!")
             result = -1
-        finally:
-            s.quit()
+
+        if result is None:
+            try:
+                s = smtplib.SMTP(host + ":25", timeout=5)
+                s.sendmail(self.destination, [self.destination], msg.as_string())
+                print("sent email")
+                result = 0
+            except Exception:
+                print("An exception!")
+                result = -2
+            finally:
+                s.quit()
 
         print("done with email")
         self.emit(SIGNAL("emailExportDone(int)"),
