@@ -21,9 +21,8 @@ from PyQt4.QtCore import *
 from .mainpage import *
 from .patienteditpage import *
 from .importpage import *
+from .photoviewwindow import *
 
-import database.fs
-from logic.datamanager import DataManager
 import export.sendtoppt
 
 #data = None
@@ -94,13 +93,13 @@ class PageManager(QWidget):
       self.selected.update(set([path]))
 
   def clearSelection(self):
-    self.selected = set();
+    self.selected = set()
     self.editpage.clearSelection()
 
   def viewSelection(self):
-    #TODO
-    pass
+    if(len(self.selected) > 0):
+      PhotoViewWindow(self.selected, 'Selected Photos', self.data)
+
 
   def exportSelectionToPresentation(self):
-    #TODO
     export.sendtoppt.export_presentation(self.selected, "presentation.odp", True)
