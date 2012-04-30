@@ -21,6 +21,7 @@
 import smtplib
 import os
 import sys
+import multiprocessing
 
 if sys.version_info[0] == 2:
     import dns.resolver as dnsr
@@ -34,27 +35,56 @@ from email.MIMEText import MIMEText
 from email.Utils import COMMASPACE, formatdate
 from email import Encoders
 
-def export_email(photos, destination):
-    msg = MIMEMultipart()
-    msg['From'] = destination
-    msg['To'] = destination
-    msg['Subject'] = "PHARC export"
+from PyQt4.QtCore import *
 
-    i = 0
-    for p in photos:
-        part = MIMEBase('application', "octet-stream")
-        part.set_payload(open(p.getData(),"rb").read())
-        Encoders.encode_base64(part)
-        part.add_header('Content-Disposition', 'attachment; filename="image %d: %s - %s"' % (i, p.photoset.patient.name(), p.name))
-        i = i+1
-        msg.attach(part)
+class ExportThread(QThread):
+    def __init__(self, parent=None):
+        super(ExportThread, self).__init__(parent)
 
-    (user, server) = destination.split("@")
-    
-    host = ""
-    ans = dnsr.query(server, "MX")
-    for d in ans:
-        host = str(d.exchange)
-    s = smtplib.SMTP(host + ":25")
-    s.sendmail(destination, [destination], msg.as_string())
-    s.quit()
+    def __del__(self):
+        self.wait()
+
+    def export(self, photos, destination):
+        self.photos = photos
+        self.destination = destination
+        self.start()
+
+    def run(self):
+        result = None
+        print("sending email")
+
+        msg = MIMEMultipart()
+        msg['From'] = self.destination
+        msg['To'] = self.destination
+        msg['Subject'] = "PHARC export"
+
+        i = 0
+        for p in self.photos:
+            part = MIMEBase('application', "octet-stream")
+            part.set_payload(open(p.getData(),"rb").read())
+            Encoders.encode_base64(part)
+            part.add_header('Content-Disposition', 'attachment; filename="image %d: %s - %s"' % (i, p.photoset.patient.name(), p.name))
+            i = i+1
+            msg.attach(part)
+
+        (user, server) = self.destination.split("@")
+        
+        try:
+            host = ""
+            ans = dnsr.query(server, "MX")
+            for d in ans:
+                host = str(d.exchange)
+            s = smtplib.SMTP(host + ":25", timeout=5)
+            s.sendmail(self.destination, [self.destination], msg.as_string())
+            print("sent email")
+            result = 0
+        except Exception:
+            print("An exception!")
+            result = -1
+        finally:
+            s.quit()
+
+        print("done with email")
+        self.emit(SIGNAL("emailExportDone(int)"),
+                  result)
+                  

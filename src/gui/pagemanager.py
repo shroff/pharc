@@ -54,6 +54,11 @@ class PageManager(QWidget):
 
     self.selected = set()
 
+    self.emailthread = export.sendtoemail.ExportThread()
+    self.connect(self.emailthread, SIGNAL("finished()"), self.exportEmailDone)
+    self.connect(self.emailthread, SIGNAL("terminated()"), self.exportEmailDone)
+    self.connect(self.emailthread, SIGNAL("emailExportDone(int)"), self.exportEmailResult)
+
   def initUI(self):
     vbox = QVBoxLayout()
 
@@ -105,6 +110,19 @@ class PageManager(QWidget):
   def exportSelectionToPresentation(self):
     export.sendtoppt.export_presentation(self.selected, "presentation.odp", True)
 
+
+
+
   def exportSelectionToEmail(self):
-    #TODO
-    export.sendtoemail.export_email(self.selected, "sreynoldshaertle@gmail.com")
+    # non-threaded version
+    # export.sendtoemail.export_email(self.selected, "sreynoldshaertle@gmail.com")
+
+    # threaded version
+    self.emailthread.export(self.selected, "sreynoldshaertle@gmail.com")
+    pass
+  def exportEmailDone(self):
+    print("export email done")
+    pass
+  def exportEmailResult(self, status):
+    print("export email result: %d" % status)
+    pass
