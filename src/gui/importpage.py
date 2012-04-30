@@ -77,6 +77,7 @@ class ImportPage(QWidget):
   def add(self, photoset):
     for img in self.selected:
       self.dataManager.importPhoto(imageBase + img, photoset)
+    self.selected = set()
 
     self.photo.refresh(self.dataManager.loader.PhotoStorage.findPhotos(imageBase),
         imageBase)
