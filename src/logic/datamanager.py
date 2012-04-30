@@ -19,6 +19,7 @@ from . import tags
 from . import photo
 import database.datastorageinterface
 import collections
+import os.path
 
 class DataManager(object):
     """The DataManager is the root object in the logic package.
@@ -85,7 +86,9 @@ class DataManager(object):
         return ps
     def importPhoto(self, path, photoset):
         self.loader.PhotoStorage.importPhoto(path, photoset)
+        path = os.path.basename(path)
         phot = photo.Photo(path, photoset)
+        photoset.photos.append(phot)
         phot.dm = self
         return phot
 
