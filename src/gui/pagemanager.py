@@ -24,6 +24,7 @@ from .importpage import *
 from .photoviewwindow import *
 
 import export.sendtoppt
+import export.sendtoemail
 
 #data = None
 
@@ -103,3 +104,7 @@ class PageManager(QWidget):
 
   def exportSelectionToPresentation(self):
     export.sendtoppt.export_presentation(self.selected, "presentation.odp", True)
+
+  def exportSelectionToEmail(self):
+    #TODO
+    export.sendtoemail.export_email(self.selected, "sreynoldshaertle@gmail.com")
