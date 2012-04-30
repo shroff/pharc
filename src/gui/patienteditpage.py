@@ -62,8 +62,21 @@ class PatientEditPage(QWidget):
     self.nameRow.savePatient()
     self.parent.triggerUpdate()
     print('Saving')
+    for edit in self.detailTable.queuededits:
+      (ps, field) = edit
+      val = self.detailTable.queuededits[edit]
+      if field == 'date':
+        ps.date = val
+      if field == 'diagnosis':
+        ps.clearDiagnoses()
+        ps.addDiagnoses(val)
+      if field == 'treatment':
+        ps.clearTreatments()
+        ps.addTreatments(val)
+    self.detailTable.queuededits = {}
 
   def cancelChanges(self):
+    self.detailTable.queuededits = {}
     self.parent.viewMain()
 
   def selected(self, ps):
