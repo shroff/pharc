@@ -59,3 +59,13 @@ class PatientDetailTable(QTableView):
 
   def modelUpdated(self):
     self.linkModel()
+
+  def currentChanged(self, index1, index2):
+    self.editIndex = index1
+
+  def commitData(self, editor):
+    # 'self.editIndex' defines what was edited
+    # 'self.editIndex.row()', and 'self.editIndex.column()'
+    # 'editor.text()' tells says what it was changed to
+
+    pass
