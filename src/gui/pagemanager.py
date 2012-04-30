@@ -129,7 +129,7 @@ class PageManager(QWidget):
     self.parent.statusBar().clearMessage()
     if status == -1:            # could not get MX addr
       self.parent.statusBar().showMessage("Could not find mail server - bad address, internet connected?", 10000)
-      if status == -2:
+    if status == -2:
       self.parent.statusBar().showMessage("Could not connect to mail server - bad address, internet connected?", 10000)
     if status == 0:
       self.parent.statusBar().showMessage("Successfully sent email.", 10000)
