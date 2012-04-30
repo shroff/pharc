@@ -63,6 +63,11 @@ class PhotoViewWidget(QWidget):
     self.info.setPhoto(photo)
     path = self.dataManager.loader.PhotosetStorage.getPath(photo.photoset) + '/' + photo.name
     image = QImage(path)
+    if(image.width() > self.width() or image.height() > self.height()):
+      if(image.width()/self.width() > image.height()/self.height()):
+        image = image.scaledToWidth(self.width())
+      else:
+        image = image.scaledToHeight(self.height())
     self.image.setPixmap(QPixmap.fromImage(image))
 
 
