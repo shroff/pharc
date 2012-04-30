@@ -18,12 +18,16 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 import os,sys,getopt,struct, subprocess
-from cStringIO import StringIO
-from odf.opendocument import OpenDocumentPresentation
-from odf.style import Style, MasterPage, PageLayout, PageLayoutProperties, \
-TextProperties, GraphicProperties, ParagraphProperties, DrawingPageProperties
-from odf.text import P
-from odf.draw  import Page, Frame, TextBox, Image
+if sys.version_info[0] == 2:
+    from odf.opendocument import OpenDocumentPresentation
+    from odf.style import Style, MasterPage, PageLayout, PageLayoutProperties, TextProperties, GraphicProperties, ParagraphProperties, DrawingPageProperties
+    from odf.text import P
+    from odf.draw  import Page, Frame, TextBox, Image
+if sys.version_info[0] == 3:
+    from odf3.opendocument import OpenDocumentPresentation
+    from odf3.style import Style, MasterPage, PageLayout, PageLayoutProperties, TextProperties, GraphicProperties, ParagraphProperties, DrawingPageProperties
+    from odf3.text import P
+    from odf3.draw  import Page, Frame, TextBox, Image
 
 import PIL.Image
 
