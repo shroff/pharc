@@ -61,3 +61,7 @@ class Photo(object):
     def delphotoset(self):
         pass
     photoset = property(getphotoset, setphotoset, delphotoset, "")
+
+    def deletePhoto(self):
+        self.dm.loader.PhotoStorage.deletePhoto(self)
+        self._photoset.updateDifference(set(self))

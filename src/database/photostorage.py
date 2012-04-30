@@ -87,3 +87,7 @@ class PhotoStorage:
 
     def findPhotos(self, path):
         return self.fsm.findPhotos(path)
+
+    def deletePhoto(self, photo):
+        # TODO
+        pass
