@@ -85,11 +85,13 @@ class DataManager(object):
         ps.dm = self
         return ps
     def importPhoto(self, path, photoset):
+        print(photoset)
         self.loader.PhotoStorage.importPhoto(path, photoset)
         path = os.path.basename(path)
         phot = photo.Photo(path, photoset)
         photoset.photos.append(phot)
         phot.dm = self
+        print(photoset) 
         return phot
 
     Query = collections.namedtuple('Query', ['field', 'match', 'arg'])
