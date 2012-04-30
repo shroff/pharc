@@ -69,10 +69,12 @@ class DataManager(object):
 
         self.treatments = tags.TagList()
         self.diagnoses = tags.TagList()
+        self.physicians = tags.TagList()
         self.patients = self.loader.PatientStorage.loadAllPatients()
+        if not self.patients:
+            self.patients = []
         for p in self.patients:
             p.dm = self
-        self.physicians = tags.TagList()
 
     def makePatient(self, fname, lname):
         p = self.loader.PatientStorage.createPatient(fname, lname)
