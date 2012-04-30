@@ -51,6 +51,8 @@ class PageManager(QWidget):
     self.initUI()
     self.viewMain()
 
+    self.selected = set()
+
   def initUI(self):
     vbox = QVBoxLayout()
 
@@ -83,3 +85,17 @@ class PageManager(QWidget):
   def triggerUpdate(self):
     self.importpage.modelUpdated()
     self.mainpage.modelUpdated()
+
+  def toggle(self, path):
+    if (path in self.selected):
+      self.selected -= set([path])
+    else:
+      self.selected.update(set([path]))
+
+  def clearSelection(self):
+    self.selected = set();
+    self.editpage.clearSelection()
+
+  def viewSelection(self):
+    #TODO
+    pass

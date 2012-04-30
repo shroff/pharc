@@ -43,22 +43,36 @@ class MainWindow(QMainWindow):
 
 
   def createMenus(self):
-    #exitAction = QAction(QIcon('exit.png') 'E&xit', self)
+    menuBar = self.menuBar()
+
+    fileMenu = menuBar.addMenu('&File')
+
     importAction = QAction('Check for I&mports', self)
     importAction.setShortcut('Ctrl+I')
     importAction.setStatusTip('Check for photos to import')
     importAction.triggered.connect(self.pageManager.viewImport)
+    fileMenu.addAction(importAction)
 
+    #exitAction = QAction(QIcon('exit.png') 'E&xit', self)
     exitAction = QAction('E&xit', self)
     exitAction.setShortcut('Ctrl+Q')
     exitAction.setStatusTip('Exit Application')
     exitAction.triggered.connect(qApp.quit)
-
-    self.statusBar()
-
-    menuBar = self.menuBar()
-    fileMenu = menuBar.addMenu('&File')
-    fileMenu.addAction(importAction)
     fileMenu.addAction(exitAction)
 
+
+    selectionMenu = menuBar.addMenu('&Selection')
+
+    clearSelectionAction = QAction('C&lear Selection', self)
+    clearSelectionAction.setStatusTip('Clear Selected Photos')
+    clearSelectionAction.triggered.connect(self.pageManager.clearSelection)
+    selectionMenu.addAction(clearSelectionAction)
+
+    viewSelectionAction = QAction('V&iew Selection', self)
+    viewSelectionAction.setShortcut('Ctrl+w')
+    viewSelectionAction.setStatusTip('View Selected Photos')
+    viewSelectionAction.triggered.connect(self.pageManager.viewSelection)
+    selectionMenu.addAction(viewSelectionAction)
+
+    self.statusBar()
 

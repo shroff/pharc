@@ -20,7 +20,6 @@ from PyQt4.QtCore import *
 
 from .importphoto import *
 from database.photostorage import *
-from logic.photo import Photo
 
 import random
 
@@ -31,6 +30,7 @@ class PatientPhotos(QScrollArea):
     self.dataManager = data
     self.checkable=checkable
     self.horiz=horiz
+    self.selected = set()
     self.refresh([], '')
 
   def refresh(self, images, imageDir):
@@ -57,10 +57,7 @@ class PatientPhotos(QScrollArea):
     for x in images:
       pbox = QHBoxLayout()
       pbox.setAlignment(Qt.AlignCenter)
-      if isinstance(x, Photo):
-        pbox.addWidget(ImportPhoto(self, x.name, imageDir, self.checkable))
-      else:
-        pbox.addWidget(ImportPhoto(self, x, imageDir, self.checkable))
+      pbox.addWidget(ImportPhoto(self, x, imageDir, self.checkable, x in self.selected))
       box.addLayout(pbox)
 
     photos = QWidget()
@@ -68,6 +65,10 @@ class PatientPhotos(QScrollArea):
     
     return photos
 
-  def toggle(self, path):
-    self.parent.toggle(path)
+  def setSelected(self, selected):
+    self.selected = selected;
+
+
+  def toggle(self, photo):
+    self.parent.toggle(photo)
 

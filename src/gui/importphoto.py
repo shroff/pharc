@@ -17,24 +17,30 @@
 
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
+from logic.photo import Photo
 
 class ImportPhoto(QWidget):
-  def __init__(self, parent, name, path, checkable):
+  def __init__(self, parent, name, path, checkable, checked = False):
     super(ImportPhoto, self).__init__()
     self.parent = parent
     self.name = name
     self.path = path
     self.checkable = checkable
 
-    self.initUI()
+    self.initUI(checked)
 
-  def initUI(self):
+  def initUI(self, checked):
     vbox = QVBoxLayout()
 
     self.picLabel = QLabel()
     self.picLabel.setFixedSize(QSize(150, 150))
 
-    image = QImage(self.path + self.name)
+    if isinstance(self.name, Photo):
+      name = self.name.name
+    else:
+      name = self.name
+
+    image = QImage(self.path + name)
     pixmap = QPixmap.fromImage(image)
     if(not pixmap.isNull()):
       pixmap = pixmap.scaledToHeight(150)
@@ -46,10 +52,12 @@ class ImportPhoto(QWidget):
     hbox = QHBoxLayout()
 
     if self.checkable:
-      nameLabel = QCheckBox(self.name, self)
+      nameLabel = QCheckBox(name, self)
+      if(checked):
+        nameLabel.setChecked(checked)
       QObject.connect(nameLabel, SIGNAL('stateChanged(int)'), self.toggle)
     else:
-      nameLabel = QLabel(self.name)
+      nameLabel = QLabel(name)
     hbox.setAlignment(Qt.AlignCenter)
     hbox.addWidget(nameLabel)
 
@@ -59,4 +67,5 @@ class ImportPhoto(QWidget):
     self.setLayout(vbox)
 
   def toggle(self, arg):
+    print("toggle")
     self.parent.toggle(self.name)
