@@ -71,8 +71,10 @@ class PatientDetailTable(QTableView):
 
     if sys.version_info[0] == 2:
       ps = self.model().data(self.editIndex, role=Qt.UserRole).toPyObject()
+      val = str(editor.text())
     elif sys.version_info[0] == 3:
       ps = self.model().data(self.editIndex, role=Qt.UserRole)
+      val = editor.text()
     print(ps)
     
     if self.editIndex.column() == 0: # date
