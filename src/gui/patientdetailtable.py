@@ -15,6 +15,8 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
+import sys
+
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 
@@ -45,7 +47,10 @@ class PatientDetailTable(QTableView):
     self.updateGeometry()
 
   def click(self, index):
-    ps = self.model().data(index, role=Qt.UserRole)
+    if sys.version_info[0] == 2:
+      ps = self.model().data(index, role=Qt.UserRole).toPyObject()
+    elif sys.version_info[0] == 3:
+      ps = self.model().data(index, role=Qt.UserRole)
     self.parent.selected(ps)
 
   def setPatient(self, patient):
