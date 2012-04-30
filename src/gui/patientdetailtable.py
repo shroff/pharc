@@ -78,13 +78,14 @@ class PatientDetailTable(QTableView):
     print(ps)
     
     if self.editIndex.column() == 0: # date
-      self.queuededits[(ps, 'date')] = editor.text()
-    elif self.editIndex.column() == 1: # diagnoses
-      self.queuededits[(ps, 'diagnosis')] = editor.text()
-    elif self.editIndex.column() == 2: # treatments
-      self.queuededits[(ps, 'treatment')] = editor.text()
+      self.queuededits[(ps, 'date')] = val
+    elif self.editIndex.column() == 1: # treatments
+      self.queuededits[(ps, 'treatment')] = val
+    elif self.editIndex.column() == 2: # diagnoses
+      self.queuededits[(ps, 'diagnosis')] = val
 
+    print(self.queuededits)
     super(PatientDetailTable, self).commitData(editor)
     
-    print(self.queuededits)
+
 
