@@ -28,6 +28,7 @@ class PatientDetailTable(QTableView):
     self.dataManager = dm
     self.parent = parent
     self.initUI()
+    self.queuededits = {}
 
     self.connect(self, SIGNAL("clicked(QModelIndex)"), self.click)
     self.connect(self, SIGNAL("activated(QModelIndex)"), self.click)
@@ -67,5 +68,21 @@ class PatientDetailTable(QTableView):
     # 'self.editIndex' defines what was edited
     # 'self.editIndex.row()', and 'self.editIndex.column()'
     # 'editor.text()' tells says what it was changed to
+    
+    if sys.version_info[0] == 2:
+      ps = self.model().data(self.editIndex, role=Qt.UserRole).toPyObject()
+    elif sys.version_info[0] == 3:
+      ps = self.model().data(self.editIndex, role=Qt.UserRole)
+    print(ps)
+    # self.model().setItem(self.editIndex.row(), self.editIndex.column(), QStandardItem(editor.text()))
+    
+    if self.editIndex.column() == 0: # date
+      self.queuededits[(ps, 'date')] = editor.text()
+    elif self.editIndex.column() == 1: # diagnoses
+      self.queuededits[(ps, 'diagnosis')] = editor.text()
+    elif self.editIndex.column() == 2: # treatments
+      self.queuededits[(ps, 'treatment')] = editor.text()
 
+    print(self.queuededits)
+      
     pass
