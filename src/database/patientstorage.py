@@ -197,5 +197,4 @@ class PatientStorage(object):
             Throws:
                 ?
         """
-        if not self.checkNewFS():
-            return self.fsm.loadAllPatients()
+        return self.fsm.loadAllPatients()
