@@ -261,7 +261,10 @@ class FS:
         """
         patients = []
 
-        items = os.listdir(self.root)
+        dirlist = os.walk(self.root)
+        dirlist = next(dirlist)
+        items = dirlist[1]
+
         for i in items:
             if os.path.isdir(self.root + "/" + i):
                 nameFirst, nameLast, uid = self.parseName(i)
@@ -295,7 +298,7 @@ class FS:
         """
         unparsedName = name.split('#')[0]
         unparsedName = unparsedName.split()
-        nameFirst = unparsedName[1]
+        nameFirst = unparsedName[2]
         nameLast = unparsedName[0][:-1]
         uid = int(name.split('#')[1])
 
