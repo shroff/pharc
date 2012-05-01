@@ -19,9 +19,8 @@ import datetime
 
 class PhotosetStorage:
 
-    def __init__(self, dbm, fsm):
+    def __init__(self, fsm):
         # there may be a better way of handling this, but it should do
-        self.dbm = dbm
         self.fsm = fsm
 
     def loadPhotos(self, photoset):

@@ -17,26 +17,23 @@
 
 class PatientStorage(object):
 
-    def __init__(self, dbm, fsm):
+    def __init__(self, fsm):
         """
             Initialize a PatientStorage object.
 
             Arguments:
-                dbm: Reference to a DB object.
                 fsm: Reference to a FS object.
         """
         # there may be a better way of handling this, but it should do
-        self.dbm = dbm
         self.fsm = fsm
 
-    def loadField(self, patient, fm, dm):
+    def loadField(self, patient, fm):
         """
             Loads a field for a Patient, e.g. notes, physicians.
 
             Arguments:
                 patient: The patient who's field we want to load.
                 fm:      The FS method to call.
-                dm:      The DB method to call.
 
             Returns:
                 The data from the field that was loaded.
@@ -44,10 +41,7 @@ class PatientStorage(object):
             Throws:
                 ?
         """
-        #TODO database loading
-
         data = fm(patient)
-        #TODO error handling
 
         return data
 
@@ -65,15 +59,11 @@ class PatientStorage(object):
             Throws:
                 ?
         """
-        #TODO try database before filesystem
-
         notes = self.fsm.loadPatientNotes(patient)
         if notes is None:
-            # TODO Error code
             return
         else:
             patient.notes = notes
-            # TODO Success code
             return
 
     def checkNewFS(self):
