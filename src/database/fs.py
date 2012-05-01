@@ -298,7 +298,7 @@ class FS:
         """
         unparsedName = name.split('#')[0]
         unparsedName = unparsedName.split()
-        nameFirst = unparsedName[2]
+        nameFirst = unparsedName[1]
         nameLast = unparsedName[0][:-1]
         uid = int(name.split('#')[1])
 
