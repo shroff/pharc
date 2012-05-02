@@ -188,8 +188,8 @@ class FS:
         ps.uid = uid
 
         directory = self.generatePatientDir(patientinit)
-        directory = directory + "/" + str(dateinit.day).zfill(2) + "-" + str(dateinit.month).zfill(2) + \
-            "-" + str(dateinit.year) + "#" + str(uid)
+        directory = os.path.abspath(directory + "/" + str(dateinit.day).zfill(2) + "-" + str(dateinit.month).zfill(2) + \
+            "-" + str(dateinit.year) + "#" + str(uid))
 
         os.makedirs(directory)
         self.makeFile(directory + "/physicians.txt")
@@ -340,7 +340,7 @@ class FS:
             Throws:
                 ?
         """
-        return self.root + "/" + patient.nameLast + ", " + patient.nameFirst + "#" + str(patient.uid)
+        return os.path.abspath(self.root + "/" + patient.nameLast + ", " + patient.nameFirst + "#" + str(patient.uid))
 
     cache = {}
     def generatePhotosetDir(self, photoset, patient=None):
@@ -370,8 +370,8 @@ class FS:
         uid = str(photoset.uid)
         date = photoset.date
         if os.path.isdir(directory):
-            retval = directory + "/" + str(date.day).zfill(2) + "-" + str(date.month).zfill(2) + \
-                "-" + str(date.year) + "#" + uid
+            retval = os.path.abspath(directory + "/" + str(date.day).zfill(2) + "-" + str(date.month).zfill(2) + \
+                "-" + str(date.year) + "#" + uid)
             self.cache[pskey] = retval
             return retval
         return None
@@ -719,14 +719,12 @@ class FS:
         """
         uid = patient.uid
         fromDirectory = self.generatePatientDir(patient)
-        toDirectory = self.root + "/" + lastName + ", " + firstName + "#" + str(uid)
+        toDirectory = os.path.abspath(self.root + "/" + lastName + ", " + firstName + "#" + str(uid))
 
         if not os.path.isdir(fromDirectory):
             raise Exception
 
-        shutil.copytree(fromDirectory, toDirectory)
-
-        shutil.rmtree(fromDirectory)
+        shutil.move(fromDirectory, toDirectory)
 
         # invalidate cache entries for this patient
         for ps in patient.photosets:
@@ -748,10 +746,9 @@ class FS:
                 Error
         """
         directory = self.generatePhotosetDir(photo.photoset)
-        fromPath = directory + "/" + photo.name
+        fromPath = os.path.abspath(directory + "/" + photo.name)
         if os.path.isdir(directory):
-            shutil.copy(fromPath, directory + "/" + name)
-            shutil.rmtree(fromPath)
+            shutil.move(fromPath, os.path.abspath(directory + "/" + name))
 
 
     def movePhoto(self, photo, photoset):
@@ -769,11 +766,10 @@ class FS:
                 ?
         """
         name = photo.name
-        fromPath = self.generatePhotosetDir(photo.photoset) + "/" + name
-        toPath = self.generatePhotosetDir(photoset) + "/" + name
+        fromPath = os.path.abspath(self.generatePhotosetDir(photo.photoset) + "/" + name)
+        toPath = os.path.abspath(self.generatePhotosetDir(photoset) + "/" + name)
 
-        shutil.copy(fromPath, toPath)
-        shutil.rmtree(toPath)
+        shutil.move(fromPath, toPath)
 
     def loadPhotosetPhotos(self, photoset):
         """
@@ -849,6 +845,6 @@ class FS:
 
     def deletePhoto(self, photo):
         path = self.generatePhotosetDir(photo.photoset)
-        path = path + "/" + name
+        path = os.path.abspath(path + "/" + name)
         shutil.rmtree(path)
 
