@@ -101,6 +101,6 @@ def export_presentation(photos, destination, openafter=False):
     if sys.platform.startswith('darwin'):
         subprocess.call(('open', destination))
     elif os.name == 'nt':
-        os.startfile(detination)
+        os.startfile(destination)
     elif os.name == 'posix':
         subprocess.call(('xdg-open', destination))

@@ -50,8 +50,6 @@ class ImportPage(QWidget):
     hboxButtons.addWidget(skipButton)
 
     self.photo = PatientPhotos(self, self.dataManager)
-    self.photo.refresh(self.dataManager.loader.PhotoStorage.findPhotos(imageBase),
-        imageBase)
 
     self.patientSearch = PatientSearch(self, self.dataManager, self.currPatientList)
     self.photosetAdd = PhotosetAdd(self, self.dataManager)
@@ -82,6 +80,9 @@ class ImportPage(QWidget):
     self.photo.refresh(self.dataManager.loader.PhotoStorage.findPhotos(imageBase),
         imageBase)
 
+  def refresh(self):
+    self.photo.refresh(self.dataManager.loader.PhotoStorage.findPhotos(imageBase),
+        imageBase)
 
   def toggle(self, path):
     if (path in self.selected):
