@@ -109,7 +109,11 @@ class PageManager(QWidget):
 
 
   def exportSelectionToPresentation(self):
-    export.sendtoppt.export_presentation(self.selected, "presentation.odp", True)
+    (filename, ok) = QInputDialog.getText(self.parent, "Enter Filename", "Presentation name:", text="presentation.odp")
+    if ok:
+      export.sendtoppt.export_presentation(self.selected, filename, True)
+    else:
+      self.parent.statusBar().showMessage("Canceled", 60000)
 
 
 
@@ -119,9 +123,13 @@ class PageManager(QWidget):
     # export.sendtoemail.export_email(self.selected, "sreynoldshaertle@gmail.com")
 
     # threaded version
-    self.emailthread.export(self.selected, "sreynoldshaertle@gmail.com")
-    self.parent.statusBar().showMessage("sending email...", 60000)
-    pass
+    
+    (email, ok) = QInputDialog.getText(self.parent, "Enter Destination", "Email Address:")
+    if ok:
+      self.emailthread.export(self.selected, email)
+      self.parent.statusBar().showMessage("sending email...", 60000)
+    else:
+      self.parent.statusBar().showMessage("Canceled", 60000)
   def exportEmailDone(self):
     print("export email done")
     pass
@@ -129,9 +137,9 @@ class PageManager(QWidget):
     print("export email result: %d" % status)
     self.parent.statusBar().clearMessage()
     if status == -1:            # could not get MX addr
-      self.parent.statusBar().showMessage("Could not find mail server - bad address, internet connected?", 10000)
+      self.parent.statusBar().showMessage("Could not find mail server - bad address; internet connected?", 10000)
     if status == -2:
-      self.parent.statusBar().showMessage("Could not connect to mail server - bad address, internet connected?", 10000)
+      self.parent.statusBar().showMessage("Could not connect to mail server - Timed out", 10000)
     if status == 0:
       self.parent.statusBar().showMessage("Successfully sent email.", 10000)
 
