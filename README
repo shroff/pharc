@@ -1,0 +1,29 @@
+PHARC is a photo archiving system designed to organize physicians' photos. It
+allows users to import photos and add them to different patients.
+
+Each patient has multiple photosets, which have associated treatments and
+diagnoses for each date.
+
+
+============
+INSTALLATION
+============
+
+This application needs the following packages:
+
+- Python 3.2
+- PyQT4
+- odfpy3
+- dnspython3
+
+odfpy3 and dnspython3 can be installed using PIP (python package index)
+
+Additionally, if you need to create a test datase, you will also need to install
+the python imaging library. Keep in mind that as of right now (April 2012) PIL
+does not work with python3.
+
+=======
+RUNNING
+=======
+
+Just run the executable. Nothing could go wrong.
