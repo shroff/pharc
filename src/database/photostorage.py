@@ -16,9 +16,8 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 class PhotoStorage:
-    def __init__(self, dbm, fsm):
+    def __init__(self, fsm):
         # there may be a better way of handling this, but it should do
-        self.dbm = dbm
         self.fsm = fsm
 
     def importPhoto(self, path, photoset):
@@ -89,5 +88,4 @@ class PhotoStorage:
         return self.fsm.findPhotos(path)
 
     def deletePhoto(self, photo):
-        # TODO
-        pass
+        return self.fsm.deletePhoto(photo)

@@ -16,7 +16,9 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 
+import os
 import sys
+import subprocess
 
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
@@ -78,6 +80,7 @@ class DetailsPanel(QWidget):
     self.parent = parent
     self.initUI()
     self.setFixedSize(200, 500)
+    self.cur = None
 
   def initUI(self):
     vbox = QVBoxLayout()
@@ -92,6 +95,9 @@ class DetailsPanel(QWidget):
     vbox.addWidget(self.diagnosis)
     vbox.addWidget(self.treatment)
 
+    self.editButton = QPushButton('Open in External Viewer')
+    vbox.addWidget(self.editButton)
+
     buttonHBox = QHBoxLayout()
     prevButton = QPushButton('<')
     nextButton = QPushButton('>')
@@ -105,10 +111,12 @@ class DetailsPanel(QWidget):
     QObject.connect(self.doneButton, SIGNAL('clicked()'), self.parent.parent.close)
     QObject.connect(nextButton, SIGNAL('clicked()'), self.nextImage)
     QObject.connect(prevButton, SIGNAL('clicked()'), self.prevImage)
+    QObject.connect(self.editButton, SIGNAL('clicked()'), self.externalEditImage)
 
     self.setLayout(vbox)
 
   def setPhoto(self, photo):
+    self.cur = photo
     photoset = photo.photoset
     self.name.setText('Patient Name:\n' + photoset.patient.nameFirst + " " +
         photoset.patient.nameLast)
@@ -122,3 +130,13 @@ class DetailsPanel(QWidget):
 
   def prevImage(self):
     self.parent.cycle(-1)
+
+  def externalEditImage(self):
+    path = self.cur.getData()
+    if sys.platform.startswith('darwin'):
+        subprocess.call(('open', path))
+    elif os.name == 'nt':
+        os.startfile(path)
+    elif os.name == 'posix':
+        subprocess.call(('xdg-open', path))
+    

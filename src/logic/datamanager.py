@@ -65,14 +65,16 @@ class DataManager(object):
             IOError: Could not initialize the DataManagerLoader
         """
 
-        self.loader = database.datastorageinterface.DataStorageInterface(filesystem_location + "/..", filesystem_location)
+        self.loader = database.datastorageinterface.DataStorageInterface(filesystem_location)
 
         self.treatments = tags.TagList()
         self.diagnoses = tags.TagList()
+        self.physicians = tags.TagList()
         self.patients = self.loader.PatientStorage.loadAllPatients()
+        if not self.patients:
+            self.patients = []
         for p in self.patients:
             p.dm = self
-        self.physicians = tags.TagList()
 
     def makePatient(self, fname, lname):
         p = self.loader.PatientStorage.createPatient(fname, lname)
@@ -85,11 +87,13 @@ class DataManager(object):
         ps.dm = self
         return ps
     def importPhoto(self, path, photoset):
+        print(photoset)
         self.loader.PhotoStorage.importPhoto(path, photoset)
         path = os.path.basename(path)
         phot = photo.Photo(path, photoset)
         photoset.photos.append(phot)
         phot.dm = self
+        print(photoset) 
         return phot
 
     Query = collections.namedtuple('Query', ['field', 'match', 'arg'])

@@ -830,3 +830,8 @@ class FS:
 
         return images
 
+    def deletePhoto(self, photo):
+        path = self.generatePhotosetDir(photo.photoset)
+        path = path + "/" + name
+        shutil.rmtree(path)
+

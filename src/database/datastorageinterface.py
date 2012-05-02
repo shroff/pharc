@@ -16,7 +16,6 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 import database.fs
-import database.db
 import database.patientstorage as patientstor
 import database.photosetstorage as photosetstor
 import database.photostorage as photostor
@@ -26,12 +25,11 @@ class DataStorageInterface:
     """
 
     # Initialize and do appropriate operations on startup
-    def __init__(self, dbpath, fspath):
+    def __init__(self, fspath):
 
         self.FS = database.fs.FS(fspath)
-        self.DB = database.db.DB(dbpath)
 
-        self.PatientStorage = patientstor.PatientStorage(self.DB, self.FS)
-        self.PhotosetStorage = photosetstor.PhotosetStorage(self.DB, self.FS)
-        self.PhotoStorage = photostor.PhotoStorage(self.DB, self.FS)
+        self.PatientStorage = patientstor.PatientStorage(self.FS)
+        self.PhotosetStorage = photosetstor.PhotosetStorage(self.FS)
+        self.PhotoStorage = photostor.PhotoStorage(self.FS)
 
