@@ -67,5 +67,4 @@ class ImportPhoto(QWidget):
     self.setLayout(vbox)
 
   def toggle(self, arg):
-    print("toggle")
     self.parent.toggle(self.name)
