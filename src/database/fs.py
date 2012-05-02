@@ -270,7 +270,6 @@ class FS:
                 nameFirst, nameLast, uid = self.parseName(i)
                 p = patient.Patient(fname=nameFirst, lname=nameLast, num=uid)
                 # Parse filename
-                p.uid = int(p.uid)
                 if p.uid > self.patientUID:
                     self.patientUID = p.uid
                 patients.append(p)
