@@ -245,6 +245,9 @@ class FS:
         directory = self.generatePhotosetDir(photoset)
         shutil.rmtree(directory)
 
+        #invalidate cache
+        del self.cache[(photoset, photoset.patient)]
+
     # Returns a list of all the patients
     def loadAllPatients(self):
         """
@@ -270,8 +273,8 @@ class FS:
                 nameFirst, nameLast, uid = self.parseName(i)
                 p = patient.Patient(fname=nameFirst, lname=nameLast, num=uid)
                 # Parse filename
-                if p.uid > self.patientUID:
-                    self.patientUID = p.uid
+                if uid > self.patientUID:
+                    self.patientUID = uid
                 patients.append(p)
 
         self.knownPatientUIDs = True
@@ -339,6 +342,7 @@ class FS:
         """
         return self.root + "/" + patient.nameLast + ", " + patient.nameFirst + "#" + str(patient.uid)
 
+    cache = {}
     def generatePhotosetDir(self, photoset, patient=None):
         """
             Generate the string representation of the path for the directory of
@@ -358,12 +362,19 @@ class FS:
         if patient is None:
             patient = photoset.patient
 
+        pskey = (photoset, patient)
+        if pskey in self.cache:
+            return self.cache[pskey]
+
         directory = self.generatePatientDir(patient)
         uid = str(photoset.uid)
         date = photoset.date
         if os.path.isdir(directory):
-            return directory + "/" + str(date.day).zfill(2) + "-" + str(date.month).zfill(2) + \
+            retval = directory + "/" + str(date.day).zfill(2) + "-" + str(date.month).zfill(2) + \
                 "-" + str(date.year) + "#" + uid
+            self.cache[pskey] = retval
+            return retval
+        return None
         
 
     def getPatientDataFromField(self, patient, field):
@@ -561,7 +572,7 @@ class FS:
                         p.uid = int(uid)
 
                         # determine date
-                        patient.photosets |= set([p])
+                        patient.photosets.update(set([p]))
 
             except IOError as error:
                 (errno, strerror) = error.args
@@ -716,6 +727,10 @@ class FS:
         shutil.copytree(fromDirectory, toDirectory)
 
         shutil.rmtree(fromDirectory)
+
+        # invalidate cache entries for this patient
+        for ps in patient.photosets:
+            del self.cache[(patient, ps)]
 
 
     def renamePhoto(self, photo, name):
