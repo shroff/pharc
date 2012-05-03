@@ -153,7 +153,8 @@ import list and the import directory.
 
 ## Known Problems
 
-Many. This is alpha-quality software. The big ones:
+Look at the issues tab on github for more detailed information. The
+big ones:
 
 * The application only searches for photos to import on program
   startup.
