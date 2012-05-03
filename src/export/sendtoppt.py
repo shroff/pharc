@@ -95,7 +95,7 @@ def export_presentation(photos, destination, openafter=False):
         href = doc.addPicture(path)
         photoframe.addElement(Image(href=href))
     
-    delete(destination)
+    os.remove(destination)
     doc.save(destination)
 
 
