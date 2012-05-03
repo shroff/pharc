@@ -169,7 +169,7 @@ class Photoset(object):
     def getdate(self):
         return self._date
     def setdate(self, value):
-        self.dm.loader.PhotosetStorage.editDate(self, value)
+        #self.dm.loader.PhotosetStorage.editDate(self, value)
         self._date = value
     def deldate(self):
         pass

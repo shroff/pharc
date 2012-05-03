@@ -61,7 +61,6 @@ class PatientEditPage(QWidget):
 
   def saveChanges(self):
     self.nameRow.savePatient()
-    self.parent.triggerUpdate()
     print('Saving')
     for edit in self.detailTable.queuededits:
       (ps, field) = edit
@@ -75,6 +74,7 @@ class PatientEditPage(QWidget):
         ps.clearTreatments()
         ps.addTreatments(val)
     self.detailTable.queuededits = {}
+    self.parent.triggerUpdate()
 
   def cancelChanges(self):
     self.detailTable.queuededits = {}
