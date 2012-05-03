@@ -116,7 +116,7 @@ class PatientSearch(QWidget):
   def createPatient(self):
     self.dataManager.makePatient(str(self.fnameInput.text()), str(self.lnameInput.text()))
     self.parent.triggerUpdate()
-    self.searchBar.setSearch(self.fnameInput.text() + " " + self.lnameInput.text())
+    self.searchBar.setSearch(self.fnameInput.text())
     self.switchSearch()
 
   def modelUpdated(self):
