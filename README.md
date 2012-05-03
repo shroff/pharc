@@ -55,9 +55,9 @@ the required dependencies packaged together. Extract the contents into
 the location of your choice, locate the .exe or .app, and run the
 program.
 
-## Windows and OSX developers
+### Windows and OSX developers
 
-## Linux users and developers
+### Linux users and developers
 
 You can use your package manager to install Python and PyQt4 if they
 aren't already installed. odfpy and dnspython are in PyPI and can be
